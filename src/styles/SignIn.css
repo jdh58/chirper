@@ -1,0 +1,142 @@
+.signInOverlay {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+  background-color: #00000067;
+}
+
+.signInPopUp {
+  height: 650px;
+  width: 600px;
+  border-radius: 15px;
+  background-color: white;
+  display: grid;
+  grid-template-rows: 40px 100px 105px 50px 85px 105px 60px;
+  padding: 0 150px;
+}
+
+.signInPopUp .logo {
+  height: 25px;
+  justify-self: center;
+  align-self: end;
+}
+
+.signInPopUp .title {
+  font-size: 3.25rem;
+  font-weight: 600;
+  align-self: center;
+}
+
+.otherSignIn {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.otherSignIn .google {
+  font-family: 'Google';
+}
+.otherSignIn .apple {
+  font-family: 'Apple';
+}
+
+.signInPopUp button {
+  display: block;
+  border-radius: 10000px;
+  height: 3rem;
+  border: none;
+  font-size: 1.5rem;
+  height: 40px;
+}
+
+.signInPopUp .signInButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7.5px;
+  background-color: #fff;
+  border: 1px solid rgb(211, 211, 211);
+}
+
+.signInButton img {
+  width: 20px;
+}
+
+.signInPopUp input {
+  border-radius: 5px;
+  border: 1px solid rgb(211, 211, 211);
+  height: 60px;
+  font-size: 1.75rem;
+  padding-left: 7px;
+  padding-top: 10px;
+  outline-color: var(--blue);
+}
+
+.signInPopUp .placeholder {
+  position: relative;
+  font-size: 1.75rem;
+  transition: 0.2s;
+  transform: translateY(-35px);
+  margin-left: 7.5px;
+  user-select: none;
+  cursor: text;
+}
+
+.signInPopUp input:focus + .placeholder {
+  position: relative;
+  transform: translateY(-42.5px);
+  font-size: 1.25rem;
+  color: var(--blue);
+}
+
+.signInPopUp .next {
+  font-weight: 600;
+  background-color: black;
+  color: white;
+}
+
+.signInPopUp .forgot {
+  color: black;
+  font-weight: 600;
+  background-color: #fff;
+  border: 1px solid rgb(211, 211, 211);
+}
+
+.signInPopUp h2 {
+  font-size: 1.5rem;
+  color: rgb(111, 111, 111);
+}
+
+.signInPopUp .signUpButton {
+  color: var(--blue);
+}
+
+.signInPopUp .signUpButton:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.separator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 1px;
+  align-self: center;
+  width: 100%;
+  background-color: rgb(211, 211, 211);
+}
+
+.separator p {
+  margin-bottom: 2.5px;
+  text-align: center;
+  font-size: 1.75rem;
+  background-color: #fff;
+  padding: 0 10px;
+}
+
+.signInPopUp h2 {
+  align-self: end;
+}
