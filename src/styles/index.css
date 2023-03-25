@@ -154,7 +154,7 @@ table {
 }
 @font-face {
   font-family: 'Apple';
-  src: url('../fonts/SFPRODISPLAYREGULAR.OTF');
+  src: url('../fonts/SFPRODISPLAYMEDIUM.OTF');
 }
 @font-face {
   font-family: 'Google';
@@ -167,4 +167,7 @@ table {
   font-size: 10px;
 
   --blue: #1da1f2;
+  --blue-hover: rgba(175, 221, 251, 0.118);
+  --blue-hover-border: rgb(196, 221, 235);
+  --light-black: rgb(101, 101, 101);
 }

@@ -8,13 +8,23 @@
 }
 
 .signInPopUp {
-  height: 650px;
+  position: relative;
+  overflow: hidden;
+  position: relative;
+  height: 88%;
   width: 600px;
   border-radius: 15px;
   background-color: white;
   display: grid;
-  grid-template-rows: 40px 100px 105px 50px 85px 105px 60px;
+  grid-template-rows: 40px 100px 105px 50px 80px 105px 60px;
   padding: 0 150px;
+}
+
+.signInPopUp .close {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  width: 25px;
 }
 
 .signInPopUp .logo {
@@ -27,6 +37,31 @@
   font-size: 3.25rem;
   font-weight: 600;
   align-self: center;
+}
+
+.signInPopUp button {
+  display: block;
+  border-radius: 10000px;
+  height: 3rem;
+  border: none;
+  font-size: 1.5rem;
+  height: 40px;
+  transition: 0.25s;
+}
+
+.signInPopUp button:hover {
+  cursor: pointer;
+  background-color: var(--blue-hover);
+  border: 1px solid var(--blue-hover-border);
+}
+
+.signInPopUp .next:hover {
+  background-color: #262626;
+  border: none;
+}
+.signInPopUp .forgot:hover {
+  background-color: rgb(226, 226, 226);
+  border: 1px solid rgb(211, 211, 211);
 }
 
 .otherSignIn {
@@ -43,15 +78,6 @@
   font-family: 'Apple';
 }
 
-.signInPopUp button {
-  display: block;
-  border-radius: 10000px;
-  height: 3rem;
-  border: none;
-  font-size: 1.5rem;
-  height: 40px;
-}
-
 .signInPopUp .signInButton {
   display: flex;
   align-items: center;
@@ -66,30 +92,39 @@
 }
 
 .signInPopUp input {
+  position: relative;
+  z-index: 2;
+  background-color: transparent;
   border-radius: 5px;
   border: 1px solid rgb(211, 211, 211);
-  height: 60px;
+  height: 55px;
   font-size: 1.75rem;
-  padding-left: 7px;
-  padding-top: 10px;
+  padding-left: 9px;
+  padding-top: 11px;
   outline-color: var(--blue);
 }
 
 .signInPopUp .placeholder {
-  position: relative;
+  color: rgb(101, 101, 101);
+  left: 160px;
+  top: 313px;
+  z-index: 1;
+  position: absolute;
   font-size: 1.75rem;
   transition: 0.2s;
-  transform: translateY(-35px);
-  margin-left: 7.5px;
   user-select: none;
   cursor: text;
 }
 
-.signInPopUp input:focus + .placeholder {
-  position: relative;
-  transform: translateY(-42.5px);
+.signInPopUp input:focus + .placeholder,
+.placeholder.active {
+  top: 303px;
   font-size: 1.25rem;
   color: var(--blue);
+}
+
+.placeholder.active {
+  color: var(--light-black);
 }
 
 .signInPopUp .next {
@@ -107,7 +142,7 @@
 
 .signInPopUp h2 {
   font-size: 1.5rem;
-  color: rgb(111, 111, 111);
+  color: var(--light-black);
 }
 
 .signInPopUp .signUpButton {
