@@ -10,6 +10,11 @@
    License: none (public domain)
 */
 
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
 html,
 body,
 div,
@@ -171,6 +176,7 @@ table {
   --blue-hover: rgba(175, 221, 251, 0.118);
   --blue-hover-border: rgb(196, 221, 235);
   --light-black: rgb(101, 101, 101);
+  --light-grey: rgb(231, 231, 231);
 }
 
 body {

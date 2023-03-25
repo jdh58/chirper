@@ -5,10 +5,12 @@ import Bookmarks from './components/Bookmarks';
 import Notifications from './components/Notifications';
 import Explore from './components/Explore';
 import Home from './components/Home';
+import Nav from './components/Nav';
 
 function App() {
   return (
     <BrowserRouter>
+      <Nav />
       <Routes>
         <Route path="/" element={<Home />}></Route>
         <Route path="/explore" element={<Explore />}></Route>
