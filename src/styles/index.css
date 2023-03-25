@@ -149,6 +149,11 @@ table {
 }
 @font-face {
   font-family: 'Chirp';
+  src: url('../fonts/Chirp-Medium.woff');
+  font-weight: 700;
+}
+@font-face {
+  font-family: 'Chirp';
   src: url('../fonts/Chirp-Heavy.woff');
   font-weight: 600;
 }

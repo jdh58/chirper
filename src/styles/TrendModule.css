@@ -1,0 +1,23 @@
+.trendItem {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 1.5rem;
+  padding: 12.5px 15px;
+  transition: 0.2s;
+}
+
+.trendItem:hover {
+  cursor: pointer;
+  background-color: rgb(241, 241, 241);
+}
+
+.trendItem .topic {
+  font-weight: 700;
+}
+
+.trendItem .number,
+.trendItem .title {
+  color: var(--light-black);
+  font-size: 1.4rem;
+}

@@ -13,10 +13,6 @@
   padding-bottom: 5px;
 }
 
-.navBar a.active .navName {
-  font-size: 1px;
-}
-
 .navButton {
   display: flex;
   gap: 15px;
@@ -34,7 +30,7 @@
 }
 
 .navButton.active .navName {
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .navIcon {
