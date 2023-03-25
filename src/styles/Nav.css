@@ -1,0 +1,55 @@
+.navBar {
+  padding-top: 17.5px;
+  justify-self: start;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding-left: 0;
+}
+
+.navBar .logo {
+  margin-left: 15px;
+  width: 28.5px;
+  padding-bottom: 5px;
+}
+
+.navButton {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  width: fit-content;
+  padding: 5px 10px;
+  padding-right: 20px;
+  transition: 0.15s;
+  border-radius: 1000px;
+}
+
+.navButton:hover {
+  cursor: pointer;
+  background-color: rgb(221, 221, 221);
+}
+
+.navIcon {
+  width: 35px;
+}
+
+.navName {
+  font-size: 2rem;
+}
+
+.tweepButton {
+  font-size: 1.75rem;
+  font-weight: 600;
+  width: 235px;
+  height: 53px;
+  background-color: var(--blue);
+  color: white;
+  border: none;
+  border-radius: 1000px;
+  transition: 0.15s;
+}
+
+.tweepButton:hover {
+  cursor: pointer;
+  background-color: var(--blue-hover-pure);
+}

@@ -167,7 +167,19 @@ table {
   font-size: 10px;
 
   --blue: #1da1f2;
+  --blue-hover-pure: hsl(203, 79%, 43%);
   --blue-hover: rgba(175, 221, 251, 0.118);
   --blue-hover-border: rgb(196, 221, 235);
   --light-black: rgb(101, 101, 101);
+}
+
+body {
+  display: flex;
+  justify-content: center;
+}
+
+#root {
+  margin: auto;
+  display: grid;
+  grid-template-columns: 270px 600px 380px;
 }
