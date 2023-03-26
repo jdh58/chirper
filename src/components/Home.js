@@ -3,6 +3,7 @@ import '../styles/Home.css';
 import Nav from './Nav';
 import WhatsHappening from './RightBar';
 import TweepModule from './TweepModule';
+import Tweep from './Tweep';
 
 export default function Home() {
   const [currentTab, setCurrentTab] = useState('foryou');
@@ -20,7 +21,9 @@ export default function Home() {
             className="foryou subheader"
             onClick={setTab}
             style={
-              currentTab === 'foryou' ? { opacity: '1' } : { opacity: '70%' }
+              currentTab === 'foryou'
+                ? { opacity: '1', fontWeight: 700 }
+                : { opacity: '70%', fontWeight: 600 }
             }
           >
             <h2>For you</h2>
@@ -29,7 +32,9 @@ export default function Home() {
             className="following subheader"
             onClick={setTab}
             style={
-              currentTab === 'following' ? { opacity: '1' } : { opacity: '70%' }
+              currentTab === 'following'
+                ? { opacity: '1', fontWeight: 700 }
+                : { opacity: '70%', fontWeight: 600 }
             }
           >
             <h2>Following</h2>
@@ -37,6 +42,7 @@ export default function Home() {
           <div className={`indicator ${currentTab}`}></div>
         </header>
         <TweepModule />
+        <Tweep />
       </div>
       <WhatsHappening />
     </>

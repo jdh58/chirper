@@ -1,5 +1,6 @@
 .homePage {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   border-left: 1px solid var(--light-grey);
   border-right: 1px solid var(--light-grey);
   height: 100vh;
@@ -7,9 +8,9 @@
 
 .homePage header {
   position: relative;
-  height: 100px;
+  height: 105px;
   display: grid;
-  grid-template-rows: repeat(2, 1fr);
+  grid-template-rows: 52.5px 52.5px;
   grid-template-columns: repeat(2, 1fr);
   border-bottom: 1px solid var(--light-grey);
 }
@@ -17,7 +18,7 @@
 .homePage header .title {
   margin-left: 15px;
   font-weight: 700;
-  color: rgb(44, 44, 44);
+  color: rgb(71, 71, 71);
   font-size: 2.1rem;
   align-self: center;
 }
@@ -56,6 +57,7 @@
   justify-self: center;
   align-self: end;
   position: absolute;
+  border-radius: 1000px;
 }
 
 .indicator {

@@ -18,6 +18,15 @@
 
 .tweepModule .tweepButton {
   font-size: 1.6rem;
-  width: 80px;
-  height: 40px;
+  width: 75px;
+  height: 37px;
+}
+
+.tweepButton:disabled {
+  opacity: 50%;
+}
+
+.tweepButton:disabled:hover {
+  cursor: auto;
+  background-color: var(--blue);
 }

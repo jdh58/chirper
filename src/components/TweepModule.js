@@ -18,6 +18,22 @@ export default function TweepModule() {
     element.style.height = `${element.scrollHeight}px`;
   };
 
+  const handleTweepChange = (event) => {
+    // Make sure the box size changes dynamically
+    autoGrow(event);
+
+    // Disable the button if there's no text, otherwise enable it.
+    if (event.target.value.length === 0) {
+      document
+        .querySelector('.tweepModule .tweepButton')
+        .setAttribute('disabled', '');
+    } else {
+      document
+        .querySelector('.tweepModule .tweepButton')
+        .removeAttribute('disabled');
+    }
+  };
+
   return (
     <div className="tweepModule">
       <div className="tweepWriting">
@@ -26,19 +42,32 @@ export default function TweepModule() {
           name="tweepInput"
           id="tweepInput"
           placeholder="What's Happening?"
-          onChange={autoGrow}
+          onChange={handleTweepChange}
+          maxLength="280"
         />
       </div>
       <div className="toolbar">
         <div className="icons">
-          <img src={ImageIcon} alt="" className="icon" />
-          <img src={GifBox} alt="" className="icon gif" />
-          <img src={Poll} alt="" className="icon" />
-          <img src={Emoji} alt="" className="icon" />
-          <img src={Clock} alt="" className="icon" />
-          <img src={Pin} alt="" className="icon" />
+          <span className="iconContainer">
+            <img src={ImageIcon} alt="" className="icon" />
+          </span>
+          <span className="iconContainer">
+            <img src={GifBox} alt="" className="icon gif" />
+          </span>
+          <span className="iconContainer">
+            <img src={Poll} alt="" className="icon" />
+          </span>
+          <span className="iconContainer">
+            <img src={Emoji} alt="" className="icon" />
+          </span>
+          <span className="iconContainer">
+            <img src={Clock} alt="" className="icon" />
+          </span>
+          <span className="iconContainer">
+            <img src={Pin} alt="" className="icon" />
+          </span>
         </div>
-        <TweepButton />
+        <TweepButton disabled="disabled" />
       </div>
     </div>
   );
