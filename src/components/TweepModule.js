@@ -12,7 +12,9 @@ export default function TweepModule() {
   const autoGrow = (e) => {
     const element = e.target;
 
-    element.style.height = '54px';
+    console.log(element.scrollHeight);
+    element.style.height = '0px';
+    console.log(element.scrollHeight);
     element.style.height = `${element.scrollHeight}px`;
   };
 
