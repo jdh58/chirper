@@ -11,6 +11,7 @@ export default function Tweep() {
     <div className="tweep">
       <div className="profilePicContainer">
         <img src={Pic} alt="" />
+        <div className="imageOverlay"></div>
       </div>
       <div className="tweepInfo">
         <p className="name">Full Clout</p>

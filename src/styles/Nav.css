@@ -26,7 +26,7 @@
 
 .navButton:hover {
   cursor: pointer;
-  background-color: rgb(221, 221, 221);
+  background-color: rgb(231, 231, 231);
 }
 
 .navButton.active .navName {
