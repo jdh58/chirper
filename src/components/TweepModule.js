@@ -13,7 +13,7 @@ export default function TweepModule() {
     const element = e.target;
 
     console.log(element.scrollHeight);
-    element.style.height = '0px';
+    element.style.height = '54px';
     console.log(element.scrollHeight);
     element.style.height = `${element.scrollHeight}px`;
   };
