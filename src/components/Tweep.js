@@ -4,6 +4,7 @@ import Chat from '../assets/chat.svg';
 import ReTweep from '../assets/retweep.svg';
 import Like from '../assets/like.svg';
 import Share from '../assets/share.svg';
+import '../styles/Tweep.css';
 
 export default function Tweep() {
   return (
@@ -25,17 +26,25 @@ export default function Tweep() {
         be getting Dr. Doom!
       </p>
       <div className="tweepIcons">
-        <div className="chat">
-          <img src={Chat} alt="" />
+        <div className="icon chat">
+          <div className="container">
+            <img src={Chat} alt="" />
+          </div>
         </div>
-        <div className="reTweep">
-          <img src={ReTweep} alt="" />
+        <div className="icon reTweep">
+          <div className="container">
+            <img src={ReTweep} alt="" />
+          </div>
         </div>
-        <div className="likes">
-          <img src={Like} alt="" />
+        <div className="icon likes">
+          <div className="container">
+            <img src={Like} alt="" />
+          </div>
         </div>
-        <div className="share">
-          <img src={Share} alt="" />
+        <div className="icon share">
+          <div className="container">
+            <img src={Share} alt="" />
+          </div>
         </div>
       </div>
     </div>

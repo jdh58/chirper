@@ -7,8 +7,11 @@ import Emoji from '../assets/smile.svg';
 import Clock from '../assets/clock.svg';
 import Pin from '../assets/map-pin.svg';
 import '../styles/TweepModule.css';
+import { useState } from 'react';
 
 export default function TweepModule() {
+  const [characters, setCharacters] = useState(0);
+
   const autoGrow = (e) => {
     const element = e.target;
 
@@ -32,6 +35,9 @@ export default function TweepModule() {
         .querySelector('.tweepModule .tweepButton')
         .removeAttribute('disabled');
     }
+
+    // Update character count
+    setCharacters(event.target.value.length);
   };
 
   return (
@@ -67,6 +73,9 @@ export default function TweepModule() {
             <img src={Pin} alt="" className="icon" />
           </span>
         </div>
+        <p className="characterCount">
+          {characters > 0 ? `${characters}/280` : null}
+        </p>
         <TweepButton disabled="disabled" />
       </div>
     </div>

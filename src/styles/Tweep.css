@@ -1,0 +1,98 @@
+.tweep {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 75px 1fr;
+  grid-template-rows: 20px 1fr 40px;
+  border-bottom: 1px solid var(--light-grey);
+  padding-top: 10px;
+}
+
+.tweep:hover {
+  cursor: pointer;
+  background-color: rgb(249, 249, 249);
+}
+
+.profilePicContainer {
+  justify-self: center;
+}
+
+.profilePicContainer > img {
+  width: 47.5px;
+  border-radius: 1000px;
+  grid-column: 1 / 2;
+  grid-column: 1 / -1;
+}
+
+.tweepInfo {
+  align-self: start;
+  grid-row: 1 / 2;
+  grid-column: 2 / -1;
+  display: flex;
+  align-items: center;
+  font-size: 1.6rem;
+  color: var(--light-black);
+  gap: 5px;
+}
+
+.tweepInfo .name {
+  font-weight: 600;
+  color: rgb(30, 30, 30);
+}
+
+.tweepInfo .at {
+}
+
+.tweepInfo .separator {
+  width: 2px;
+  height: 2px;
+  background-color: var(--light-black);
+}
+
+.tweepInfo .settingContainer {
+  margin-left: auto;
+  margin-right: 15px;
+  display: flex;
+  justify-content: center;
+  border-radius: 100px;
+}
+
+.tweepInfo .settingContainer > img {
+  width: 80%;
+}
+
+.settingContainer:hover {
+  cursor: pointer;
+}
+
+.tweepWords {
+  grid-row: 2 / 3;
+  grid-column: 2 / -1;
+  font-size: 1.6rem;
+  padding: 3px 0;
+}
+
+.tweepIcons {
+  grid-row: -2 / -1;
+  grid-column: -2 / -1;
+  display: flex;
+  justify-content: space-around;
+  align-self: center;
+  margin-left: -7.5px;
+}
+
+.tweepIcons .icon .container {
+  width: fit-content;
+  border-radius: 1000px;
+  transition: 0.2s;
+}
+
+.tweepIcons .icon img {
+  width: 32px;
+  padding: 7.5px;
+}
+
+.tweepIcons .icon .container:hover,
+.tweepInfo .settingContainer:hover {
+  cursor: pointer;
+  background-color: #cfedff7e;
+}

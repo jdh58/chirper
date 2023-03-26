@@ -67,7 +67,7 @@
 }
 
 .gif.icon {
-  /* width: 22px; */
+  width: 22px;
   filter: invert(51%) sepia(53%) saturate(2515%) hue-rotate(176deg)
     brightness(99%) contrast(91%);
 }
@@ -75,4 +75,11 @@
 .iconContainer:hover {
   cursor: pointer;
   background-color: #cfedff7e;
+}
+
+.toolbar .characterCount {
+  font-size: 1.3rem;
+  margin-left: auto;
+  margin-right: 15px;
+  color: var(--blue);
 }
