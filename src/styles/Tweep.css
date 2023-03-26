@@ -117,3 +117,31 @@
   cursor: pointer;
   background-color: #cfedff7e;
 }
+
+.icon.likes .container > img {
+  transition: 0.2s;
+}
+
+.tweepIcons .icon.likes .container:hover {
+  background-color: #ffcfcf7e;
+}
+
+.tweepIcons .icon.likes .container:hover > img {
+  filter: invert(29%) sepia(86%) saturate(1365%) hue-rotate(336deg)
+    brightness(110%) contrast(106%);
+}
+
+.tweepIcons .icon.reTweep .container:hover {
+  background-color: hsla(118, 68%, 81%, 0.494);
+}
+
+.tweepIcons .icon.reTweep .container:hover > img {
+  filter: invert(82%) sepia(47%) saturate(4064%) hue-rotate(61deg)
+    brightness(92%) contrast(89%);
+}
+
+.tweepIcons .icon.chat .container:hover > img,
+.tweepIcons .icon.share .container:hover > img {
+  filter: invert(56%) sepia(36%) saturate(5072%) hue-rotate(176deg)
+    brightness(100%) contrast(91%);
+}
