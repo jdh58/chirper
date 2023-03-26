@@ -1,0 +1,23 @@
+.tweepButton {
+  font-size: 1.7rem;
+  font-weight: 600;
+  width: 233px;
+  height: 52px;
+  background-color: var(--blue);
+  color: white;
+  border: none;
+  border-radius: 1000px;
+  box-shadow: 0 0 24px rgba(0, 0, 0, 0.1);
+  transition: 0.15s;
+}
+
+.tweepButton:hover {
+  cursor: pointer;
+  background-color: var(--blue-hover-pure);
+}
+
+.tweepModule .tweepButton {
+  font-size: 1.6rem;
+  width: 80px;
+  height: 40px;
+}

@@ -40,21 +40,3 @@
 .navName {
   font-size: 2.05rem;
 }
-
-.tweepButton {
-  font-size: 1.75rem;
-  font-weight: 600;
-  width: 233px;
-  height: 52px;
-  background-color: var(--blue);
-  color: white;
-  border: none;
-  border-radius: 1000px;
-  box-shadow: 0 0 24px rgba(0, 0, 0, 0.1);
-  transition: 0.15s;
-}
-
-.tweepButton:hover {
-  cursor: pointer;
-  background-color: var(--blue-hover-pure);
-}

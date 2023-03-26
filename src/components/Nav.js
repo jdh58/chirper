@@ -14,6 +14,7 @@ import ProfileFill from '../assets/profile_fill.svg';
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import NavItem from './NavItem';
+import TweepButton from './TweepButton';
 import '../styles/Nav.css';
 
 export default function Nav(props) {
@@ -39,7 +40,7 @@ export default function Nav(props) {
       />
       <NavItem name="Profile" emptyIcon={Profile} fillIcon={ProfileFill} />
 
-      <button className="tweepButton">Tweep</button>
+      <TweepButton />
     </nav>
   );
 }
