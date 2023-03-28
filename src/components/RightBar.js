@@ -1,6 +1,7 @@
 import '../styles/RightBar.css';
 import TrendList from './TrendList';
 import Search from './Search';
+import AccountModule from './AccountModule';
 
 export default function RightBar({ noSearch }) {
   return (
@@ -19,7 +20,11 @@ export default function RightBar({ noSearch }) {
 
       <div className={!noSearch ? 'accounts' : 'accounts only'}>
         <h2 className="title">Who to follow</h2>
-        <div className="whItems"></div>
+        <div className="accountItems">
+          <AccountModule />
+          <AccountModule />
+          <AccountModule />
+        </div>
       </div>
     </div>
   );

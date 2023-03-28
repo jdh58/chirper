@@ -30,6 +30,15 @@
   flex-direction: column;
 }
 
+.accounts .title {
+  padding-bottom: 5px;
+}
+
 .accounts.only {
   margin-top: 7.5px;
+}
+
+.accountItems {
+  display: flex;
+  flex-direction: column;
 }
