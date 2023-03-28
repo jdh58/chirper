@@ -2,7 +2,7 @@ import { useState } from 'react';
 import '../styles/Home.css';
 import '../styles/page.css';
 import Nav from './Nav';
-import WhatsHappening from './RightBar';
+import RightBar from './RightBar';
 import TweepModule from './TweepModule';
 import Tweep from './Tweep';
 
@@ -52,7 +52,7 @@ export default function Home() {
         <Tweep />
         <Tweep />
       </div>
-      <WhatsHappening />
+      <RightBar />
     </>
   );
 }

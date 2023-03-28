@@ -2,23 +2,24 @@ import '../styles/RightBar.css';
 import TrendList from './TrendList';
 import Search from './Search';
 
-export default function RightBar(props) {
+export default function RightBar({ noSearch }) {
   return (
     <div className="rightBar">
-      {!props.isExplore ? <Search /> : null}
+      {!noSearch ? (
+        <>
+          <Search />
+          <div className="trends">
+            <h2 className="title">What's happening</h2>
+            <div className="whItems">
+              <TrendList />
+            </div>
+          </div>
+        </>
+      ) : null}
 
-      <div className="trends">
-        <h2 className="title">What's happening</h2>
-        <div className="whItems">
-          <TrendList />
-        </div>
-      </div>
-
-      <div className="accounts">
+      <div className={!noSearch ? 'accounts' : 'accounts only'}>
         <h2 className="title">Who to follow</h2>
-        <div className="whItems">
-          <TrendList />
-        </div>
+        <div className="whItems"></div>
       </div>
     </div>
   );

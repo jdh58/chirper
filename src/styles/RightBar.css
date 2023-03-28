@@ -20,7 +20,7 @@
 .rightBar > .trends > .title,
 .rightBar > .accounts > .title {
   font-weight: 700;
-  font-size: 2.2rem;
+  font-size: 2.1rem;
   margin-bottom: 12.5px;
   margin-left: 15px;
 }
@@ -28,4 +28,8 @@
 .whItems {
   display: flex;
   flex-direction: column;
+}
+
+.accounts.only {
+  margin-top: 7.5px;
 }

@@ -1,18 +1,16 @@
-import Pic from '../assets/fakepic.jpeg';
+import ProfilePic from './ProfilePic';
 import More from '../assets/more.svg';
 import Chat from '../assets/chat.svg';
 import ReTweep from '../assets/retweep.svg';
 import Like from '../assets/like.svg';
 import Share from '../assets/share.svg';
+import '../styles/ProfilePic.css';
 import '../styles/Tweep.css';
 
 export default function Tweep() {
   return (
     <div className="tweep">
-      <div className="profilePicContainer">
-        <img src={Pic} alt="" />
-        <div className="imageOverlay"></div>
-      </div>
+      <ProfilePic />
       <div className="tweepInfo">
         <p className="name">Full Clout</p>
         <p className="at">@FullClout</p>
