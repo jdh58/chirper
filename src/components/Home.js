@@ -3,8 +3,8 @@ import '../styles/Home.css';
 import '../styles/page.css';
 import Nav from './Nav';
 import RightBar from './RightBar';
-import TweepModule from './TweepModule';
-import Tweep from './Tweep';
+import ChirpModule from './ChirpModule';
+import Chirp from './Chirp';
 
 export default function Home() {
   const [currentTab, setCurrentTab] = useState('foryou');
@@ -42,15 +42,15 @@ export default function Home() {
           </div>
           <div className={`indicator ${currentTab}`}></div>
         </header>
-        <TweepModule />
-        <Tweep />
-        <Tweep />
-        <Tweep />
-        <Tweep />
-        <Tweep />
-        <Tweep />
-        <Tweep />
-        <Tweep />
+        <ChirpModule />
+        <Chirp />
+        <Chirp />
+        <Chirp />
+        <Chirp />
+        <Chirp />
+        <Chirp />
+        <Chirp />
+        <Chirp />
       </div>
       <RightBar />
     </>

@@ -1,15 +1,15 @@
 import Pic from '../assets/fakepic.jpeg';
-import TweepButton from './TweepButton';
+import ChirpButton from './ChirpButton';
 import GifBox from '../assets/gifbox.svg';
 import ImageIcon from '../assets/image.svg';
 import Poll from '../assets/list.svg';
 import Emoji from '../assets/smile.svg';
 import Clock from '../assets/clock.svg';
 import Pin from '../assets/map-pin.svg';
-import '../styles/TweepModule.css';
+import '../styles/ChirpModule.css';
 import { useState } from 'react';
 
-export default function TweepModule() {
+export default function ChirpModule() {
   const [characters, setCharacters] = useState(0);
 
   const autoGrow = (e) => {
@@ -21,18 +21,18 @@ export default function TweepModule() {
     element.style.height = `${element.scrollHeight}px`;
   };
 
-  const handleTweepChange = (event) => {
+  const handleChirpChange = (event) => {
     // Make sure the box size changes dynamically
     autoGrow(event);
 
     // Disable the button if there's no text, otherwise enable it.
     if (event.target.value.length === 0) {
       document
-        .querySelector('.tweepModule .tweepButton')
+        .querySelector('.chirpModule .chirpButton')
         .setAttribute('disabled', '');
     } else {
       document
-        .querySelector('.tweepModule .tweepButton')
+        .querySelector('.chirpModule .chirpButton')
         .removeAttribute('disabled');
     }
 
@@ -41,14 +41,14 @@ export default function TweepModule() {
   };
 
   return (
-    <div className="tweepModule">
-      <div className="tweepWriting">
+    <div className="chirpModule">
+      <div className="chirpWriting">
         <img src={Pic} alt="" className="profilePic" />
         <textarea
-          name="tweepInput"
-          id="tweepInput"
+          name="chirpInput"
+          id="chirpInput"
           placeholder="What's Happening?"
-          onChange={handleTweepChange}
+          onChange={handleChirpChange}
           maxLength="280"
         />
       </div>
@@ -79,7 +79,7 @@ export default function TweepModule() {
         >
           {characters > 0 ? `${characters}/280` : null}
         </p>
-        <TweepButton disabled="disabled" />
+        <ChirpButton disabled="disabled" />
       </div>
     </div>
   );

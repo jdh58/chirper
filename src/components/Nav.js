@@ -13,7 +13,7 @@ import Profile from '../assets/profile.svg';
 import ProfileFill from '../assets/profile_fill.svg';
 import { Link } from 'react-router-dom';
 import NavItem from './NavItem';
-import TweepButton from './TweepButton';
+import ChirpButton from './ChirpButton';
 import '../styles/Nav.css';
 
 export default function Nav(props) {
@@ -35,7 +35,7 @@ export default function Nav(props) {
       />
       <NavItem name="Profile" emptyIcon={Profile} fillIcon={ProfileFill} />
 
-      <TweepButton />
+      <ChirpButton />
     </nav>
   );
 }

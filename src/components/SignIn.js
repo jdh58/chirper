@@ -23,7 +23,7 @@ export default function SignIn() {
       <div className="signInPopUp">
         <img src={Close} alt="" className="close" />
         <img src={Logo} alt="" className="logo" />
-        <h1 className="title">Sign in to Tweeper</h1>
+        <h1 className="title">Sign in to Chirper</h1>
         <div className="otherSignIn">
           <button className="signInButton google">
             <img src={Google} alt="" />

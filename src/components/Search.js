@@ -9,7 +9,7 @@ export default function Search() {
         type="text"
         name="search"
         id="search"
-        placeholder="Search Twitter"
+        placeholder="Search Chirper"
       />
       <img src={Glass} alt="" />
     </form>

@@ -4,6 +4,8 @@ import Search from './Search';
 import AccountModule from './AccountModule';
 
 export default function RightBar({ noSearch }) {
+  // TODO: Fill out copyright with my github and sites
+
   return (
     <div className="rightBar">
       {!noSearch ? (
@@ -30,7 +32,7 @@ export default function RightBar({ noSearch }) {
         </div>
       </div>
 
-      <div className="copyright"></div>
+      <div className="copyright">dsadsa</div>
     </div>
   );
 }

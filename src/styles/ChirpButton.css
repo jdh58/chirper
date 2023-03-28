@@ -1,4 +1,4 @@
-.tweepButton {
+.chirpButton {
   font-size: 1.7rem;
   font-weight: 600;
   width: 233px;
@@ -11,22 +11,22 @@
   transition: 0.15s;
 }
 
-.tweepButton:hover {
+.chirpButton:hover {
   cursor: pointer;
   background-color: var(--blue-hover-pure);
 }
 
-.tweepModule .tweepButton {
+.chirpModule .chirpButton {
   font-size: 1.6rem;
   width: 75px;
   height: 37px;
 }
 
-.tweepButton:disabled {
+.chirpButton:disabled {
   opacity: 50%;
 }
 
-.tweepButton:disabled:hover {
+.chirpButton:disabled:hover {
   cursor: auto;
   background-color: var(--blue);
 }

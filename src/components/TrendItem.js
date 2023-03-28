@@ -12,7 +12,7 @@ export default function TrendItem() {
             <p>Trending</p>
           </p>
           <h3 className="topic">76ers at Warriors</h3>
-          <p className="number">7,324 Tweeps</p>
+          <p className="number">7,324 Chirps</p>
         </div>
         <img src={More} alt="" className="more" />
       </div>
