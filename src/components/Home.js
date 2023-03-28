@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import '../styles/Home.css';
+import '../styles/page.css';
 import Nav from './Nav';
 import WhatsHappening from './RightBar';
 import TweepModule from './TweepModule';
@@ -14,7 +15,7 @@ export default function Home() {
 
   return (
     <>
-      <div className="homePage">
+      <div className="homePage page">
         <header>
           <h1 className="title">Home</h1>
           <div

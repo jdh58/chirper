@@ -1,0 +1,12 @@
+.explorePage {
+}
+
+.explorePage header {
+  align-items: center;
+  grid-template-columns: ;
+}
+
+.explorePage header .searchBar {
+  width: 92.5%;
+  justify-self: center;
+}

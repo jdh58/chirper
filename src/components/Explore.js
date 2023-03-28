@@ -1,6 +1,13 @@
-import '../styles/Home.css';
-import Nav from './Nav';
+import '../styles/Explore.css';
+import '../styles/page.css';
+import Search from './Search.js';
 
 export default function Explore() {
-  return <div className="homePage">x</div>;
+  return (
+    <div className="explorePage page">
+      <header>
+        <Search />
+      </header>
+    </div>
+  );
 }
