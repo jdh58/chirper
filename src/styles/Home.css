@@ -7,12 +7,16 @@
 }
 
 .homePage header {
-  position: relative;
+  background-color: rgba(255, 255, 255, 0.85);
+  position: sticky;
+  z-index: 20;
+  top: 0;
   height: 105px;
   display: grid;
   grid-template-rows: 52.5px 52.5px;
   grid-template-columns: repeat(2, 1fr);
   border-bottom: 1px solid var(--light-grey);
+  backdrop-filter: blur(10px);
 }
 
 .homePage header .title {

@@ -2,7 +2,7 @@
   width: 100%;
   display: grid;
   grid-template-columns: 75px 1fr;
-  grid-template-rows: 25px 1fr 40px;
+  grid-template-rows: 20px 1fr 40px;
   border-bottom: 1px solid var(--light-grey);
   padding-top: 10px;
   transition: 0.2s;
@@ -54,7 +54,7 @@
 }
 
 .tweepInfo .name {
-  font-weight: 600;
+  font-weight: 700;
   color: rgb(30, 30, 30);
 }
 
@@ -93,6 +93,7 @@
   grid-column: 2 / -1;
   font-size: 1.5rem;
   padding-right: 10px;
+  line-height: 1.25;
 }
 
 .tweepIcons {

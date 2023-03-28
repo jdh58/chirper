@@ -43,6 +43,13 @@ export default function Home() {
         </header>
         <TweepModule />
         <Tweep />
+        <Tweep />
+        <Tweep />
+        <Tweep />
+        <Tweep />
+        <Tweep />
+        <Tweep />
+        <Tweep />
       </div>
       <WhatsHappening />
     </>
