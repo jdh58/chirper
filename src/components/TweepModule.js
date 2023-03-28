@@ -73,7 +73,10 @@ export default function TweepModule() {
             <img src={Pin} alt="" className="icon" />
           </span>
         </div>
-        <p className="characterCount">
+        <p
+          className="characterCount"
+          style={characters > 270 ? { color: 'red' } : null}
+        >
           {characters > 0 ? `${characters}/280` : null}
         </p>
         <TweepButton disabled="disabled" />
