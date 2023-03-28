@@ -31,16 +31,19 @@ export default function Tweep() {
           <div className="container">
             <img src={Chat} alt="" />
           </div>
+          <p className="count">23</p>
         </div>
         <div className="icon reTweep">
           <div className="container">
             <img src={ReTweep} alt="" />
           </div>
+          <p className="count">3,426</p>
         </div>
         <div className="icon likes">
           <div className="container">
             <img src={Like} alt="" />
           </div>
+          <p className="count">384K</p>
         </div>
         <div className="icon share">
           <div className="container">

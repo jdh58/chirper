@@ -100,10 +100,21 @@
   margin-left: -7.5px;
 }
 
-.tweepIcons .icon .container {
+.tweepIcons .icon {
+  display: flex;
+  align-items: center;
+  color: var(--light-black);
   width: fit-content;
+  margin-right: auto;
+}
+
+.tweepIcons .icon .container {
   border-radius: 1000px;
   transition: 0.2s;
+}
+
+.tweepIcons .icon p {
+  font-size: 1.3rem;
 }
 
 .tweepIcons .icon img {
@@ -112,36 +123,48 @@
   opacity: 70%;
 }
 
-.tweepIcons .icon .container:hover,
+.tweepIcons .icon:hover .container,
 .tweepInfo .settingContainer:hover {
   cursor: pointer;
   background-color: #cfedff7e;
 }
 
 .icon.likes .container > img {
-  transition: 0.2s;
+  transition: 0.15s;
 }
 
-.tweepIcons .icon.likes .container:hover {
+.tweepIcons .icon.likes:hover .container {
   background-color: #ffcfcf7e;
 }
 
-.tweepIcons .icon.likes .container:hover > img {
+.tweepIcons .icon.likes:hover {
+  color: #ff2f60;
+}
+
+.tweepIcons .icon.likes:hover .container > img {
   filter: invert(29%) sepia(86%) saturate(1365%) hue-rotate(336deg)
     brightness(110%) contrast(106%);
 }
 
-.tweepIcons .icon.reTweep .container:hover {
+.tweepIcons .icon.reTweep:hover {
+  color: hsl(130, 80%, 39%);
+}
+
+.tweepIcons .icon.reTweep:hover .container {
   background-color: hsla(118, 68%, 81%, 0.494);
 }
 
-.tweepIcons .icon.reTweep .container:hover > img {
+.tweepIcons .icon.reTweep:hover .container > img {
   filter: invert(82%) sepia(47%) saturate(4064%) hue-rotate(61deg)
-    brightness(92%) contrast(89%);
+    brightness(72%) contrast(89%);
 }
 
-.tweepIcons .icon.chat .container:hover > img,
-.tweepIcons .icon.share .container:hover > img {
+.tweepIcons .icon.chat:hover {
+  color: var(--blue);
+}
+
+.tweepIcons .icon.chat:hover .container > img,
+.tweepIcons .icon.share:hover .container > img {
   filter: invert(56%) sepia(36%) saturate(5072%) hue-rotate(176deg)
     brightness(100%) contrast(91%);
 }
