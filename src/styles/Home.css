@@ -29,17 +29,6 @@
 }
 
 .indicator {
-  grid-row: -2 / -1;
-  width: 55px;
-  height: 4.5px;
-  background-color: var(--blue);
-  justify-self: center;
-  align-self: end;
-  position: absolute;
-  border-radius: 1000px;
-}
-
-.indicator {
   animation-timing-function: ease;
   animation-duration: 0.4s;
   animation-fill-mode: forwards;

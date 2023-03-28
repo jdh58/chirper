@@ -1,5 +1,5 @@
 import '../styles/RightBar.css';
-import TrendList from './TrendList';
+import TrendItem from './TrendItem';
 import Search from './Search';
 import AccountModule from './AccountModule';
 
@@ -12,7 +12,10 @@ export default function RightBar({ noSearch }) {
           <div className="trends">
             <h2 className="title">What's happening</h2>
             <div className="whItems">
-              <TrendList />
+              <TrendItem />
+              <TrendItem />
+              <TrendItem />
+              <TrendItem />
             </div>
           </div>
         </>
@@ -26,6 +29,8 @@ export default function RightBar({ noSearch }) {
           <AccountModule />
         </div>
       </div>
+
+      <div className="copyright"></div>
     </div>
   );
 }

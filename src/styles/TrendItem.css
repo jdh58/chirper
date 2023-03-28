@@ -1,0 +1,45 @@
+.trendInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 7.5px;
+  font-size: 1.5rem;
+  transition: 0.2s;
+}
+
+.trendItem {
+  display: flex;
+  padding: 15px;
+}
+
+.trendItem .title {
+  display: flex;
+  gap: 5px;
+}
+
+.trendItem:hover {
+  cursor: pointer;
+  background-color: rgb(241, 241, 241);
+}
+
+.trendItem .topic {
+  font-weight: 700;
+}
+
+.trendItem .number,
+.trendItem .title {
+  color: var(--light-black);
+  font-size: 1.3rem;
+}
+
+.trendItem .more {
+  margin-left: auto;
+  opacity: 70%;
+  width: 18px;
+  align-self: start;
+}
+
+.trendItem .separator {
+  width: 2px;
+  height: 2px;
+  background-color: var(--light-black);
+}

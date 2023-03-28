@@ -3,10 +3,22 @@
 
 .explorePage header {
   align-items: center;
-  grid-template-columns: ;
+  grid-template-columns: repeat(3, 1fr);
 }
 
 .explorePage header .searchBar {
   width: 92.5%;
   justify-self: center;
+}
+
+.explorePage .searchBar {
+  grid-column: 1 / -1;
+}
+
+.indicator.trending {
+  left: 73px;
+}
+
+.indicator.popularAccounts {
+  left: 471px;
 }

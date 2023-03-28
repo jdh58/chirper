@@ -25,3 +25,31 @@ header .title {
   font-size: 2.1rem;
   align-self: center;
 }
+
+.subheader {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 600;
+  transition: 0.2s;
+  user-select: none;
+}
+
+.subheader:hover {
+  cursor: pointer;
+  background-color: rgb(241, 241, 241);
+}
+
+.indicator {
+  grid-row: -2 / -1;
+  width: 55px;
+  height: 4.5px;
+  background-color: var(--blue);
+  justify-self: center;
+  align-self: end;
+  position: absolute;
+  border-radius: 1000px;
+}
