@@ -9,7 +9,7 @@
 header {
   background-color: rgba(255, 255, 255, 0.85);
   position: sticky;
-  z-index: 20;
+  z-index: 2;
   top: 0;
   height: 105px;
   display: grid;

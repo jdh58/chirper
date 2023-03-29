@@ -6,7 +6,7 @@ import RightBar from './RightBar';
 import ChirpModule from './ChirpModule';
 import Chirp from './Chirp';
 
-export default function Home() {
+export default function Home({ overlay }) {
   const [currentTab, setCurrentTab] = useState('foryou');
 
   const setTab = (e) => {

@@ -83,3 +83,26 @@
   margin-right: 15px;
   color: var(--blue);
 }
+
+.chirpModuleContainer.overlay {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #00000051;
+  z-index: 11;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
+.overlay .close {
+  position: absolute;
+}
+
+.overlay .chirpModule {
+  background-color: #fff;
+  padding-top: 15px;
+  width: 600px;
+}

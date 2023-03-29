@@ -20,10 +20,16 @@
 
 .accountInfo .name {
   font-weight: 700;
+  width: fit-content;
+}
+
+.accountInfo .name:hover {
+  text-decoration: underline;
 }
 
 .accountInfo .at {
   color: var(--light-black);
+  width: fit-content;
 }
 
 .follow {

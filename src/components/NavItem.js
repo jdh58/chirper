@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import ChirpModule from './ChirpModule';
 
 export default function NavItem({ name, emptyIcon, fillIcon }) {
   let location = useLocation();

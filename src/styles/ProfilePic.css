@@ -3,6 +3,8 @@
   justify-self: center;
   width: fit-content;
   height: fit-content;
+  display: flex;
+  align-items: center;
 }
 
 .imageOverlay {
@@ -11,7 +13,7 @@
 
 .profilePicContainer:hover > .imageOverlay {
   background-color: rgba(0, 0, 0, 0.157);
-  border-radius: 100px;
+  border-radius: 1000px;
   position: absolute;
   z-index: 2;
   top: 0;

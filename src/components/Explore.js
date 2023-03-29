@@ -3,6 +3,7 @@ import '../styles/page.css';
 import Search from './Search.js';
 import RightBar from './RightBar';
 import TrendingTab from './TrendingTab';
+import AccountsTab from './AccountsTab';
 import { useState } from 'react';
 
 export default function Explore() {
@@ -55,6 +56,7 @@ export default function Explore() {
           <div className={`indicator ${currentTab}`}></div>
         </header>
         {currentTab === 'trending' ? <TrendingTab /> : null}
+        {currentTab === 'popularAccounts' ? <AccountsTab /> : null}
       </div>
       <RightBar noSearch="true" />
     </>
