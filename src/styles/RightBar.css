@@ -42,3 +42,21 @@
   display: flex;
   flex-direction: column;
 }
+
+.copyright {
+  font-size: 1.3rem;
+  color: var(--light-black);
+  display: flex;
+  column-gap: 10px;
+  row-gap: 5px;
+  padding: 0 15px;
+  flex-wrap: wrap;
+}
+
+.forcewrap {
+  width: 100%;
+}
+
+.copyright a:hover {
+  text-decoration: underline;
+}
