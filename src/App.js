@@ -9,6 +9,7 @@ import Nav from './components/Nav';
 import ChirpModule from './components/ChirpModule';
 import Chirp from './components/Chirp';
 import { useState } from 'react';
+import Profile from './components/Profile';
 
 function App() {
   const [overlay, setOverlay] = useState(false);
@@ -35,7 +36,7 @@ function App() {
         <Route path="/explore" element={<Explore />}></Route>
         <Route path="/notifications" element={<Notifications />}></Route>
         <Route path="/bookmarks" element={<Bookmarks />}></Route>
-        <Route path="/profile/:id"></Route>
+        <Route path="/profile/:id?" element={<Profile />}></Route>
       </Routes>
     </BrowserRouter>
   );
