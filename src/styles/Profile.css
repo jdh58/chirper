@@ -1,2 +1,132 @@
 .profilePage {
 }
+
+.profilePage header {
+  padding: 0 10px;
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  height: 55px;
+}
+
+.profilePage header .info {
+  height: 100%;
+  padding: 7px 0;
+  margin-left: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+header .backContainer {
+  border-radius: 1000px;
+  transition: 0.2s;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+header .backContainer:hover {
+  cursor: pointer;
+  background-color: var(--light-grey);
+}
+
+.profilePage header .name {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.profilePage header .chirps {
+  font-size: 1.3rem;
+  color: var(--light-black);
+}
+
+.profilePage header img {
+  width: 22px;
+}
+
+.profilePage .banner {
+  background-color: #989898;
+  height: 150px;
+}
+
+.profilePage .profileInfo .profilePicContainer {
+  width: 130px;
+  height: 130px;
+  transform: translateY(-60px);
+  margin-bottom: -60px;
+  background-color: #fff;
+  border-radius: 1000px;
+}
+
+.profilePage .profileInfo .profilePicContainer > img {
+  width: 125px;
+  height: 125px;
+}
+
+.profilePage .profileInfo .profilePicContainer:hover {
+  cursor: pointer;
+}
+
+.profileInfo {
+  padding: 0 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 12.5px;
+}
+
+.profileInfo .accountNames {
+  display: flex;
+  flex-direction: column;
+  gap: 7.5px;
+  margin-bottom: 2.5px;
+}
+
+.profileInfo .name {
+  font-size: 2rem;
+  font-weight: 800;
+}
+
+.at {
+  color: var(--light-black);
+  font-size: 1.55rem;
+}
+
+.bio {
+  font-size: 1.55rem;
+  line-height: 1.25;
+}
+
+.joinDate {
+  display: flex;
+  align-items: center;
+  font-size: 1.55rem;
+  color: var(--light-black);
+  gap: 5px;
+}
+
+.joinDate img {
+  width: 20px;
+  filter: invert(39%) sepia(0%) saturate(3%) hue-rotate(216deg) brightness(95%)
+    contrast(78%);
+}
+
+.followStats {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  font-size: 1.4rem;
+  color: var(--light-black);
+}
+
+.followStats .number {
+  font-weight: 600;
+  color: black;
+}
+
+.tabs {
+  display: flex;
+  height: 52.5px;
+}
