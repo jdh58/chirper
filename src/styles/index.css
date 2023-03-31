@@ -183,7 +183,6 @@ table {
   --light-black: rgb(101, 101, 101);
   --light-grey: rgb(231, 231, 231);
 }
-
 body {
   display: flex;
   justify-content: center;
