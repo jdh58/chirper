@@ -2,6 +2,7 @@ import { useState } from 'react';
 import '../styles/Home.css';
 import '../styles/page.css';
 import Nav from './Nav';
+import Tab from './Tab';
 import RightBar from './RightBar';
 import ChirpModule from './ChirpModule';
 import Chirp from './Chirp';
@@ -17,29 +18,19 @@ export default function Home({ overlay }) {
     <>
       <div className="homePage page">
         <header>
-          <h1 className="title">Home</h1>
-          <div
-            className="foryou subheader"
-            onClick={setTab}
-            style={
-              currentTab === 'foryou'
-                ? { opacity: '1', fontWeight: 700 }
-                : { opacity: '70%', fontWeight: 600 }
-            }
-          >
-            <h2>For you</h2>
-          </div>
-          <div
-            className="following subheader"
-            onClick={setTab}
-            style={
-              currentTab === 'following'
-                ? { opacity: '1', fontWeight: 700 }
-                : { opacity: '70%', fontWeight: 600 }
-            }
-          >
-            <h2>Following</h2>
-          </div>
+          <h1 className="title">Home</h1>'
+          <Tab
+            currentTab={currentTab}
+            setTab={setTab}
+            tabName={'For You'}
+            className={'foryou'}
+          />
+          <Tab
+            currentTab={currentTab}
+            setTab={setTab}
+            tabName={'Following'}
+            className={'following'}
+          />
           <div className={`indicator ${currentTab}`}></div>
         </header>
         <ChirpModule />

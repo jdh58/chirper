@@ -3,12 +3,19 @@ import Back from '../assets/back.svg';
 import Calendar from '../assets/calendar.svg';
 import Chirp from './Chirp';
 import ProfilePic from './ProfilePic';
+import Tab from './Tab';
 import '../styles/page.css';
 import '../styles/Profile.css';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 export default function Profile() {
   const navigate = useNavigate();
+  const [currentTab, setCurrentTab] = useState('chirps');
+
+  const setTab = (e) => {
+    setCurrentTab(e.currentTarget.classList[0]);
+  };
 
   return (
     <>
@@ -54,19 +61,31 @@ export default function Profile() {
           </div>
         </div>
         <div className="tabs">
-          <div className="chirps subheader">
-            <h2>Chirps</h2>
-          </div>
-          <div className="replies subheader">
-            <h2>Replies</h2>
-          </div>
-          <div className="media subheader">
-            <h2>Media</h2>
-          </div>
-          <div className="likes subheader">
-            <h2>Likes</h2>
-          </div>
-          <div className={`indicator`}></div>
+          <Tab
+            currentTab={currentTab}
+            setTab={setTab}
+            tabName={'Chirps'}
+            className={'chirps'}
+          />
+          <Tab
+            currentTab={currentTab}
+            setTab={setTab}
+            tabName={'Replies'}
+            className={'replies'}
+          />
+          <Tab
+            currentTab={currentTab}
+            setTab={setTab}
+            tabName={'Media'}
+            className={'media'}
+          />
+          <Tab
+            currentTab={currentTab}
+            setTab={setTab}
+            tabName={'Likes'}
+            className={'likes'}
+          />
+          <div className={`indicator ${currentTab}`}></div>
         </div>
         <Chirp />
         <Chirp />

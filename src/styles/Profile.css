@@ -132,3 +132,16 @@ header .backContainer:hover {
   height: 52.5px;
   border-bottom: 1px solid var(--light-grey);
 }
+
+.profilePage .indicator.chirps {
+  left: 53px;
+}
+.profilePage .indicator.replies {
+  left: 202.5px;
+}
+.profilePage .indicator.media {
+  left: 352px;
+}
+.profilePage .indicator.likes {
+  left: 501.5px;
+}

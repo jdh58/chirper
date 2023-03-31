@@ -4,12 +4,11 @@ import Search from './Search.js';
 import RightBar from './RightBar';
 import TrendingTab from './TrendingTab';
 import AccountsTab from './AccountsTab';
+import Tab from './Tab';
 import { useState } from 'react';
 
 export default function Explore() {
   const [currentTab, setCurrentTab] = useState('trending');
-
-  // TODO: Make the tabs their own component. Will do later.
 
   const setTab = (e) => {
     setCurrentTab(e.currentTarget.classList[0]);
@@ -20,39 +19,24 @@ export default function Explore() {
       <div className="explorePage page">
         <header>
           <Search />
-          <div
-            className="trending subheader"
-            onClick={setTab}
-            style={
-              currentTab === 'trending'
-                ? { opacity: '1', fontWeight: 700 }
-                : { opacity: '70%', fontWeight: 600 }
-            }
-          >
-            <h2>Trending</h2>
-          </div>
-          <div
-            className="sports subheader"
-            onClick={setTab}
-            style={
-              currentTab === 'sports'
-                ? { opacity: '1', fontWeight: 700 }
-                : { opacity: '70%', fontWeight: 600 }
-            }
-          >
-            <h2>Sports</h2>
-          </div>
-          <div
-            className="popularAccounts subheader"
-            onClick={setTab}
-            style={
-              currentTab === 'popularAccounts'
-                ? { opacity: '1', fontWeight: 700 }
-                : { opacity: '70%', fontWeight: 600 }
-            }
-          >
-            <h2>Popular Accounts</h2>
-          </div>
+          <Tab
+            currentTab={currentTab}
+            setTab={setTab}
+            tabName={'Trending'}
+            className={'trending'}
+          />
+          <Tab
+            currentTab={currentTab}
+            setTab={setTab}
+            tabName={'Sports'}
+            className={'sports'}
+          />
+          <Tab
+            currentTab={currentTab}
+            setTab={setTab}
+            tabName={'Popular Accounts'}
+            className={'popularAccounts'}
+          />
           <div className={`indicator ${currentTab}`}></div>
         </header>
         {currentTab === 'trending' ? <TrendingTab /> : null}
