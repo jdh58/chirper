@@ -24,7 +24,6 @@
   font-family: 'Chirp', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
     Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   width: 100%;
-  max-height: 200px;
   height: 54px;
   font-size: 2rem;
   margin-left: 18px;
@@ -87,10 +86,10 @@
 .chirpModuleContainer.overlay {
   position: fixed;
   display: flex;
-  align-items: center;
+  align-items: start;
   justify-content: center;
-  background-color: #00000051;
-  z-index: 11;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 3;
   top: 0;
   left: 0;
   width: 100vw;
@@ -99,10 +98,29 @@
 
 .overlay .close {
   position: absolute;
+  width: 34px;
+  padding: 6px;
+  top: 10px;
+  left: 10px;
+  border-radius: 1000px;
+  transition: 0.2s;
+}
+
+.overlay .close:hover {
+  cursor: pointer;
+  background-color: var(--light-grey);
 }
 
 .overlay .chirpModule {
+  position: relative;
+  margin-top: 50px;
   background-color: #fff;
-  padding-top: 15px;
+  padding-top: 60px;
+  border-radius: 15px;
   width: 600px;
+}
+
+.overlay .chirpWriting #chirpInput {
+  height: 150px;
+  border-bottom: 1px solid var(--light-grey);
 }

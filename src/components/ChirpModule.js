@@ -16,15 +16,15 @@ export default function ChirpModule({ overlay, killModule }) {
   const autoGrow = (e) => {
     const element = e.target;
 
-    console.log(element.scrollHeight);
     element.style.height = '54px';
-    console.log(element.scrollHeight);
     element.style.height = `${element.scrollHeight}px`;
   };
 
   const handleChirpChange = (event) => {
-    // Make sure the box size changes dynamically
-    autoGrow(event);
+    // Make sure the box size changes dynamically if it's not an overlay
+    if (!overlay) {
+      autoGrow(event);
+    }
 
     // Disable the button if there's no text, otherwise enable it.
     if (event.target.value.length === 0) {
@@ -47,17 +47,16 @@ export default function ChirpModule({ overlay, killModule }) {
         overlay ? 'chirpModuleContainer overlay' : 'chirpModuleContainer'
       }
     >
-      {overlay ? (
-        <img src={Close} alt="" className="close" onClick={killModule} />
-      ) : null}
-
       <div className="chirpModule">
+        {overlay ? (
+          <img src={Close} alt="" className="close" onClick={killModule} />
+        ) : null}
         <div className="chirpWriting">
           <img src={Pic} alt="" className="profilePic" />
           <textarea
             name="chirpInput"
             id="chirpInput"
-            placeholder="What's Happening?"
+            placeholder="What's happening?"
             onChange={handleChirpChange}
             maxLength="280"
           />
