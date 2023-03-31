@@ -11,7 +11,7 @@
 
 .profilePage header .info {
   height: 100%;
-  padding: 7px 0;
+  padding: 6px 0;
   margin-left: 10px;
   display: flex;
   flex-direction: column;
@@ -39,7 +39,7 @@ header .backContainer:hover {
 }
 
 .profilePage header .chirps {
-  font-size: 1.3rem;
+  font-size: 1.4rem;
   color: var(--light-black);
 }
 
@@ -75,7 +75,7 @@ header .backContainer:hover {
   display: flex;
   flex-direction: column;
   gap: 13px;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
 }
 
 .profileInfo .accountNames {
@@ -83,6 +83,7 @@ header .backContainer:hover {
   flex-direction: column;
   gap: 7px;
   margin-bottom: 2.5px;
+  margin-top: 5px;
 }
 
 .profileInfo .name {
@@ -92,7 +93,7 @@ header .backContainer:hover {
 
 .at {
   color: var(--light-black);
-  font-size: 1.5rem;
+  font-size: 1.55rem;
 }
 
 .bio {
@@ -118,7 +119,7 @@ header .backContainer:hover {
   display: flex;
   align-items: center;
   gap: 15px;
-  font-size: 1.4rem;
+  font-size: 1.5rem;
   color: var(--light-black);
 }
 
@@ -128,20 +129,21 @@ header .backContainer:hover {
 }
 
 .tabs {
+  position: relative;
   display: flex;
   height: 52.5px;
   border-bottom: 1px solid var(--light-grey);
 }
 
 .profilePage .indicator.chirps {
-  left: 53px;
+  left: 47.5px;
 }
 .profilePage .indicator.replies {
-  left: 202.5px;
+  left: 197px;
 }
 .profilePage .indicator.media {
-  left: 352px;
+  left: 346.5px;
 }
 .profilePage .indicator.likes {
-  left: 501.5px;
+  left: 495.5px;
 }
