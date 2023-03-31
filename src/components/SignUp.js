@@ -5,7 +5,7 @@ import Apple from '../assets/apple-original.svg';
 import Close from '../assets/close.svg';
 import { useState } from 'react';
 
-export default function SignUp() {
+export default function SignUp({ killModule, toSignIn }) {
   const [userInput, setUserInput] = useState('');
 
   const checkUserInput = (e) => {
@@ -21,7 +21,7 @@ export default function SignUp() {
   return (
     <div className="signInOverlay">
       <div className="signInPopUp">
-        <img src={Close} alt="" className="close" />
+        <img src={Close} alt="" className="close" onClick={killModule} />
         <img src={Logo} alt="" className="logo" />
         <h1 className="title">Join Chirper Today</h1>
         <div className="otherSignIn">
@@ -41,7 +41,10 @@ export default function SignUp() {
           <button className="next">Create account</button>
         </div>
         <h2>
-          Already have an account? <span className="signUpButton">Log In</span>
+          Already have an account?{' '}
+          <span className="signUpButton" onClick={toSignIn}>
+            Log In
+          </span>
         </h2>
       </div>
     </div>

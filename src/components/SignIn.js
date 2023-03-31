@@ -6,7 +6,7 @@ import Close from '../assets/close.svg';
 import { useState } from 'react';
 import { app } from '../firebase-config';
 
-export default function SignIn() {
+export default function SignIn({ killModule, toSignUp }) {
   const [userInput, setUserInput] = useState('');
 
   const checkUserInput = (e) => {
@@ -22,7 +22,7 @@ export default function SignIn() {
   return (
     <div className="signInOverlay">
       <div className="signInPopUp">
-        <img src={Close} alt="" className="close" />
+        <img src={Close} alt="" className="close" onClick={killModule} />
         <img src={Logo} alt="" className="logo" />
         <h1 className="title">Sign in to Chirper</h1>
         <div className="otherSignIn">
@@ -51,7 +51,10 @@ export default function SignIn() {
         </div>
 
         <h2>
-          Don't have an account? <span className="signUpButton">Sign Up</span>
+          Don't have an account?{' '}
+          <span className="signUpButton" onClick={toSignUp}>
+            Sign Up
+          </span>
         </h2>
       </div>
     </div>

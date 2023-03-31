@@ -41,12 +41,18 @@ function App() {
           killModule={() => {
             setOverlay(false);
           }}
+          toSignUp={() => {
+            setOverlay('signUp');
+          }}
         />
       ) : null}
       {overlay === 'signUp' ? (
         <SignUp
           killModule={() => {
             setOverlay(false);
+          }}
+          toSignIn={() => {
+            setOverlay('signIn');
           }}
         />
       ) : null}
