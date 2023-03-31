@@ -10,17 +10,21 @@ import ChirpModule from './components/ChirpModule';
 import SignUp from './components/SignUp';
 import SignInBanner from './components/SignInBanner';
 import Chirp from './components/Chirp';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Profile from './components/Profile';
 import { app } from './firebase-config';
 
 function App() {
+  const [signedIn, setSignedIn] = useState(false);
   const [overlay, setOverlay] = useState(false);
 
-  const chirpOverlay = () => {
-    setOverlay('chirp');
-    document.querySelector('body').style = 'overflow: hidden;';
-  };
+  useEffect(() => {
+    if (!!overlay) {
+      document.querySelector('body').style = 'overflow: hidden;';
+    } else {
+      document.querySelector('body').style = 'overflow: auto;';
+    }
+  }, [overlay]);
 
   return (
     <BrowserRouter>
@@ -29,13 +33,40 @@ function App() {
           overlay={true}
           killModule={() => {
             setOverlay(false);
-            document.querySelector('body').style = 'overflow: auto;';
+          }}
+        />
+      ) : null}
+      {overlay === 'signIn' ? (
+        <SignIn
+          killModule={() => {
+            setOverlay(false);
+          }}
+        />
+      ) : null}
+      {overlay === 'signUp' ? (
+        <SignUp
+          killModule={() => {
+            setOverlay(false);
           }}
         />
       ) : null}
 
-      <SignInBanner />
-      <Nav chirpOverlay={chirpOverlay} />
+      {!signedIn ? (
+        <SignInBanner
+          onSignIn={() => {
+            setOverlay('signIn');
+          }}
+          onSignUp={() => {
+            setOverlay('signUp');
+          }}
+        />
+      ) : null}
+
+      <Nav
+        chirpOverlay={() => {
+          setOverlay('chirp');
+        }}
+      />
       <Routes>
         <Route path="/" element={<Home />}></Route>
         <Route path="/signin" element={<SignIn />}></Route>
