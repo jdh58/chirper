@@ -33,7 +33,7 @@ export default function RightBar({ noSearch }) {
       </div>
 
       <div className="copyright">
-        <a href="jonathanhawes.dev">My Website</a>
+        <a href="https://jonathanhawes.dev">My Website</a>
         <a href="https://github.com/jdh58">GitHub</a>
         <div className="forcewrap"></div>
         <p>© 2023 Nobody, Inc.</p>

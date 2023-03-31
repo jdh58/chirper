@@ -6,7 +6,7 @@
   display: flex;
   gap: 15px;
   align-items: center;
-  height: 55px;
+  height: 52.5px;
 }
 
 .profilePage header .info {
@@ -49,21 +49,21 @@ header .backContainer:hover {
 
 .profilePage .banner {
   background-color: #989898;
-  height: 150px;
+  height: 200px;
 }
 
 .profilePage .profileInfo .profilePicContainer {
-  width: 130px;
-  height: 130px;
-  transform: translateY(-60px);
-  margin-bottom: -60px;
+  width: 140px;
+  height: 140px;
+  transform: translateY(-75px);
+  margin-bottom: -75px;
   background-color: #fff;
   border-radius: 1000px;
 }
 
 .profilePage .profileInfo .profilePicContainer > img {
-  width: 125px;
-  height: 125px;
+  width: 132.5px;
+  height: 132.5px;
 }
 
 .profilePage .profileInfo .profilePicContainer:hover {
@@ -74,13 +74,14 @@ header .backContainer:hover {
   padding: 0 15px;
   display: flex;
   flex-direction: column;
-  gap: 12.5px;
+  gap: 13px;
+  margin-bottom: 16px;
 }
 
 .profileInfo .accountNames {
   display: flex;
   flex-direction: column;
-  gap: 7.5px;
+  gap: 7px;
   margin-bottom: 2.5px;
 }
 
@@ -91,18 +92,18 @@ header .backContainer:hover {
 
 .at {
   color: var(--light-black);
-  font-size: 1.55rem;
+  font-size: 1.5rem;
 }
 
 .bio {
-  font-size: 1.55rem;
+  font-size: 1.525rem;
   line-height: 1.25;
 }
 
 .joinDate {
   display: flex;
   align-items: center;
-  font-size: 1.55rem;
+  font-size: 1.5rem;
   color: var(--light-black);
   gap: 5px;
 }
@@ -129,4 +130,5 @@ header .backContainer:hover {
 .tabs {
   display: flex;
   height: 52.5px;
+  border-bottom: 1px solid var(--light-grey);
 }

@@ -5,13 +5,21 @@ import Chirp from './Chirp';
 import ProfilePic from './ProfilePic';
 import '../styles/page.css';
 import '../styles/Profile.css';
+import { useNavigate } from 'react-router-dom';
 
 export default function Profile() {
+  const navigate = useNavigate();
+
   return (
     <>
       <div className="profilePage page">
         <header>
-          <div className="backContainer">
+          <div
+            className="backContainer"
+            onClick={() => {
+              navigate(-1);
+            }}
+          >
             <img src={Back} alt="" className="backButton" />
           </div>
           <div className="info">
