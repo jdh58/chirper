@@ -11,12 +11,20 @@ import Bookmarks from '../assets/bookmark.svg';
 import BookmarksFill from '../assets/bookmark_fill.svg';
 import Profile from '../assets/profile.svg';
 import ProfileFill from '../assets/profile_fill.svg';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import NavItem from './NavItem';
 import NavChirpButton from './NavChirpButton';
 import '../styles/Nav.css';
 
 export default function Nav(props) {
+  let location = useLocation();
+  location = location.pathname;
+
+  if (location === '/signin' || location === '/signup') {
+    // We don't want nav to render on the sign in page.
+    return;
+  }
+
   return (
     <nav className="navBar">
       <img src={Logo} alt="" className="logo" />

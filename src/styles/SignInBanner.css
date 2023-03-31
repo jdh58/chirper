@@ -1,0 +1,9 @@
+.signInBanner {
+  position: fixed;
+  z-index: 2;
+  height: 100px;
+  width: 100vw;
+  background-color: var(--blue);
+  bottom: 0;
+  left: 0;
+}

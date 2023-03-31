@@ -4,8 +4,8 @@ import ChirpModule from './ChirpModule';
 
 export default function NavItem({ name, emptyIcon, fillIcon }) {
   let location = useLocation();
-  let empty = emptyIcon;
-  let fill = fillIcon;
+  const empty = emptyIcon;
+  const fill = fillIcon;
   location = location.pathname;
 
   let to = `/${name.toLowerCase()}`;

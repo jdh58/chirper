@@ -7,6 +7,10 @@
   margin-top: 7.5px;
 }
 
+.chirpModule img {
+  width: fit-content;
+}
+
 .chirpModule .chirpWriting {
   display: flex;
   grid-row: 1 / 2;

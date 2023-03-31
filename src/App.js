@@ -7,9 +7,12 @@ import Explore from './components/Explore';
 import Home from './components/Home';
 import Nav from './components/Nav';
 import ChirpModule from './components/ChirpModule';
+import SignUp from './components/SignUp';
+import SignInBanner from './components/SignInBanner';
 import Chirp from './components/Chirp';
 import { useState } from 'react';
 import Profile from './components/Profile';
+import { app } from './firebase-config';
 
 function App() {
   const [overlay, setOverlay] = useState(false);
@@ -30,9 +33,13 @@ function App() {
           }}
         />
       ) : null}
+
+      <SignInBanner />
       <Nav chirpOverlay={chirpOverlay} />
       <Routes>
         <Route path="/" element={<Home />}></Route>
+        <Route path="/signin" element={<SignIn />}></Route>
+        <Route path="/signup" element={<SignUp />}></Route>
         <Route path="/explore" element={<Explore />}></Route>
         <Route path="/notifications" element={<Notifications />}></Route>
         <Route path="/bookmarks" element={<Bookmarks />}></Route>
