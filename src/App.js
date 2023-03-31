@@ -10,6 +10,7 @@ import ChirpModule from './components/ChirpModule';
 import SignUp from './components/SignUp';
 import SignInBanner from './components/SignInBanner';
 import Chirp from './components/Chirp';
+import FinishSignUp from './components/FinishSignUp';
 import { useEffect, useState } from 'react';
 import Profile from './components/Profile';
 import { app } from './firebase-config';
@@ -47,7 +48,7 @@ function App() {
         />
       ) : null}
       {overlay === 'signUp' ? (
-        <SignUp
+        <FinishSignUp
           killModule={() => {
             setOverlay(false);
           }}

@@ -187,3 +187,44 @@
 .signInPopUp h2 {
   align-self: end;
 }
+
+.finish {
+  height: 400px;
+}
+
+.finish form {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  height: fit-content;
+  width: 100%;
+}
+
+.finish .namePlaceholder {
+  top: 158.5px;
+}
+.finish .userPlaceholder {
+  position: absolute;
+  color: rgb(101, 101, 101);
+  left: 157.5px;
+  font-size: 1.75rem;
+  top: 238px;
+}
+
+.finish #username {
+  padding: 0;
+  padding-left: 25px;
+}
+
+.finish #username:focus + .userPlaceholder {
+  color: var(--blue);
+}
+
+.finish #name:focus + .namePlaceholder {
+  top: 150px;
+  color: var(--blue);
+}
+
+.finish #name + .namePlaceholder.active {
+  top: 150px;
+}
