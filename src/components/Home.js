@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import '../styles/Home.css';
 import '../styles/page.css';
-import Nav from './Nav';
 import Tab from './Tab';
 import RightBar from './RightBar';
 import ChirpModule from './ChirpModule';

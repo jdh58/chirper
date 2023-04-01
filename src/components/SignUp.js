@@ -4,9 +4,24 @@ import Google from '../assets/google-original.svg';
 import Apple from '../assets/apple-original.svg';
 import Close from '../assets/close.svg';
 import { useState } from 'react';
+import { app } from '../firebase-config';
+import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 
-export default function SignUp({ killModule, toSignIn }) {
+export default function SignUp({ killModule, toSignIn, finalize }) {
   const [userInput, setUserInput] = useState('');
+
+  const handleGoogle = async () => {
+    try {
+      const google = new GoogleAuthProvider();
+      await signInWithPopup(getAuth(app), google);
+      console.log(getAuth(app));
+      if (!!getAuth(app).currentUser) {
+        finalize();
+      }
+    } catch {
+      console.error('Sign up Failed');
+    }
+  };
 
   const checkUserInput = (e) => {
     const inputVal = e.target.value;
@@ -25,7 +40,7 @@ export default function SignUp({ killModule, toSignIn }) {
         <img src={Logo} alt="" className="logo" />
         <h1 className="title">Join Chirper Today</h1>
         <div className="otherSignIn">
-          <button className="signInButton google">
+          <button className="signInButton google" onClick={handleGoogle}>
             <img src={Google} alt="" />
             <p>Sign up with Google</p>
           </button>

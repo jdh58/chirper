@@ -14,10 +14,21 @@ import FinishSignUp from './components/FinishSignUp';
 import { useEffect, useState } from 'react';
 import Profile from './components/Profile';
 import { app } from './firebase-config';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 function App() {
-  const [signedIn, setSignedIn] = useState(false);
+  const [signedIn, setSignedIn] = useState(true);
   const [overlay, setOverlay] = useState(false);
+
+  useEffect(() => {
+    onAuthStateChanged(getAuth(app), (user) => {
+      if (user) {
+        setSignedIn(true);
+        return;
+      }
+      setSignedIn(false);
+    });
+  }, []);
 
   useEffect(() => {
     if (!!overlay) {
@@ -48,15 +59,19 @@ function App() {
         />
       ) : null}
       {overlay === 'signUp' ? (
-        <FinishSignUp
+        <SignUp
           killModule={() => {
             setOverlay(false);
           }}
           toSignIn={() => {
             setOverlay('signIn');
           }}
+          finalize={() => {
+            setOverlay('finalize');
+          }}
         />
       ) : null}
+      {overlay === 'finalize' ? <FinishSignUp /> : null}
 
       {!signedIn ? (
         <SignInBanner
@@ -73,6 +88,7 @@ function App() {
         chirpOverlay={() => {
           setOverlay('chirp');
         }}
+        signedIn={signedIn}
       />
       <Routes>
         <Route path="/" element={<Home />}></Route>
