@@ -6,37 +6,19 @@ import Close from '../assets/close.svg';
 import { useState } from 'react';
 import { app } from '../firebase-config';
 import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-import {
-  collection,
-  getDocs,
-  getFirestore,
-  query,
-  where,
-} from 'firebase/firestore';
+import existCheck from '../existCheck.js';
 
 export default function SignUp({ killModule, toSignIn, finalize }) {
   const [userInput, setUserInput] = useState('');
-
-  const existCheck = async (id) => {
-    const accountQuery = query(
-      collection(getFirestore(app), 'accounts'),
-      where('id', '==', `${id}`)
-    );
-
-    const info = await getDocs(accountQuery);
-    console.log(info.docs);
-
-    return Promise.resolve(info.docs);
-  };
 
   const handleGoogle = async () => {
     try {
       const google = new GoogleAuthProvider();
       await signInWithPopup(getAuth(app), google);
-      const existingAccounts = await existCheck(getAuth(app).currentUser.uid);
+      const existingAccount = await existCheck(getAuth(app).currentUser.uid);
       console.log(getAuth(app));
 
-      if (!!getAuth(app).currentUser && existingAccounts.length < 1) {
+      if (!!getAuth(app).currentUser && existingAccount.length === 0) {
         finalize();
       } else {
         killModule();

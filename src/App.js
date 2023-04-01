@@ -14,21 +14,37 @@ import FinishSignUp from './components/FinishSignUp';
 import { useEffect, useState } from 'react';
 import Profile from './components/Profile';
 import { app } from './firebase-config';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
+import existCheck from './existCheck';
 
 function App() {
   const [signedIn, setSignedIn] = useState(true);
   const [overlay, setOverlay] = useState(false);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
-    onAuthStateChanged(getAuth(app), (user) => {
+    onAuthStateChanged(getAuth(app), async (user) => {
       if (user) {
         setSignedIn(true);
+        setUser(user);
         return;
       }
       setSignedIn(false);
+      setUser(null);
     });
   }, []);
+
+  useEffect(() => {
+    // Check if the account hasnt been created on Chirper, and force overlay
+    if (!!user) {
+      (async function () {
+        const existingAccount = await existCheck(user.uid);
+        if (existingAccount.length === 0) {
+          setOverlay('finalize');
+        }
+      })();
+    }
+  }, [user]);
 
   useEffect(() => {
     if (!!overlay) {

@@ -18,6 +18,7 @@ import '../styles/Nav.css';
 import { app } from '../firebase-config';
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 import { useEffect, useState } from 'react';
+import existCheck from '../existCheck';
 
 export default function Nav({ chirpOverlay }) {
   const [user, setUser] = useState(null);
@@ -28,7 +29,7 @@ export default function Nav({ chirpOverlay }) {
     onAuthStateChanged(getAuth(app), (user) => {
       setUser(user);
     });
-  });
+  }, []);
 
   if (location === '/signin' || location === '/signup') {
     // We don't want nav to render on the sign in page.
