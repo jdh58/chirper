@@ -71,7 +71,13 @@ function App() {
           }}
         />
       ) : null}
-      {overlay === 'finalize' ? <FinishSignUp /> : null}
+      {overlay === 'finalize' ? (
+        <FinishSignUp
+          killModule={() => {
+            setOverlay(false);
+          }}
+        />
+      ) : null}
 
       {!signedIn ? (
         <SignInBanner
