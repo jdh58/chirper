@@ -1,6 +1,6 @@
 .signInBanner {
   position: fixed;
-  z-index: 2;
+  z-index: 3;
   height: 73px;
   width: 100vw;
   background-color: var(--blue);

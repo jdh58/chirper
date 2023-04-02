@@ -12,6 +12,7 @@ import { useState } from 'react';
 
 export default function ChirpModule({ overlay, killModule }) {
   const [characters, setCharacters] = useState(0);
+  const [disabled, setDisabled] = useState(true);
 
   const autoGrow = (e) => {
     const element = e.target;
@@ -28,13 +29,9 @@ export default function ChirpModule({ overlay, killModule }) {
 
     // Disable the button if there's no text, otherwise enable it.
     if (event.target.value.length === 0) {
-      document
-        .querySelector('.chirpModule .chirpButton')
-        .setAttribute('disabled', '');
+      setDisabled(true);
     } else {
-      document
-        .querySelector('.chirpModule .chirpButton')
-        .removeAttribute('disabled');
+      setDisabled(false);
     }
 
     // Update character count
@@ -88,7 +85,7 @@ export default function ChirpModule({ overlay, killModule }) {
           >
             {characters > 0 ? `${characters}/280` : null}
           </p>
-          <ChirpButton disabled="disabled" />
+          <ChirpButton disabled={disabled} />
         </div>
       </div>
     </div>
