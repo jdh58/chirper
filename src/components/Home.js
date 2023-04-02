@@ -32,7 +32,7 @@ export default function Home({ overlay }) {
           />
           <div className={`indicator ${currentTab}`}></div>
         </header>
-        <ChirpModule />
+        <ChirpModule isReply={false} />
         <Chirp />
         <Chirp />
         <Chirp />

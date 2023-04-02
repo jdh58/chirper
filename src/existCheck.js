@@ -7,10 +7,10 @@ import {
 } from 'firebase/firestore';
 import { app } from './firebase-config';
 
-export default async function existCheck(id) {
+export default async function existCheck(userId) {
   const accountQuery = query(
     collection(getFirestore(app), 'accounts'),
-    where('id', '==', `${id}`)
+    where('userId', '==', `${userId}`)
   );
 
   const info = await getDocs(accountQuery);

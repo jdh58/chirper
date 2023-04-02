@@ -33,7 +33,6 @@ export default function FinishSignUp({}) {
   };
 
   const signUp = async (e) => {
-    e.preventDefault();
     try {
       const name = document.querySelector('.finish #name').value;
       const username = document.querySelector('.finish #username').value;
@@ -42,7 +41,7 @@ export default function FinishSignUp({}) {
         name,
         username,
         pic,
-        id: `${getAuth(app).currentUser.uid}`,
+        userId: `${getAuth(app).currentUser.uid}`,
       });
     } catch {
       console.error('Could not add user to database');

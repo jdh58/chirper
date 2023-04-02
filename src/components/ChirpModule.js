@@ -10,7 +10,7 @@ import Close from '../assets/close.svg';
 import '../styles/ChirpModule.css';
 import { useState } from 'react';
 
-export default function ChirpModule({ overlay, killModule }) {
+export default function ChirpModule({ overlay, killModule, isReply }) {
   const [characters, setCharacters] = useState(0);
   const [disabled, setDisabled] = useState(true);
 
@@ -53,7 +53,7 @@ export default function ChirpModule({ overlay, killModule }) {
           <textarea
             name="chirpInput"
             id="chirpInput"
-            placeholder="What's happening?"
+            placeholder={isReply ? 'Chirp your reply' : "What's happening?"}
             onChange={handleChirpChange}
             maxLength="280"
           />

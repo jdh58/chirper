@@ -62,6 +62,7 @@ function App() {
           killModule={() => {
             setOverlay(false);
           }}
+          isReply={false}
         />
       ) : null}
       {overlay === 'signIn' ? (
