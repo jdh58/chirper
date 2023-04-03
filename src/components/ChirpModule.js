@@ -70,6 +70,7 @@ export default function ChirpModule({ overlay, killModule, isReply }) {
         <div className="toolbar">
           <div className="icons">
             <span className="iconContainer">
+              <input type="file" name="imageInput" id="imageInput" />
               <img src={ImageIcon} alt="" className="icon" />
             </span>
             <span className="iconContainer">
