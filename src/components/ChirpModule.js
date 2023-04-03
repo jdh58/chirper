@@ -9,33 +9,42 @@ import Pin from '../assets/map-pin.svg';
 import Close from '../assets/close.svg';
 import '../styles/ChirpModule.css';
 import { useState } from 'react';
+import { getAuth } from 'firebase/auth';
+import { app } from '../firebase-config';
 
 export default function ChirpModule({ overlay, killModule, isReply }) {
   const [characters, setCharacters] = useState(0);
   const [disabled, setDisabled] = useState(true);
 
-  const autoGrow = (e) => {
-    const element = e.target;
+  // We don't want non-users chirping
+  if (!getAuth(app).currentUser) {
+    return null;
+  }
 
-    element.style.height = '54px';
-    element.style.height = `${element.scrollHeight}px`;
+  const autoGrow = (textBox) => {
+    textBox.style.height = '54px';
+    textBox.style.height = `${textBox.scrollHeight}px`;
   };
 
-  const handleChirpChange = (event) => {
+  const handleChirpChange = (textBox) => {
+    if (!textBox.nodeName) {
+      textBox = textBox.target;
+    }
+
     // Make sure the box size changes dynamically if it's not an overlay
     if (!overlay) {
-      autoGrow(event);
+      autoGrow(textBox);
     }
 
     // Disable the button if there's no text, otherwise enable it.
-    if (event.target.value.length === 0) {
+    if (textBox.value.length === 0) {
       setDisabled(true);
     } else {
       setDisabled(false);
     }
 
     // Update character count
-    setCharacters(event.target.value.length);
+    setCharacters(textBox.value.length);
   };
 
   return (
@@ -85,7 +94,11 @@ export default function ChirpModule({ overlay, killModule, isReply }) {
           >
             {characters > 0 ? `${characters}/280` : null}
           </p>
-          <ChirpButton disabled={disabled} />
+          <ChirpButton
+            disabled={disabled}
+            isReply={isReply}
+            handleChirpChange={handleChirpChange}
+          />
         </div>
       </div>
     </div>

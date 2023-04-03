@@ -14,7 +14,6 @@ export default async function existCheck(userId) {
   );
 
   const info = await getDocs(accountQuery);
-  console.log(info.docs);
 
   return info.docs;
 }

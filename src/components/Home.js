@@ -17,7 +17,7 @@ export default function Home({ overlay }) {
     <>
       <div className="homePage page">
         <header>
-          <h1 className="title">Home</h1>'
+          <h1 className="title">Home</h1>
           <Tab
             currentTab={currentTab}
             setTab={setTab}
