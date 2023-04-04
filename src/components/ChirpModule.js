@@ -50,12 +50,21 @@ export default function ChirpModule({ overlay, killModule, isReply }) {
   };
 
   const handleImageAdded = (e) => {
+    console.log('triggered');
     const file = URL.createObjectURL(e.target.files[0]);
 
     if (e) {
       setUploadedImage(
         <div className="uploadedImage">
-          <img src={file} alt="" />
+          <div
+            className="closeContainer"
+            onClick={() => {
+              setUploadedImage(null);
+            }}
+          >
+            <img src={Close} alt="" className="close" />
+          </div>
+          <img src={file} alt="" className="thePic" />
         </div>
       );
     }
@@ -89,7 +98,7 @@ export default function ChirpModule({ overlay, killModule, isReply }) {
                 type="file"
                 name="imageInput"
                 id="imageInput"
-                onChange={handleImageAdded}
+                onInput={handleImageAdded}
               />
               <img src={ImageIcon} alt="" className="icon" />
             </span>

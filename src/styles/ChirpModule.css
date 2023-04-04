@@ -13,26 +13,46 @@
   grid-template-columns: 70px 1fr;
   grid-row: 1 / 2;
   grid-column: 1 / -1;
-  border-bottom: 1px solid var(--light-grey);
 }
 
 .uploadedImage {
+  position: relative;
   grid-row: -2 / -1;
   grid-column: -2 / -1;
   height: fit-content;
   max-height: 1000px;
   width: fit-content;
   max-width: 100%;
-  border: 1px solid black;
   align-self: center;
-  border-radius: 10px;
-  margin-bottom: 16px;
   margin-top: 8px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--light-grey);
 }
 
-.uploadedImage > img {
+.uploadedImage > .closeContainer {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  border-radius: 1000px;
+  background-color: #272727ef;
+  display: flex;
+}
+
+.uploadedImage > .closeContainer:hover {
+  cursor: pointer;
+}
+
+.uploadedImage > .closeContainer > .close {
+  filter: invert(100%);
+  width: 32px;
+  padding: 6px;
+}
+
+.uploadedImage > .thePic {
   height: 100%;
   width: 100%;
+  border-radius: 10px;
+  border: 1px solid black;
 }
 
 .chirpWriting .profilePic {
@@ -111,11 +131,14 @@
   align-items: start;
   justify-content: center;
   background-color: rgba(0, 0, 0, 0.4);
-  z-index: 3;
+  z-index: 11;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
+  overflow: scroll;
+  padding-top: 50px;
+  padding-bottom: 50px;
 }
 
 .overlay .close {
@@ -135,15 +158,14 @@
 
 .overlay .chirpModule {
   position: relative;
-  margin-top: 50px;
   background-color: #fff;
   padding-top: 60px;
   border-radius: 15px;
   width: 600px;
 }
 
-.overlay .chirpWriting #chirpInput {
-  height: 150px;
+.overlay .chirpWriting {
+  min-height: 150px;
   border-bottom: 1px solid var(--light-grey);
 }
 
