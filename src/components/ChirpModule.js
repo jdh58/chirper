@@ -134,6 +134,10 @@ export default function ChirpModule({
             isReply={isReply}
             handleChirpChange={handleChirpChange}
             displayToast={displayToast}
+            killUploadedImage={() => {
+              setUploadedImage(null);
+            }}
+            uploadedImage={uploadedImage}
           />
         </div>
       </div>

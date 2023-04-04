@@ -16,6 +16,8 @@ export default function ChirpButton({
   isReply,
   handleChirpChange,
   displayToast,
+  uploadedImage,
+  killUploadedImage,
 }) {
   // We don't want non-users chirping
   if (!getAuth(app).currentUser) {
@@ -27,13 +29,15 @@ export default function ChirpButton({
     const chirpModule = e.target.parentElement.parentElement;
     const textBox = chirpModule.querySelector('#chirpInput');
     const text = textBox.value;
-    const attatchment = null;
+    const imageInput = chirpModule.querySelector('#imageInput');
+    const image = uploadedImage;
     const accountId = getAuth(app).currentUser.uid;
     let chirpId = null;
 
-    /* Clear box once value is saved, and let the module know to update.
-    This also disables the button so the user can't double Chirp. */
-    chirpModule.querySelector('#chirpInput').value = '';
+    /* Clear box + image once value is saved, and let the module know to 
+    update. This also disables the button so the user can't double Chirp. */
+    textBox.value = '';
+    killUploadedImage();
     handleChirpChange(textBox);
 
     // Generate a random number from 1 to 100 trillion and check if the id already exists.
@@ -52,15 +56,18 @@ export default function ChirpButton({
       }
     }
 
+    // If there was an image, store it
+
+    // Log the chirp to the database
     await addDoc(collection(getFirestore(app), 'chirps'), {
       accountId,
       chirpId,
       text,
-      attatchment,
+      image,
       isReply,
     });
 
-    // Here we should add a popup to let the user know a chirp was sent
+    // Display a notification to let the user know a chirp was sent
     displayToast('Your Chirp was sent.');
   };
 
