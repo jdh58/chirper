@@ -20,16 +20,19 @@ export default function FinishSignUp({}) {
 
   const signUp = async (e) => {
     e.preventDefault();
+    e.target.disabled = true;
     try {
       const name = document.querySelector('.finish #name').value;
       const username = document.querySelector('.finish #username').value;
-      const pic = Math.ceil(Math.random() * 7);
+      const picNum = Math.ceil(Math.random() * 7);
       await addDoc(collection(getFirestore(app), 'accounts'), {
         name,
         username,
-        picPath: `defaultPics/default${pic}`,
+        picPath: `defaultPics/default${picNum}`,
         userId: `${getAuth(app).currentUser.uid}`,
       });
+      // Refresh
+      document.location.reload();
     } catch (error) {
       console.error('Could not add new user to database' + error);
     }
