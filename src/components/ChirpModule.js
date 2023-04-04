@@ -11,10 +11,12 @@ import '../styles/ChirpModule.css';
 import { useState } from 'react';
 import { getAuth } from 'firebase/auth';
 import { app } from '../firebase-config';
+import { upload } from '@testing-library/user-event/dist/upload';
 
 export default function ChirpModule({ overlay, killModule, isReply }) {
   const [characters, setCharacters] = useState(0);
   const [disabled, setDisabled] = useState(true);
+  const [uploadedImage, setUploadedImage] = useState(null);
 
   // We don't want non-users chirping
   if (!getAuth(app).currentUser) {
@@ -47,6 +49,18 @@ export default function ChirpModule({ overlay, killModule, isReply }) {
     setCharacters(textBox.value.length);
   };
 
+  const handleImageAdded = (e) => {
+    const file = URL.createObjectURL(e.target.files[0]);
+
+    if (e) {
+      setUploadedImage(
+        <div className="uploadedImage">
+          <img src={file} alt="" />
+        </div>
+      );
+    }
+  };
+
   return (
     <div
       className={
@@ -66,11 +80,17 @@ export default function ChirpModule({ overlay, killModule, isReply }) {
             onChange={handleChirpChange}
             maxLength="280"
           />
+          {uploadedImage}
         </div>
         <div className="toolbar">
           <div className="icons">
             <span className="iconContainer">
-              <input type="file" name="imageInput" id="imageInput" />
+              <input
+                type="file"
+                name="imageInput"
+                id="imageInput"
+                onChange={handleImageAdded}
+              />
               <img src={ImageIcon} alt="" className="icon" />
             </span>
             <span className="iconContainer">
