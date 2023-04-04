@@ -8,7 +8,7 @@ import Clock from '../assets/clock.svg';
 import Pin from '../assets/map-pin.svg';
 import Close from '../assets/close.svg';
 import '../styles/ChirpModule.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { getAuth } from 'firebase/auth';
 import { app } from '../firebase-config';
 import { upload } from '@testing-library/user-event/dist/upload';
@@ -20,6 +20,12 @@ import {
   query,
   where,
 } from 'firebase/firestore';
+import {
+  getDownloadURL,
+  getStorage,
+  ref,
+  uploadBytesResumable,
+} from 'firebase/storage';
 
 export default function ChirpModule({
   overlay,
@@ -30,6 +36,30 @@ export default function ChirpModule({
   const [characters, setCharacters] = useState(0);
   const [disabled, setDisabled] = useState(true);
   const [uploadedImage, setUploadedImage] = useState(null);
+  const [imageDisplay, setImageDisplay] = useState(null);
+
+  useEffect(() => {
+    if (!uploadedImage) {
+      setImageDisplay(null);
+      return;
+    }
+
+    const fileURL = URL.createObjectURL(uploadedImage);
+
+    setImageDisplay(
+      <div className="uploadedImage">
+        <div
+          className="closeContainer"
+          onClick={() => {
+            setUploadedImage(null);
+          }}
+        >
+          <img src={Close} alt="" className="close" />
+        </div>
+        <img src={fileURL} alt="" className="thePic" />
+      </div>
+    );
+  }, [uploadedImage]);
 
   // We don't want non-users chirping
   if (!getAuth(app).currentUser) {
@@ -64,7 +94,6 @@ export default function ChirpModule({
 
   const handleImageAdded = (e) => {
     const file = e.target.files[0];
-    const fileURL = URL.createObjectURL(file);
 
     if (!/image\/*/.test(file.type)) {
       console.error('Incorrect file type. Images only.');
@@ -78,21 +107,7 @@ export default function ChirpModule({
       return;
     }
 
-    if (e) {
-      setUploadedImage(
-        <div className="uploadedImage">
-          <div
-            className="closeContainer"
-            onClick={() => {
-              setUploadedImage(null);
-            }}
-          >
-            <img src={Close} alt="" className="close" />
-          </div>
-          <img src={fileURL} alt="" className="thePic" />
-        </div>
-      );
-    }
+    setUploadedImage(file);
   };
 
   const handleSendChirp = async (e) => {
@@ -100,8 +115,7 @@ export default function ChirpModule({
     const chirpModule = e.target.parentElement.parentElement;
     const textBox = chirpModule.querySelector('#chirpInput');
     const text = textBox.value;
-    const imageInput = chirpModule.querySelector('#imageInput');
-    const image = uploadedImage;
+    const image = URL.createObjectURL(uploadedImage);
     const accountId = getAuth(app).currentUser.uid;
     let chirpId = null;
 
@@ -127,14 +141,27 @@ export default function ChirpModule({
       }
     }
 
-    // If there was an image, store it
+    // If there was an image, store it. Otherwise, set to null
+    let imageURL = null;
+    let storageURL = null;
+    if (image) {
+      const imagePath = `${accountId}/${chirpId}`;
+      const newImageRef = ref(getStorage(app), imagePath);
+      const fileSnapshot = await uploadBytesResumable(
+        newImageRef,
+        uploadedImage
+      );
+      imageURL = await getDownloadURL(newImageRef);
+      storageURL = fileSnapshot.metadata.fullPath;
+    }
 
     // Log the chirp to the database
     await addDoc(collection(getFirestore(app), 'chirps'), {
       accountId,
       chirpId,
       text,
-      image,
+      imageURL,
+      storageURL,
       isReply,
     });
 
@@ -161,7 +188,7 @@ export default function ChirpModule({
             onChange={handleChirpChange}
             maxLength="280"
           />
-          {uploadedImage}
+          {imageDisplay}
         </div>
         <div className="toolbar">
           <div className="icons">

@@ -16,10 +16,17 @@ import Profile from './components/Profile';
 import { app } from './firebase-config';
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 import existCheck from './existCheck';
+import UserContext from './UserContext';
 import ToastNotification from './components/ToastNotification';
+import {
+  collection,
+  getDocs,
+  getFirestore,
+  query,
+  where,
+} from 'firebase/firestore';
 
 function App() {
-  const [signedIn, setSignedIn] = useState(true);
   const [overlay, setOverlay] = useState(false);
   const [user, setUser] = useState(null);
   const [toast, setToast] = useState(null);
@@ -27,11 +34,9 @@ function App() {
   useEffect(() => {
     onAuthStateChanged(getAuth(app), async (user) => {
       if (user) {
-        setSignedIn(true);
         setUser(user);
         return;
       }
-      setSignedIn(false);
       setUser(null);
     });
   }, []);
@@ -67,74 +72,78 @@ function App() {
 
   return (
     <BrowserRouter>
-      {toast}
-      {overlay === 'chirp' ? (
-        <ChirpModule
-          overlay={true}
-          killModule={() => {
-            setOverlay(false);
-          }}
-          isReply={false}
-          displayToast={displayToast}
-        />
-      ) : null}
-      {overlay === 'signIn' ? (
-        <SignIn
-          killModule={() => {
-            setOverlay(false);
-          }}
-          toSignUp={() => {
-            setOverlay('signUp');
-          }}
-        />
-      ) : null}
-      {overlay === 'signUp' ? (
-        <SignUp
-          killModule={() => {
-            setOverlay(false);
-          }}
-          toSignIn={() => {
-            setOverlay('signIn');
-          }}
-          finalize={() => {
-            setOverlay('finalize');
-          }}
-        />
-      ) : null}
-      {overlay === 'finalize' ? (
-        <FinishSignUp
-          killModule={() => {
-            setOverlay(false);
-          }}
-        />
-      ) : null}
+      <UserContext.Provider value={user}>
+        {toast}
+        {overlay === 'chirp' ? (
+          <ChirpModule
+            overlay={true}
+            killModule={() => {
+              setOverlay(false);
+            }}
+            isReply={false}
+            displayToast={displayToast}
+          />
+        ) : null}
+        {overlay === 'signIn' ? (
+          <SignIn
+            killModule={() => {
+              setOverlay(false);
+            }}
+            toSignUp={() => {
+              setOverlay('signUp');
+            }}
+          />
+        ) : null}
+        {overlay === 'signUp' ? (
+          <SignUp
+            killModule={() => {
+              setOverlay(false);
+            }}
+            toSignIn={() => {
+              setOverlay('signIn');
+            }}
+            finalize={() => {
+              setOverlay('finalize');
+            }}
+          />
+        ) : null}
+        {overlay === 'finalize' ? (
+          <FinishSignUp
+            killModule={() => {
+              setOverlay(false);
+            }}
+          />
+        ) : null}
 
-      {!signedIn ? (
-        <SignInBanner
-          onSignIn={() => {
-            setOverlay('signIn');
-          }}
-          onSignUp={() => {
-            setOverlay('signUp');
+        {!user ? (
+          <SignInBanner
+            onSignIn={() => {
+              setOverlay('signIn');
+            }}
+            onSignUp={() => {
+              setOverlay('signUp');
+            }}
+          />
+        ) : null}
+
+        <Nav
+          chirpOverlay={() => {
+            setOverlay('chirp');
           }}
         />
-      ) : null}
-
-      <Nav
-        chirpOverlay={() => {
-          setOverlay('chirp');
-        }}
-        signedIn={signedIn}
-      />
-      <Routes>
-        <Route path="/" element={<Home displayToast={displayToast} />}></Route>
-        <Route path="/signin" element={<SignIn />}></Route>
-        <Route path="/signup" element={<SignUp />}></Route>
-        <Route path="/explore" element={<Explore />}></Route>
-        <Route path="/notifications" element={<Notifications />}></Route>
-        <Route path="/bookmarks" element={<Bookmarks />}></Route>
-        <Route path="/profile/:id?" element={<Profile />}></Route>
-      </Routes>
+        <Routes>
+          <Route
+            path="/"
+            element={<Home displayToast={displayToast} />}
+          ></Route>
+          <Route path="/signin" element={<SignIn />}></Route>
+          <Route path="/signup" element={<SignUp />}></Route>
+          <Route path="/explore" element={<Explore />}></Route>
+          <Route path="/notifications" element={<Notifications />}></Route>
+          <Route path="/bookmarks" element={<Bookmarks />}></Route>
+          <Route path="/profile/:id?" element={<Profile />}></Route>
+        </Routes>
+      </UserContext.Provider>
     </BrowserRouter>
   );
 }

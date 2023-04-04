@@ -4,23 +4,9 @@ import { useEffect, useState } from 'react';
 import { app } from '../firebase-config';
 import { addDoc, collection, getFirestore } from 'firebase/firestore';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import default1 from '../assets/defaultPics/default1.png';
-import default2 from '../assets/defaultPics/default2.png';
-import default3 from '../assets/defaultPics/default3.png';
-import default4 from '../assets/defaultPics/default4.png';
-import default5 from '../assets/defaultPics/default5.png';
-import default6 from '../assets/defaultPics/default6.png';
-import default7 from '../assets/defaultPics/default7.png';
 
 export default function FinishSignUp({}) {
   const [userInput, setUserInput] = useState('');
-  const defaultPics = [];
-
-  useEffect(() => {
-    defaultPics.push(
-      ...[default1, default2, default3, default4, default5, default6, default7]
-    );
-  }, []);
 
   const checkUserInput = (e) => {
     const inputVal = e.target.value;
@@ -33,18 +19,19 @@ export default function FinishSignUp({}) {
   };
 
   const signUp = async (e) => {
+    e.preventDefault();
     try {
       const name = document.querySelector('.finish #name').value;
       const username = document.querySelector('.finish #username').value;
-      const pic = defaultPics[Math.floor(Math.random() * 7)];
+      const pic = Math.ceil(Math.random() * 7);
       await addDoc(collection(getFirestore(app), 'accounts'), {
         name,
         username,
-        pic,
+        picPath: `defaultPics/default${pic}`,
         userId: `${getAuth(app).currentUser.uid}`,
       });
-    } catch {
-      console.error('Could not add user to database');
+    } catch (error) {
+      console.error('Could not add new user to database' + error);
     }
   };
 

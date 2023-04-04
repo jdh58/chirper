@@ -1,9 +1,12 @@
+import { getAuth } from 'firebase/auth';
 import { useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { app } from '../firebase-config';
 import ChirpModule from './ChirpModule';
 
 export default function NavItem({ name, emptyIcon, fillIcon }) {
   let location = useLocation();
+  const user = getAuth(app).currentUser;
   const empty = emptyIcon;
   const fill = fillIcon;
   location = location.pathname;
@@ -13,6 +16,11 @@ export default function NavItem({ name, emptyIcon, fillIcon }) {
   // Handle case for default '/' path
   if (name === 'Home') {
     to = '/';
+  }
+
+  // Handle case for profile path
+  if (name === 'Profile') {
+    to = `/profile/${user.uid}`;
   }
 
   return (

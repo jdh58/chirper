@@ -9,9 +9,11 @@ import '../styles/Profile.css';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
-export default function Profile() {
+export default function Profile({ match }) {
   const navigate = useNavigate();
   const [currentTab, setCurrentTab] = useState('chirps');
+
+  console.log(match);
 
   const setTab = (e) => {
     setCurrentTab(e.currentTarget.classList[0]);

@@ -17,19 +17,14 @@ import NavChirpButton from './NavChirpButton';
 import '../styles/Nav.css';
 import { app } from '../firebase-config';
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
-import { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import UserContext from '../UserContext';
 import existCheck from '../existCheck';
 
 export default function Nav({ chirpOverlay }) {
-  const [user, setUser] = useState(null);
+  const user = useContext(UserContext);
   let location = useLocation();
   location = location.pathname;
-
-  useEffect(() => {
-    onAuthStateChanged(getAuth(app), (user) => {
-      setUser(user);
-    });
-  }, []);
 
   if (location === '/signin' || location === '/signup') {
     // We don't want nav to render on the sign in page.
@@ -41,19 +36,27 @@ export default function Nav({ chirpOverlay }) {
       <img src={Logo} alt="" className="logo" />
       <NavItem name="Home" emptyIcon={Home} fillIcon={HomeFill} />
       <NavItem name="Explore" emptyIcon={Tag} fillIcon={TagFill} />
-      <NavItem
-        name="Notifications"
-        emptyIcon={Notifications}
-        fillIcon={NotificationsFill}
-      />
-      <NavItem name="Messages" emptyIcon={Messages} fillIcon={MessagesFill} />
-      <NavItem
-        name="Bookmarks"
-        emptyIcon={Bookmarks}
-        fillIcon={BookmarksFill}
-      />
-      <NavItem name="Profile" emptyIcon={Profile} fillIcon={ProfileFill} />
-      <NavChirpButton chirpOverlay={chirpOverlay} />
+      {!!user ? (
+        <>
+          <NavItem
+            name="Notifications"
+            emptyIcon={Notifications}
+            fillIcon={NotificationsFill}
+          />
+          <NavItem
+            name="Messages"
+            emptyIcon={Messages}
+            fillIcon={MessagesFill}
+          />
+          <NavItem
+            name="Bookmarks"
+            emptyIcon={Bookmarks}
+            fillIcon={BookmarksFill}
+          />
+          <NavItem name="Profile" emptyIcon={Profile} fillIcon={ProfileFill} />
+          <NavChirpButton chirpOverlay={chirpOverlay} />
+        </>
+      ) : null}
 
       {user ? (
         <button
