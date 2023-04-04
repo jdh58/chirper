@@ -18,6 +18,7 @@ import {
   getDocs,
   getFirestore,
   query,
+  updateDoc,
   where,
 } from 'firebase/firestore';
 import {
@@ -111,62 +112,87 @@ export default function ChirpModule({
   };
 
   const handleSendChirp = async (e) => {
-    // We go up from the button to ensure we grab the corresponding input
-    const chirpModule = e.target.parentElement.parentElement;
-    const textBox = chirpModule.querySelector('#chirpInput');
-    const text = textBox.value;
-    const image = URL.createObjectURL(uploadedImage);
-    const accountId = getAuth(app).currentUser.uid;
-    let chirpId = null;
+    try {
+      // We go up from the button to ensure we grab the corresponding input
+      const chirpModule = e.target.parentElement.parentElement;
+      const textBox = chirpModule.querySelector('#chirpInput');
+      const text = textBox.value;
+      const image = uploadedImage;
+      const accountId = getAuth(app).currentUser.uid;
+      let chirpId = null;
 
-    /* Clear box + image once value is saved, and let the module know to 
-    update. This also disables the button so the user can't double Chirp. */
-    textBox.value = '';
-    setUploadedImage(null);
-    handleChirpChange(textBox);
+      /* Clear box + image once value is saved, and let the module know to 
+      update. This also disables the button so the user can't double Chirp. */
+      textBox.value = '';
+      setUploadedImage(null);
+      handleChirpChange(textBox);
 
-    // Generate a random number from 1 to 100 trillion and check if the id already exists.
-    let repeat = true;
-    while (repeat === true) {
-      chirpId = Math.floor(Math.random() * 100000000000000);
-      const existing = await getDocs(
-        query(
-          collection(getFirestore(app), 'chirps'),
-          where('chirpId', '==', `${chirpId}`)
-        )
-      ).docs;
+      // Generate a random number from 1 to 100 trillion and check if the id already exists.
+      let repeat = true;
+      while (repeat === true) {
+        chirpId = Math.floor(Math.random() * 100000000000000);
+        const existing = await getDocs(
+          query(
+            collection(getFirestore(app), 'chirps'),
+            where('chirpId', '==', `${chirpId}`)
+          )
+        ).docs;
 
-      if (!existing) {
-        repeat = false;
+        if (!existing) {
+          repeat = false;
+        }
       }
-    }
 
-    // If there was an image, store it. Otherwise, set to null
-    let imageURL = null;
-    let storageURL = null;
-    if (image) {
-      const imagePath = `${accountId}/${chirpId}`;
-      const newImageRef = ref(getStorage(app), imagePath);
-      const fileSnapshot = await uploadBytesResumable(
-        newImageRef,
-        uploadedImage
+      // If there was an image, store it. Otherwise, set to null
+      let imageURL = null;
+      let storageURL = null;
+      if (image) {
+        const imagePath = `${accountId}/${chirpId}`;
+        const newImageRef = ref(getStorage(app), imagePath);
+        const fileSnapshot = await uploadBytesResumable(
+          newImageRef,
+          uploadedImage
+        );
+        imageURL = await getDownloadURL(newImageRef);
+        storageURL = fileSnapshot.metadata.fullPath;
+      }
+
+      // Log the chirp to the database
+      await addDoc(collection(getFirestore(app), 'chirps'), {
+        accountId,
+        chirpId,
+        text,
+        imageURL,
+        storageURL,
+        isReply,
+        replies: 0,
+        reChirps: 0,
+        likes: 0,
+      });
+
+      // Now we need to update the account's chirp count.
+      let accountDoc = await getDocs(
+        query(
+          collection(getFirestore(app), 'accounts'),
+          where('userId', '==', `${accountId}`)
+        )
       );
-      imageURL = await getDownloadURL(newImageRef);
-      storageURL = fileSnapshot.metadata.fullPath;
+
+      accountDoc = accountDoc.docs[0];
+      const accountChirps = accountDoc.data().chirps + 1;
+      const accountRef = accountDoc.ref;
+
+      await updateDoc(accountRef, {
+        chirps: accountChirps,
+      });
+
+      // Done. Whew.
+
+      // Display a notification to let the user know a chirp was sent
+      displayToast('Your Chirp was sent.');
+    } catch (error) {
+      console.error(error);
     }
-
-    // Log the chirp to the database
-    await addDoc(collection(getFirestore(app), 'chirps'), {
-      accountId,
-      chirpId,
-      text,
-      imageURL,
-      storageURL,
-      isReply,
-    });
-
-    // Display a notification to let the user know a chirp was sent
-    displayToast('Your Chirp was sent.');
   };
 
   return (

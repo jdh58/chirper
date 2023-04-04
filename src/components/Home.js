@@ -33,14 +33,6 @@ export default function Home({ overlay, displayToast }) {
           <div className={`indicator ${currentTab}`}></div>
         </header>
         <ChirpModule isReply={false} displayToast={displayToast} />
-        <Chirp />
-        <Chirp />
-        <Chirp />
-        <Chirp />
-        <Chirp />
-        <Chirp />
-        <Chirp />
-        <Chirp />
       </div>
       <RightBar />
     </>

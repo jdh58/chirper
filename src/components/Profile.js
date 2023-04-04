@@ -9,10 +9,19 @@ import '../styles/Profile.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import existCheck from '../existCheck';
+import {
+  collection,
+  getDocs,
+  getFirestore,
+  query,
+  where,
+} from 'firebase/firestore';
+import { app } from '../firebase-config';
 
 export default function Profile() {
   const profileId = useParams().id;
   const navigate = useNavigate();
+  const [profileChirps, setProfileChirps] = useState(null);
   const [currentTab, setCurrentTab] = useState('chirps');
   const [profile, setProfile] = useState({
     name: '',
@@ -32,6 +41,29 @@ export default function Profile() {
       setProfile(profileInfo);
     })();
   }, []);
+
+  useEffect(() => {
+    (async () => {
+      const chirpDocs = await getDocs(
+        query(
+          collection(getFirestore(app), 'chirps'),
+          where('accountId', '==', `${profile.userId}`)
+        )
+      );
+
+      const chirps = chirpDocs.docs;
+
+      const chirpList = chirps.map((chirp) => {
+        const chirpData = chirp.data();
+
+        console.log(chirpData);
+
+        return <Chirp chirpData={chirpData} profile={profile} />;
+      });
+
+      setProfileChirps(chirpList);
+    })();
+  }, [profile]);
 
   console.log(profileId);
 
@@ -53,7 +85,7 @@ export default function Profile() {
           </div>
           <div className="info">
             <p className="name">{profile.name}</p>
-            <p className="chirps">598 Chirps</p>
+            <p className="chirps">{profile.chirps} Chirps</p>
           </div>
         </header>
         <div className="banner">
@@ -65,17 +97,17 @@ export default function Profile() {
             <h1 className="name">{profile.name}</h1>
             <h2 className="at">@{profile.username}</h2>
           </div>
-          <p className="bio">{}</p>
+          <p className="bio">{profile.bio}</p>
           <div className="joinDate">
             <img src={Calendar} alt="" />
-            <p>Joined February 2019</p>
+            <p>Joined {profile.joinDate}</p>
           </div>
           <div className="followStats">
             <p className="following">
-              <span className="number">0</span> Following
+              <span className="number">{profile.following}</span> Following
             </p>
             <p className="followers">
-              <span className="number">153</span> Followers
+              <span className="number">{profile.followers}</span> Followers
             </p>
           </div>
         </div>
@@ -106,21 +138,7 @@ export default function Profile() {
           />
           <div className={`indicator ${currentTab}`}></div>
         </div>
-        <Chirp />
-        <Chirp />
-        <Chirp />
-        <Chirp />
-        <Chirp />
-        <Chirp />
-        <Chirp />
-        <Chirp />
-        <Chirp />
-        <Chirp />
-        <Chirp />
-        <Chirp />
-        <Chirp />
-        <Chirp />
-        <Chirp />
+        {profileChirps}
       </div>
       <RightBar />
     </>

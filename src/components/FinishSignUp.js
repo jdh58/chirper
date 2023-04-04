@@ -11,6 +11,7 @@ import {
   where,
 } from 'firebase/firestore';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { format } from 'date-fns';
 
 export default function FinishSignUp({}) {
   const [userInput, setUserInput] = useState('');
@@ -40,6 +41,7 @@ export default function FinishSignUp({}) {
       const username = document.querySelector('.finish #username').value;
       const bio = document.querySelector('.finish #bio').value;
       const picNum = Math.ceil(Math.random() * 7);
+      const joinDate = format(new Date(), 'MMMM yyyy');
 
       const nameDocs = await getDocs(
         query(
@@ -47,44 +49,42 @@ export default function FinishSignUp({}) {
           where('name', '==', `${name}`)
         )
       );
-      const usernameDocs = await query(
-        collection(getFirestore(app), 'accounts'),
-        where('username', '==', `${username}`)
+      const usernameDocs = await getDocs(
+        query(
+          collection(getFirestore(app), 'accounts'),
+          where('username', '==', `${username}`)
+        )
       );
 
-      if (!!nameDocs.docs) {
+      // Will consolidate these into one function later, too lazy right nows
+      if (nameDocs.docs.length > 0) {
         console.error(`Name already exists`);
         const nameInput = document.querySelector(`.finish #name`);
         nameInput.setCustomValidity(`Name already exists`);
         nameInput.reportValidity();
+        nameInput.setCustomValidity('');
+
         // Let user try again
         button.disabled = false;
         return false;
       }
-      if (!!usernameDocs.docs) {
+      if (usernameDocs.docs.length > 0) {
         console.error(`Username already exists`);
         const usernameInput = document.querySelector(`.finish #username`);
         usernameInput.setCustomValidity(`Username already exists`);
         usernameInput.reportValidity();
+        usernameInput.setCustomValidity('');
+
         // Let user try again
         button.disabled = false;
         return false;
       }
-
-      // if (!!usernameDocs.docs) {
-      //   console.error(`Userame already exists`);
-      //   const nameInput = document.querySelector(`.finish #name`);
-      //   nameInput.setCustomValidity(`Name already exists`);
-      //   nameInput.reportValidity();
-      //   // Let user try again
-      //   e.target.disabled = false;
-      //   return false;
-      // }
 
       await addDoc(collection(getFirestore(app), 'accounts'), {
         name,
         username,
         bio,
+        joinDate,
         picPath: `defaultPics/default${picNum}`,
         userId: `${getAuth(app).currentUser.uid}`,
         following: 0,
