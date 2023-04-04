@@ -117,18 +117,6 @@ export default function ChirpModule({ overlay, killModule, isReply }) {
             <span className="iconContainer">
               <img src={GifBox} alt="" className="icon gif" />
             </span>
-            <span className="iconContainer">
-              <img src={Poll} alt="" className="icon" />
-            </span>
-            <span className="iconContainer">
-              <img src={Emoji} alt="" className="icon" />
-            </span>
-            <span className="iconContainer">
-              <img src={Clock} alt="" className="icon" />
-            </span>
-            <span className="iconContainer">
-              <img src={Pin} alt="" className="icon" />
-            </span>
           </div>
           <p
             className="characterCount"
