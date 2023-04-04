@@ -11,16 +11,18 @@ import { useEffect, useState } from 'react';
 import { app } from '../firebase-config';
 import '../styles/ChirpButton.css';
 
-export default function ChirpButton({ disabled, isReply, handleChirpChange }) {
+export default function ChirpButton({
+  disabled,
+  isReply,
+  handleChirpChange,
+  displayToast,
+}) {
   // We don't want non-users chirping
   if (!getAuth(app).currentUser) {
     return null;
   }
 
   const handleSendChirp = async (e) => {
-    // Prevent user from double chirping
-    e.target.disabled = true;
-
     // We go up from the button to ensure we grab the corresponding input
     const chirpModule = e.target.parentElement.parentElement;
     const textBox = chirpModule.querySelector('#chirpInput');
@@ -29,7 +31,8 @@ export default function ChirpButton({ disabled, isReply, handleChirpChange }) {
     const accountId = getAuth(app).currentUser.uid;
     let chirpId = null;
 
-    // Clear box once value is saved, and let the module know to update
+    /* Clear box once value is saved, and let the module know to update.
+    This also disables the button so the user can't double Chirp. */
     chirpModule.querySelector('#chirpInput').value = '';
     handleChirpChange(textBox);
 
@@ -58,9 +61,7 @@ export default function ChirpButton({ disabled, isReply, handleChirpChange }) {
     });
 
     // Here we should add a popup to let the user know a chirp was sent
-
-    // Let user from chirp again
-    e.target.disabled = false;
+    displayToast('Your Chirp was sent.');
   };
 
   return (

@@ -13,7 +13,12 @@ import { getAuth } from 'firebase/auth';
 import { app } from '../firebase-config';
 import { upload } from '@testing-library/user-event/dist/upload';
 
-export default function ChirpModule({ overlay, killModule, isReply }) {
+export default function ChirpModule({
+  overlay,
+  killModule,
+  isReply,
+  displayToast,
+}) {
   const [characters, setCharacters] = useState(0);
   const [disabled, setDisabled] = useState(true);
   const [uploadedImage, setUploadedImage] = useState(null);
@@ -128,6 +133,7 @@ export default function ChirpModule({ overlay, killModule, isReply }) {
             disabled={disabled}
             isReply={isReply}
             handleChirpChange={handleChirpChange}
+            displayToast={displayToast}
           />
         </div>
       </div>

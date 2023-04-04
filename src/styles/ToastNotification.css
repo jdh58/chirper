@@ -1,0 +1,36 @@
+.toastNotification {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  z-index: 2000;
+  background-color: var(--blue);
+  border-radius: 5px;
+  width: fit-content;
+  height: 42.5px;
+  font-size: 1.5rem;
+  bottom: 32.5px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0 25px;
+  animation-name: showToast;
+  animation-duration: 0.4s;
+}
+.toastNotification.disappear {
+  animation-name: hideToast;
+  animation-duration: 0.4s;
+}
+
+@keyframes showToast {
+  0% {
+    bottom: -35px;
+    opacity: 0;
+  }
+}
+@keyframes hideToast {
+  100% {
+    bottom: -35px;
+    opacity: 0;
+  }
+}

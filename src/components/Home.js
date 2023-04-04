@@ -6,7 +6,7 @@ import RightBar from './RightBar';
 import ChirpModule from './ChirpModule';
 import Chirp from './Chirp';
 
-export default function Home({ overlay }) {
+export default function Home({ overlay, displayToast }) {
   const [currentTab, setCurrentTab] = useState('foryou');
 
   const setTab = (e) => {
@@ -32,7 +32,7 @@ export default function Home({ overlay }) {
           />
           <div className={`indicator ${currentTab}`}></div>
         </header>
-        <ChirpModule isReply={false} />
+        <ChirpModule isReply={false} displayToast={displayToast} />
         <Chirp />
         <Chirp />
         <Chirp />

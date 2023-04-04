@@ -16,11 +16,13 @@ import Profile from './components/Profile';
 import { app } from './firebase-config';
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 import existCheck from './existCheck';
+import ToastNotification from './components/ToastNotification';
 
 function App() {
   const [signedIn, setSignedIn] = useState(true);
   const [overlay, setOverlay] = useState(false);
   const [user, setUser] = useState(null);
+  const [toast, setToast] = useState(null);
 
   useEffect(() => {
     onAuthStateChanged(getAuth(app), async (user) => {
@@ -54,8 +56,18 @@ function App() {
     }
   }, [overlay]);
 
+  const displayToast = (message) => {
+    const timeAlive = 3000;
+    setToast(<ToastNotification message={message} timeAlive={timeAlive} />);
+
+    setTimeout(() => {
+      setToast(null);
+    }, timeAlive);
+  };
+
   return (
     <BrowserRouter>
+      {toast}
       {overlay === 'chirp' ? (
         <ChirpModule
           overlay={true}
@@ -63,6 +75,7 @@ function App() {
             setOverlay(false);
           }}
           isReply={false}
+          displayToast={displayToast}
         />
       ) : null}
       {overlay === 'signIn' ? (
@@ -114,7 +127,7 @@ function App() {
         signedIn={signedIn}
       />
       <Routes>
-        <Route path="/" element={<Home />}></Route>
+        <Route path="/" element={<Home displayToast={displayToast} />}></Route>
         <Route path="/signin" element={<SignIn />}></Route>
         <Route path="/signup" element={<SignUp />}></Route>
         <Route path="/explore" element={<Explore />}></Route>
