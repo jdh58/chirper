@@ -6,6 +6,7 @@
   border-bottom: 1px solid var(--light-grey);
   padding-top: 10px;
   transition: 0.2s;
+  white-space: pre;
 }
 
 .chirp:hover {
