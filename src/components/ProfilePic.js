@@ -1,9 +1,7 @@
-import Pic from '../assets/fakepic.jpeg';
-
-export default function ProfilePic() {
+export default function ProfilePic({ picURL }) {
   return (
     <div className="profilePicContainer">
-      <img src={Pic} alt="" />
+      <img src={picURL} alt="" />
       <div className="imageOverlay"></div>
     </div>
   );

@@ -17,6 +17,7 @@ import {
   where,
 } from 'firebase/firestore';
 import { app } from '../firebase-config';
+import { getDownloadURL, getStorage, ref } from 'firebase/storage';
 
 export default function Profile() {
   const profileId = useParams().id;
@@ -38,6 +39,7 @@ export default function Profile() {
         return;
       }
       const profileInfo = profileDocs[0].data();
+
       setProfile(profileInfo);
     })();
   }, []);
@@ -92,7 +94,7 @@ export default function Profile() {
           <img src="" alt="" className="banner" />
         </div>
         <div className="profileInfo">
-          <ProfilePic />
+          <ProfilePic picURL={profile.picURL} />
           <div className="accountNames">
             <h1 className="name">{profile.name}</h1>
             <h2 className="at">@{profile.username}</h2>

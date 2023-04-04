@@ -15,6 +15,8 @@ import {
   where,
 } from 'firebase/firestore';
 import { app } from '../firebase-config';
+import { formatDistanceToNow, parseISO } from 'date-fns';
+import { enUS } from 'date-fns/locale';
 
 export default function Chirp({ chirpData, profile }) {
   const [account, setAccount] = useState({
@@ -33,19 +35,36 @@ export default function Chirp({ chirpData, profile }) {
           where('userId', '==', `${chirpData.accountId}`)
         );
 
-        setAccount(accountDocs.docs[0]);
+        setAccount(accountDocs.docs[0].data());
       })();
     }
   }, []);
 
+  function formatDistanceShort() {
+    const distance = formatDistanceToNow(parseISO(chirpData.postTime), {
+      addSuffix: true,
+    });
+    const [value, unit] = distance.split(' ');
+    switch (unit) {
+      case 'seconds':
+        return 'now';
+      case 'minutes':
+        return `${value}m`;
+      case 'hours':
+        return `${value}h`;
+      default:
+        return `${value}${unit.charAt(0)}`;
+    }
+  }
+
   return (
     <div className="chirp">
-      <ProfilePic />
+      <ProfilePic picURL={account.picURL} />
       <div className="chirpInfo">
         <p className="name">{account.name}</p>
         <p className="at">@{account.username}</p>
         <div className="separator"></div>
-        <p className="time">16m</p>
+        <p className="time">{formatDistanceShort()}</p>
         <div className="settingContainer">
           <img src={More} alt="" />
         </div>

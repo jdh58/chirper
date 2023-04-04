@@ -12,6 +12,7 @@ import {
 } from 'firebase/firestore';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { format } from 'date-fns';
+import { getDownloadURL, getStorage, ref } from 'firebase/storage';
 
 export default function FinishSignUp({}) {
   const [userInput, setUserInput] = useState('');
@@ -80,12 +81,16 @@ export default function FinishSignUp({}) {
         return false;
       }
 
+      const picURL = await getDownloadURL(
+        ref(getStorage(app), `defaultPics/default${picNum}.png`)
+      );
+
       await addDoc(collection(getFirestore(app), 'accounts'), {
         name,
         username,
         bio,
         joinDate,
-        picPath: `defaultPics/default${picNum}`,
+        picURL,
         userId: `${getAuth(app).currentUser.uid}`,
         following: 0,
         followers: 0,

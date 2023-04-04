@@ -27,6 +27,7 @@ import {
   ref,
   uploadBytesResumable,
 } from 'firebase/storage';
+import { format } from 'date-fns';
 
 export default function ChirpModule({
   overlay,
@@ -168,6 +169,7 @@ export default function ChirpModule({
         replies: 0,
         reChirps: 0,
         likes: 0,
+        postTime: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
       });
 
       // Now we need to update the account's chirp count.
