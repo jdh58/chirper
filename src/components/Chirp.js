@@ -11,6 +11,7 @@ import {
   collection,
   getDocs,
   getFirestore,
+  orderBy,
   query,
   where,
 } from 'firebase/firestore';
@@ -46,7 +47,7 @@ export default function Chirp({ chirpData, profile }) {
     });
     const [value, unit] = distance.split(' ');
     switch (unit) {
-      case 'seconds':
+      case 'than':
         return 'now';
       case 'minutes':
         return `${value}m`;

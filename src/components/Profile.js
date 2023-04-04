@@ -13,6 +13,8 @@ import {
   collection,
   getDocs,
   getFirestore,
+  limit,
+  orderBy,
   query,
   where,
 } from 'firebase/firestore';
@@ -49,7 +51,8 @@ export default function Profile() {
       const chirpDocs = await getDocs(
         query(
           collection(getFirestore(app), 'chirps'),
-          where('accountId', '==', `${profile.userId}`)
+          where('accountId', '==', `${profile.userId}`),
+          orderBy('postTime', 'desc')
         )
       );
 
