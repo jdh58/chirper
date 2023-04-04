@@ -12,6 +12,14 @@ import { useState } from 'react';
 import { getAuth } from 'firebase/auth';
 import { app } from '../firebase-config';
 import { upload } from '@testing-library/user-event/dist/upload';
+import {
+  addDoc,
+  collection,
+  getDocs,
+  getFirestore,
+  query,
+  where,
+} from 'firebase/firestore';
 
 export default function ChirpModule({
   overlay,
@@ -87,6 +95,53 @@ export default function ChirpModule({
     }
   };
 
+  const handleSendChirp = async (e) => {
+    // We go up from the button to ensure we grab the corresponding input
+    const chirpModule = e.target.parentElement.parentElement;
+    const textBox = chirpModule.querySelector('#chirpInput');
+    const text = textBox.value;
+    const imageInput = chirpModule.querySelector('#imageInput');
+    const image = uploadedImage;
+    const accountId = getAuth(app).currentUser.uid;
+    let chirpId = null;
+
+    /* Clear box + image once value is saved, and let the module know to 
+    update. This also disables the button so the user can't double Chirp. */
+    textBox.value = '';
+    setUploadedImage(null);
+    handleChirpChange(textBox);
+
+    // Generate a random number from 1 to 100 trillion and check if the id already exists.
+    let repeat = true;
+    while (repeat === true) {
+      chirpId = Math.floor(Math.random() * 100000000000000);
+      const existing = await getDocs(
+        query(
+          collection(getFirestore(app), 'chirps'),
+          where('chirpId', '==', `${chirpId}`)
+        )
+      ).docs;
+
+      if (!existing) {
+        repeat = false;
+      }
+    }
+
+    // If there was an image, store it
+
+    // Log the chirp to the database
+    await addDoc(collection(getFirestore(app), 'chirps'), {
+      accountId,
+      chirpId,
+      text,
+      image,
+      isReply,
+    });
+
+    // Display a notification to let the user know a chirp was sent
+    displayToast('Your Chirp was sent.');
+  };
+
   return (
     <div
       className={
@@ -132,12 +187,7 @@ export default function ChirpModule({
           <ChirpButton
             disabled={disabled}
             isReply={isReply}
-            handleChirpChange={handleChirpChange}
-            displayToast={displayToast}
-            killUploadedImage={() => {
-              setUploadedImage(null);
-            }}
-            uploadedImage={uploadedImage}
+            handleSendChirp={handleSendChirp}
           />
         </div>
       </div>
