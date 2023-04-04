@@ -6,14 +6,34 @@ import ProfilePic from './ProfilePic';
 import Tab from './Tab';
 import '../styles/page.css';
 import '../styles/Profile.css';
-import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import existCheck from '../existCheck';
 
-export default function Profile({ match }) {
+export default function Profile() {
+  const profileId = useParams().id;
   const navigate = useNavigate();
   const [currentTab, setCurrentTab] = useState('chirps');
+  const [profile, setProfile] = useState({
+    name: '',
+    username: '',
+    bio: '',
+    following: '',
+    followers: '',
+  });
 
-  console.log(match);
+  useEffect(() => {
+    (async () => {
+      const profileDocs = await existCheck(profileId);
+      if (!profileDocs) {
+        return;
+      }
+      const profileInfo = profileDocs[0].data();
+      setProfile(profileInfo);
+    })();
+  }, []);
+
+  console.log(profileId);
 
   const setTab = (e) => {
     setCurrentTab(e.currentTarget.classList[0]);
@@ -32,7 +52,7 @@ export default function Profile({ match }) {
             <img src={Back} alt="" className="backButton" />
           </div>
           <div className="info">
-            <p className="name">Terry J. ~ (⚾ 100 WINS) ~ YANKS4LYFE</p>
+            <p className="name">{profile.name}</p>
             <p className="chirps">598 Chirps</p>
           </div>
         </header>
@@ -42,13 +62,10 @@ export default function Profile({ match }) {
         <div className="profileInfo">
           <ProfilePic />
           <div className="accountNames">
-            <h1 className="name">Terry J. ~ (⚾ 100 WINS) ~ YANKS4LYFE</h1>
-            <h2 className="at">@T_J_Enesis</h2>
+            <h1 className="name">{profile.name}</h1>
+            <h2 className="at">@{profile.username}</h2>
           </div>
-          <p className="bio">
-            Yankees 🖤 - Lakers 💛💜 - Cowboys 💙~ "What comes to truth never
-            comes to light." - John F. Kennedy 1961
-          </p>
+          <p className="bio">{}</p>
           <div className="joinDate">
             <img src={Calendar} alt="" />
             <p>Joined February 2019</p>
