@@ -26,33 +26,29 @@
   align-self: center;
   margin-top: 8px;
   padding-bottom: 16px;
-  border-bottom: 1px solid var(--light-grey);
 }
 
-.uploadedImage > .closeContainer {
+.uploadedImage > .closeContainer > img {
   position: absolute;
+  background-color: #dbdbdbef;
   top: 5px;
   left: 5px;
   border-radius: 1000px;
-  background-color: #272727ef;
   display: flex;
+  filter: invert(100%);
+  width: 32px;
+  padding: 6px;
 }
 
 .uploadedImage > .closeContainer:hover {
   cursor: pointer;
 }
 
-.uploadedImage > .closeContainer > .close {
-  filter: invert(100%);
-  width: 32px;
-  padding: 6px;
-}
-
 .uploadedImage > .thePic {
   height: 100%;
   width: 100%;
   border-radius: 10px;
-  border: 1px solid black;
+  box-shadow: 0px 0px 14px rgba(0, 0, 0, 0.05);
 }
 
 .chirpWriting .profilePic {
@@ -151,7 +147,7 @@
   transition: 0.2s;
 }
 
-.overlay .close:hover {
+.overlay > .chirpModule > .close:hover {
   cursor: pointer;
   background-color: var(--light-grey);
 }
@@ -165,16 +161,18 @@
 }
 
 .overlay .chirpWriting {
-  min-height: 150px;
   border-bottom: 1px solid var(--light-grey);
+}
+
+.overlay #chirpInput {
+  min-height: 150px;
+  grid-template-rows: 150px 1fr;
 }
 
 #imageInput {
   position: absolute;
   opacity: 0;
   display: block;
-  background-color: #fff;
-  border: 2px solid black;
   border-radius: 1000px;
   height: 100%;
   width: 100%;
