@@ -1,12 +1,14 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import '../styles/Home.css';
 import '../styles/page.css';
 import Tab from './Tab';
 import RightBar from './RightBar';
 import ChirpModule from './ChirpModule';
 import Chirp from './Chirp';
+import UserContext from '../UserContext';
 
 export default function Home({ overlay, displayToast }) {
+  const user = useContext(UserContext);
   const [currentTab, setCurrentTab] = useState('foryou');
 
   const setTab = (e) => {

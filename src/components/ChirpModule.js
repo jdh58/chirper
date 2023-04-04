@@ -8,7 +8,7 @@ import Clock from '../assets/clock.svg';
 import Pin from '../assets/map-pin.svg';
 import Close from '../assets/close.svg';
 import '../styles/ChirpModule.css';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { getAuth } from 'firebase/auth';
 import { app } from '../firebase-config';
 import { upload } from '@testing-library/user-event/dist/upload';
@@ -28,6 +28,7 @@ import {
   uploadBytesResumable,
 } from 'firebase/storage';
 import { format } from 'date-fns';
+import UserContext from '../UserContext';
 
 export default function ChirpModule({
   overlay,
@@ -35,6 +36,8 @@ export default function ChirpModule({
   isReply,
   displayToast,
 }) {
+  const user = useContext(UserContext);
+
   const [characters, setCharacters] = useState(0);
   const [disabled, setDisabled] = useState(true);
   const [uploadedImage, setUploadedImage] = useState(null);
@@ -208,7 +211,7 @@ export default function ChirpModule({
           <img src={Close} alt="" className="close" onClick={killModule} />
         ) : null}
         <div className="chirpWriting">
-          <img src={Pic} alt="" className="profilePic" />
+          <img src={user ? user.picURL : null} alt="" className="profilePic" />
           <textarea
             name="chirpInput"
             id="chirpInput"

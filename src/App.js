@@ -30,6 +30,7 @@ function App() {
   const [overlay, setOverlay] = useState(false);
   const [user, setUser] = useState(null);
   const [toast, setToast] = useState(null);
+  const [userInfo, setUserInfo] = useState(null);
 
   useEffect(() => {
     onAuthStateChanged(getAuth(app), async (user) => {
@@ -48,6 +49,18 @@ function App() {
         const existingAccount = await existCheck(user.uid);
         if (existingAccount.length === 0) {
           setOverlay('finalize');
+        } else {
+          const accountDoc = await getDocs(
+            query(
+              collection(getFirestore(app), 'accounts'),
+              where('userId', '==', `${user.uid}`)
+            )
+          );
+
+          let account = accountDoc.docs;
+          account = account[0].data();
+
+          setUserInfo(account);
         }
       })();
     }
@@ -72,7 +85,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      <UserContext.Provider value={user}>
+      <UserContext.Provider value={userInfo}>
         {toast}
         {overlay === 'chirp' ? (
           <ChirpModule
