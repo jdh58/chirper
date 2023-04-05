@@ -1,0 +1,55 @@
+.profileIndicator {
+  margin-top: auto;
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.profileIndicator .profilePicContainer {
+  width: 42px;
+}
+
+.profileNames {
+  display: flex;
+  flex-direction: column;
+  width: 150px;
+  text-align: left;
+  gap: 5px;
+}
+
+.profileNames .name {
+  font-weight: 700;
+}
+
+.profileNames .username {
+  color: var(--light-black);
+}
+
+.profileNames .name,
+.profileNames .username {
+  font-size: 1.5rem;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.profileIndicator .signOut {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  border-radius: 1000px;
+  padding: 10px;
+  transition: 0.2s;
+}
+
+.profileIndicator .signOut:hover {
+  cursor: pointer;
+  background-color: var(--light-grey);
+}
+
+.profileIndicator .signOut img {
+  width: 25px;
+}

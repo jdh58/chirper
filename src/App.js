@@ -38,6 +38,7 @@ function App() {
         setUser(user);
         return;
       }
+      setUserInfo(null);
       setUser(null);
     });
   }, []);

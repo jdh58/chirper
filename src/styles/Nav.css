@@ -8,6 +8,7 @@
   position: sticky;
   top: 0;
   align-self: start;
+  height: 100vh;
 }
 
 .navBar .logo {
