@@ -90,7 +90,12 @@ export default function Chirp({ chirpData, profile }) {
           <img src={More} alt="" />
         </div>
       </div>
-      <p className="chirpWords">{chirpData.text}</p>
+      <div className="chirpSubmit">
+        <p className="chirpWords">{chirpData.text}</p>
+        {chirpData.imageURL ? (
+          <img src={chirpData.imageURL} alt="" className="chirpImage" />
+        ) : null}
+      </div>
       <div className="chirpIcons">
         <div className="icon chat">
           <div className="container">
