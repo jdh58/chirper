@@ -16,7 +16,18 @@ import {
   where,
 } from 'firebase/firestore';
 import { app } from '../firebase-config';
-import { formatDistanceToNow, parseISO } from 'date-fns';
+import {
+  format,
+  formatDistanceToNow,
+  formatDistanceToNowStrict,
+  parseISO,
+  subDays,
+  subHours,
+  subMinutes,
+  subMonths,
+  subSeconds,
+  subYears,
+} from 'date-fns';
 import { enUS } from 'date-fns/locale';
 
 export default function Chirp({ chirpData, profile }) {
@@ -42,19 +53,28 @@ export default function Chirp({ chirpData, profile }) {
   }, []);
 
   function formatDistanceShort() {
-    const distance = formatDistanceToNow(parseISO(chirpData.postTime), {
-      addSuffix: true,
+    const distance = formatDistanceToNowStrict(parseISO(chirpData.postTime), {
+      about: false,
     });
     const [value, unit] = distance.split(' ');
     switch (unit) {
-      case 'than':
+      case 'seconds':
+      case 'second':
         return 'now';
       case 'minutes':
+      case 'minute':
         return `${value}m`;
       case 'hours':
+      case 'hour':
         return `${value}h`;
+      case 'days':
+      case 'day':
+        return format(parseISO(chirpData.postTime), 'MMMM d');
+      case 'years':
+      case 'year':
+        return format(parseISO(chirpData.postTime), 'MMMM d, yyyy');
       default:
-        return `${value}${unit.charAt(0)}`;
+        return `${distance}`;
     }
   }
 

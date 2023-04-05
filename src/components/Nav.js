@@ -19,6 +19,7 @@ import { app } from '../firebase-config';
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 import React, { useContext, useEffect, useState } from 'react';
 import UserContext from '../UserContext';
+import ProfileIndicator from './ProfileIndicator';
 import existCheck from '../existCheck';
 
 export default function Nav({ chirpOverlay }) {
@@ -58,16 +59,7 @@ export default function Nav({ chirpOverlay }) {
         </>
       ) : null}
 
-      {user ? (
-        <button
-          className="signOut"
-          onClick={() => {
-            signOut(getAuth(app));
-          }}
-        >
-          Sign Out
-        </button>
-      ) : null}
+      {user ? <ProfileIndicator user={user} /> : null}
     </nav>
   );
 }
