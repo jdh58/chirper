@@ -95,6 +95,8 @@ export default function FinishSignUp({}) {
         following: 0,
         followers: 0,
         chirps: 0,
+        likes: [],
+        bannerURL: '',
       });
       // Refresh
       document.location.reload();

@@ -1,0 +1,16 @@
+.searchPage header {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.indicator.top {
+  left: 47.5px;
+}
+.indicator.latest {
+  left: 196.5px;
+}
+.indicator.people {
+  left: 345.5px;
+}
+.indicator.photos {
+  left: 494.5px;
+}

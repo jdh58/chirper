@@ -25,6 +25,7 @@ import {
   query,
   where,
 } from 'firebase/firestore';
+import SearchPage from './components/SearchPage';
 
 function App() {
   const [overlay, setOverlay] = useState(false);
@@ -152,6 +153,7 @@ function App() {
           ></Route>
           <Route path="/signin" element={<SignIn />}></Route>
           <Route path="/signup" element={<SignUp />}></Route>
+          <Route path="/search/:query" element={<SearchPage />}></Route>
           <Route path="/explore" element={<Explore />}></Route>
           <Route path="/notifications" element={<Notifications />}></Route>
           <Route path="/bookmarks" element={<Bookmarks />}></Route>
