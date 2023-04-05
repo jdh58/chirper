@@ -26,6 +26,7 @@ import {
   where,
 } from 'firebase/firestore';
 import SearchPage from './components/SearchPage';
+import ChirpPage from './components/ChirpPage';
 
 function App() {
   const [overlay, setOverlay] = useState(false);
@@ -153,6 +154,7 @@ function App() {
           ></Route>
           <Route path="/signin" element={<SignIn />}></Route>
           <Route path="/signup" element={<SignUp />}></Route>
+          <Route path="/chirp/:id" element={<ChirpPage />}></Route>
           <Route path="/search/:query" element={<SearchPage />}></Route>
           <Route path="/explore" element={<Explore />}></Route>
           <Route path="/notifications" element={<Notifications />}></Route>

@@ -11,26 +11,15 @@ import {
   collection,
   getDocs,
   getFirestore,
-  orderBy,
   query,
   where,
 } from 'firebase/firestore';
 import { app } from '../firebase-config';
-import {
-  format,
-  formatDistanceToNow,
-  formatDistanceToNowStrict,
-  parseISO,
-  subDays,
-  subHours,
-  subMinutes,
-  subMonths,
-  subSeconds,
-  subYears,
-} from 'date-fns';
-import { enUS } from 'date-fns/locale';
+import { format, formatDistanceToNowStrict, parseISO } from 'date-fns';
+import { useNavigate } from 'react-router-dom';
 
 export default function Chirp({ chirpData, profile }) {
+  const navigate = useNavigate();
   const [account, setAccount] = useState({
     name: null,
     username: null,
@@ -78,8 +67,12 @@ export default function Chirp({ chirpData, profile }) {
     }
   }
 
+  const handleChirpClick = () => {
+    navigate(`/chirp/${chirpData.chirpId}`);
+  };
+
   return (
-    <div className="chirp">
+    <div className="chirp" onClick={handleChirpClick}>
       <ProfilePic picURL={account.picURL} />
       <div className="chirpInfo">
         <p className="name">{account.name}</p>

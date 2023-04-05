@@ -193,8 +193,10 @@ export default function ChirpModule({
 
       // Done. Whew.
 
-      // Display a notification to let the user know a chirp was sent
-      displayToast('Your Chirp was sent.');
+      // Display a notification to let the user know a reply or chirp was sent
+      isReply
+        ? displayToast('Your reply was sent.')
+        : displayToast('Your Chirp was sent.');
     } catch (error) {
       console.error(error);
     }
