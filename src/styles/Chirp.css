@@ -117,7 +117,7 @@
 .chirpIcons .icon:hover .container,
 .chirpInfo .settingContainer:hover {
   cursor: pointer;
-  background-color: #cfedff7e;
+  background-color: var(--blue-hover-white);
 }
 
 .icon.likes .container > img {
@@ -157,6 +157,6 @@
 .chirpIcons .icon.chat:hover .container > img,
 .chirpIcons .icon.share:hover .container > img,
 .chirpInfo .settingContainer:hover > img {
-  filter: invert(56%) sepia(36%) saturate(5072%) hue-rotate(176deg)
-    brightness(100%) contrast(91%);
+  filter: invert(23%) sepia(87%) saturate(3655%) hue-rotate(267deg)
+    brightness(89%) contrast(116%);
 }

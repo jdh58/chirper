@@ -100,18 +100,17 @@
 
 .icon {
   width: 100%;
-  border-radius: 1000px;
 }
 
 .gif.icon {
   width: 22px;
-  filter: invert(51%) sepia(53%) saturate(2515%) hue-rotate(176deg)
-    brightness(99%) contrast(91%);
+  filter: invert(23%) sepia(87%) saturate(3655%) hue-rotate(267deg)
+    brightness(89%) contrast(116%);
 }
 
 .iconContainer:hover {
   cursor: pointer;
-  background-color: #cfedff7e;
+  background-color: var(--blue-hover-white);
 }
 
 .toolbar .characterCount {

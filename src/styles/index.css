@@ -176,10 +176,11 @@ table {
     Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   font-size: 10px;
 
-  --blue: #1da1f2;
-  --blue-hover-pure: hsl(203, 79%, 43%);
-  --blue-hover: rgba(175, 221, 251, 0.118);
-  --blue-hover-border: rgb(196, 221, 235);
+  --blue: hsl(275, 89%, 53%);
+  --blue-hover-pure: hsl(275, 79%, 43%);
+  --blue-hover: hsla(275, 90%, 84%, 0.118);
+  --blue-hover-border: hsl(275, 49%, 85%);
+  --blue-hover-white: hsla(275, 89%, 53%, 0.118);
   --light-black: rgb(101, 101, 101);
   --light-grey: rgb(231, 231, 231);
   --white-hover: rgb(249, 249, 249);
