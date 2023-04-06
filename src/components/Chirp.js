@@ -93,7 +93,14 @@ export default function Chirp({ chirpData, profile }) {
         ></div>
       ) : null}
       <div className="chirp" onClick={handleChirpClick}>
-        {displayMore ? <MoreMenu chirpData={chirpData} /> : null}
+        {displayMore ? (
+          <MoreMenu
+            chirpData={chirpData}
+            killMenu={() => {
+              setDisplayMore(false);
+            }}
+          />
+        ) : null}
         <ProfilePic
           picURL={account.picURL}
           onClick={() => {

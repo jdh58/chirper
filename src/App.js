@@ -34,6 +34,10 @@ function App() {
   const [toast, setToast] = useState(null);
   const [userInfo, setUserInfo] = useState(null);
 
+  /* TODO: Change showToastnotification to context so it can be used easily anywhere
+TODO: Update things like chirpcount, followers, following using the actual array nums
+rather than iterating when adding or subtracting. */
+
   useEffect(() => {
     onAuthStateChanged(getAuth(app), async (user) => {
       if (user) {
