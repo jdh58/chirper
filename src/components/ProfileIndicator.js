@@ -8,7 +8,7 @@ import '../styles/ProfileIndicator.css';
 export default function ProfileIndicator({ user }) {
   return (
     <div className="profileIndicator">
-      <ProfilePic picURL={user.picURL} />
+      <ProfilePic picURL={user.picURL} noOverlay={true} />
       <div className="profileNames">
         <div className="name">{user.name}</div>
         <div className="username">@{user.username}</div>

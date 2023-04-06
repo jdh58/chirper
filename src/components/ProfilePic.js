@@ -1,8 +1,8 @@
-export default function ProfilePic({ picURL, onClick }) {
+export default function ProfilePic({ picURL, onClick, noOverlay }) {
   return (
     <div className="profilePicContainer" onClick={onClick}>
       <img src={picURL} alt="" />
-      <div className="imageOverlay"></div>
+      {noOverlay ? null : <div className="imageOverlay"></div>}
     </div>
   );
 }
