@@ -2,6 +2,28 @@
   height: 52.5px;
   display: flex;
   border: none;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+}
+
+header .backContainer {
+  border-radius: 1000px;
+  transition: 0.2s;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+header .backContainer:hover {
+  cursor: pointer;
+  background-color: var(--light-grey);
+}
+
+.chirpPage .backContainer img {
+  width: 22px;
 }
 
 .chirpPage .chirp {
@@ -24,6 +46,16 @@
   display: flex;
   align-items: center;
   gap: 12.5px;
+}
+
+.profileArea .profilePicContainer:hover {
+  cursor: pointer;
+}
+.profileArea .chirpInfo .name:hover {
+  cursor: pointer;
+}
+.profileArea .chirpInfo .at {
+  user-select: none;
 }
 
 .profileArea .chirpInfo {

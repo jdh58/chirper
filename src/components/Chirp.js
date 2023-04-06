@@ -16,7 +16,7 @@ import {
 } from 'firebase/firestore';
 import { app } from '../firebase-config';
 import { format, formatDistanceToNowStrict, parseISO } from 'date-fns';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function Chirp({ chirpData, profile }) {
   const navigate = useNavigate();
@@ -67,16 +67,43 @@ export default function Chirp({ chirpData, profile }) {
     }
   }
 
-  const handleChirpClick = () => {
-    navigate(`/chirp/${chirpData.chirpId}`);
+  const handleChirpClick = (e) => {
+    const divClass = e.target.classList[0];
+    if (
+      divClass === 'chirp' ||
+      divClass === 'chirpWords' ||
+      divClass === 'chirpIcons'
+    ) {
+      /* If any of these are clicked, redirect to chirp page */
+      navigate(`/chirp/${chirpData.chirpId}`);
+    }
   };
 
   return (
     <div className="chirp" onClick={handleChirpClick}>
-      <ProfilePic picURL={account.picURL} />
+      <ProfilePic
+        picURL={account.picURL}
+        onClick={() => {
+          navigate(`/profile/${account.userId}`);
+        }}
+      />
       <div className="chirpInfo">
-        <p className="name">{account.name}</p>
-        <p className="at">@{account.username}</p>
+        <p
+          className="name"
+          onClick={() => {
+            navigate(`/profile/${account.userId}`);
+          }}
+        >
+          {account.name}
+        </p>
+        <p
+          className="at"
+          onClick={() => {
+            navigate(`/profile/${account.userId}`);
+          }}
+        >
+          @{account.username}
+        </p>
         <div className="separator"></div>
         <p className="time">{formatDistanceShort()}</p>
         <div className="settingContainer">
@@ -84,7 +111,7 @@ export default function Chirp({ chirpData, profile }) {
         </div>
       </div>
       <div className="chirpSubmit">
-        <p className="chirpWords">{chirpData.text}</p>
+        <div className="chirpWords">{chirpData.text}</div>
         {chirpData.imageURL ? (
           <img src={chirpData.imageURL} alt="" className="chirpImage" />
         ) : null}

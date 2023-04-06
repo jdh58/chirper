@@ -7,6 +7,7 @@ import Chat from '../assets/chat.svg';
 import ReChirp from '../assets/rechirp.svg';
 import Like from '../assets/like.svg';
 import Share from '../assets/share.svg';
+import Back from '../assets/back.svg';
 import RightBar from './RightBar';
 import {
   collection,
@@ -27,6 +28,8 @@ export default function ChirpPage() {
   const [chirpData, setChirpData] = useState(null);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+
     (async () => {
       const chirpDoc = await getDocs(
         query(
@@ -69,12 +72,30 @@ export default function ChirpPage() {
             navigate(-1);
           }}
         >
+          <div
+            className="backContainer"
+            onClick={() => {
+              navigate(-1);
+            }}
+          >
+            <img src={Back} alt="" className="backButton" />
+          </div>
           <h1 className="title">Chirp</h1>
         </header>
         <div className="chirp">
           <div className="profileArea">
-            <ProfilePic picURL={account.picURL} />
-            <div className="chirpInfo">
+            <ProfilePic
+              picURL={account.picURL}
+              onClick={() => {
+                navigate(`/profile/${account.userId}`);
+              }}
+            />
+            <div
+              className="chirpInfo"
+              onClick={() => {
+                navigate(`/profile/${account.userId}`);
+              }}
+            >
               <p className="name">{account.name}</p>
               <p className="at">@{account.username}</p>
             </div>
