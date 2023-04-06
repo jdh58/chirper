@@ -16,11 +16,13 @@ import {
   where,
 } from 'firebase/firestore';
 import { app } from '../firebase-config';
-import { useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import ChirpModule from './ChirpModule';
+import '../styles/ChirpPage.css';
 
 export default function ChirpPage() {
   const id = useParams().id;
+  const navigate = useNavigate();
   const [account, setAccount] = useState(null);
   const [chirpData, setChirpData] = useState(null);
 
@@ -59,13 +61,17 @@ export default function ChirpPage() {
     );
   }
 
-  const handleChirpClick = () => {};
-
   return (
     <>
       <div className="chirpPage page">
-        <header></header>
-        <div className="chirp" onClick={handleChirpClick}>
+        <header
+          onClick={() => {
+            navigate(-1);
+          }}
+        >
+          <h1 className="title">Chirp</h1>
+        </header>
+        <div className="chirp">
           <div className="profileArea">
             <ProfilePic picURL={account.picURL} />
             <div className="chirpInfo">
@@ -88,24 +94,32 @@ export default function ChirpPage() {
             <div className="separator"></div>
             {format(parseISO(chirpData.postTime), 'MMMM d, yyyy')}
           </div>
+          <div className="chirpStats">
+            <p className="replyCount">
+              <p className="count">{chirpData.replies}</p>
+            </p>
+            <p className="reChirpCount">
+              <p className="count">{chirpData.reChirps}</p>
+            </p>
+            <p className="likesCount">
+              <p className="count">{chirpData.likes}</p>
+            </p>
+          </div>
           <div className="chirpIcons">
             <div className="icon chat">
               <div className="container">
                 <img src={Chat} alt="" />
               </div>
-              <p className="count">{chirpData.replies}</p>
             </div>
             <div className="icon reChirp">
               <div className="container">
                 <img src={ReChirp} alt="" />
               </div>
-              <p className="count">{chirpData.reChirps}</p>
             </div>
             <div className="icon likes">
               <div className="container">
                 <img src={Like} alt="" />
               </div>
-              <p className="count">{chirpData.likes}</p>
             </div>
             <div className="icon share">
               <div className="container">
@@ -113,8 +127,8 @@ export default function ChirpPage() {
               </div>
             </div>
           </div>
-          <ChirpModule isReply={id} />
         </div>
+        <ChirpModule isReply={id} />
       </div>
       <RightBar />
     </>
