@@ -146,19 +146,25 @@ export default function Chirp({ chirpData, profile }) {
             <div className="container">
               <img src={Chat} alt="" />
             </div>
-            <p className="count">{chirpData.replies}</p>
+            <p className="count">
+              {chirpData.replies > 0 ? chirpData.replies : null}
+            </p>
           </div>
           <div className="icon reChirp">
             <div className="container">
               <img src={ReChirp} alt="" />
             </div>
-            <p className="count">{chirpData.reChirps}</p>
+            <p className="count">
+              {chirpData.reChirps > 0 ? chirpData.reChirps : null}
+            </p>
           </div>
           <div className="icon likes">
             <div className="container">
               <img src={Like} alt="" />
             </div>
-            <p className="count">{chirpData.likes}</p>
+            <p className="count">
+              {chirpData.likes > 0 ? chirpData.likes : null}
+            </p>
           </div>
           <div className="icon share">
             <div className="container">
