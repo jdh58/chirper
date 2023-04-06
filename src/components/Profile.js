@@ -22,7 +22,7 @@ import { app } from '../firebase-config';
 import { getDownloadURL, getStorage, ref } from 'firebase/storage';
 
 export default function Profile() {
-  const profileId = useParams().id;
+  const urlId = useParams().id;
   const navigate = useNavigate();
   const [profileChirps, setProfileChirps] = useState(null);
   const [currentTab, setCurrentTab] = useState('chirps');
@@ -36,7 +36,7 @@ export default function Profile() {
 
   useEffect(() => {
     (async () => {
-      const profileDocs = await existCheck(profileId);
+      const profileDocs = await existCheck(urlId);
       if (!profileDocs) {
         return;
       }
@@ -44,7 +44,7 @@ export default function Profile() {
 
       setProfile(profileInfo);
     })();
-  }, []);
+  }, [urlId]);
 
   useEffect(() => {
     (async () => {
@@ -66,8 +66,6 @@ export default function Profile() {
       setProfileChirps(chirpList);
     })();
   }, [profile]);
-
-  console.log(profileId);
 
   const setTab = (e) => {
     setCurrentTab(e.currentTarget.classList[0]);
