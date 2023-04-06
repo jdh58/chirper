@@ -11,7 +11,7 @@ export default function InfoSection({ profile, editMode }) {
 
   if (editMode) {
     return (
-      <>
+      <form>
         <div className="accountNames">
           <input
             className="name"
@@ -33,7 +33,7 @@ export default function InfoSection({ profile, editMode }) {
         <textarea className="bio" id="bio" onChange={autoGrow}>
           {profile.bio}
         </textarea>
-      </>
+      </form>
     );
   } else {
     return (

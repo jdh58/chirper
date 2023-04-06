@@ -16,6 +16,7 @@ import {
   limit,
   orderBy,
   query,
+  updateDoc,
   where,
 } from 'firebase/firestore';
 import { app } from '../firebase-config';
@@ -59,6 +60,8 @@ export default function Profile() {
   }, [urlId, user]);
 
   useEffect(() => {
+    /* Sort the tweets so newest render at the top, set state
+   to be a mapped list of the user's chirps as chirp elements */
     (async () => {
       const chirpDocs = await getDocs(
         query(
@@ -83,7 +86,39 @@ export default function Profile() {
     setCurrentTab(e.currentTarget.classList[0]);
   };
 
-  const handleEdit = () => {};
+  const handleUpdateProfile = async () => {
+    const form = document.querySelector('.profileInfo form');
+    const newName = form.querySelector('input.name').value;
+    const newUsername = form.querySelector('input.at').value;
+    const newBio = form.querySelector('textarea#bio').value;
+
+    // Go back to the normal
+    setEditMode(false);
+
+    const accountDoc = await getDocs(
+      query(
+        collection(getFirestore(app), 'accounts'),
+        where('userId', '==', `${profile.userId}`)
+      )
+    );
+
+    await updateDoc(accountDoc.docs[0].ref, {
+      name: newName,
+      username: newUsername,
+      bio: newBio,
+    });
+
+    const newAccountDoc = await getDocs(
+      query(
+        collection(getFirestore(app), 'accounts'),
+        where('userId', '==', `${profile.userId}`)
+      )
+    );
+
+    setProfile(newAccountDoc.docs[0].data());
+
+    // Display notification letting user know their profile has been updated
+  };
 
   return (
     <>
@@ -107,7 +142,24 @@ export default function Profile() {
         </div>
         <div className="profileInfo">
           <ProfilePic picURL={profile.picURL} />
-          {isUser ? (
+          {editMode ? (
+            <>
+              <div
+                className="finalizeButton profileButton"
+                onClick={handleUpdateProfile}
+              >
+                Update
+              </div>
+              <div
+                className="editButton profileButton"
+                onClick={() => {
+                  setEditMode(false);
+                }}
+              >
+                Discard
+              </div>
+            </>
+          ) : isUser ? (
             <div
               className="editButton profileButton"
               onClick={() => {

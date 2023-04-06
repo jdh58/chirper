@@ -184,6 +184,7 @@ table {
   --light-black: rgb(101, 101, 101);
   --light-grey: rgb(231, 231, 231);
   --white-hover: rgb(249, 249, 249);
+  --black-hover: #262626;
 }
 body {
   display: flex;

@@ -160,6 +160,22 @@ header .backContainer:hover {
   right: 15px;
 }
 
+.profileButton.finalizeButton {
+  right: 130px;
+}
+
+.finalizeButton,
+.followButton {
+  background-color: black;
+  color: white;
+}
+
+.finalizeButton:hover,
+.followButton:hover {
+  cursor: pointer;
+  background-color: var(--black-hover);
+}
+
 .editButton:hover {
   cursor: pointer;
   background-color: var(--white-hover);
@@ -177,7 +193,20 @@ header .backContainer:hover {
 
 input.name,
 input.at {
-  width: content;
+  width: max-content;
+}
+
+input.name,
+input.at,
+textarea {
+  border: 1px solid var(--light-grey);
+  border-radius: 5px;
+}
+
+input.name:focus,
+input.at:focus,
+textarea:focus {
+  outline: 1px solid var(--blue);
 }
 
 .usernameInputContainer {
@@ -185,4 +214,10 @@ input.at {
   align-items: center;
   font-size: 1.5rem;
   color: var(--light-black);
+}
+
+.profileInfo form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
