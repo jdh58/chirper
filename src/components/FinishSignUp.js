@@ -96,6 +96,7 @@ export default function FinishSignUp({}) {
         followers: 0,
         chirps: 0,
         likes: [],
+        bookmarks: [],
         bannerURL: '',
       });
       // Refresh

@@ -126,10 +126,14 @@ export default function ChirpModule({
       let chirpId = null;
 
       /* Clear box + image once value is saved, and let the module know to 
-      update. This also disables the button so the user can't double Chirp. */
+      update. This also disables the button so the user can't double Chirp.
+      If it is an overaly chirp, close the overlay as well. */
       textBox.value = '';
       setUploadedImage(null);
       handleChirpChange(textBox);
+      if (overlay) {
+        killModule();
+      }
 
       // Generate a random number from 1 to 100 trillion and check if the id already exists.
       let repeat = true;

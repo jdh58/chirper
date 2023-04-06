@@ -47,8 +47,10 @@ export default function ChirpPage() {
   useEffect(() => {
     (async () => {
       const accountDoc = await getDocs(
-        query(collection(getFirestore(app), 'accounts')),
-        where('userId', '==', `${chirpData.accountId}`)
+        query(
+          collection(getFirestore(app), 'accounts'),
+          where('userId', '==', `${chirpData.accountId}`)
+        )
       );
 
       setAccount(accountDoc.docs[0].data());
