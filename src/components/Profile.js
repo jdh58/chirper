@@ -22,6 +22,7 @@ import { app } from '../firebase-config';
 import { getDownloadURL, getStorage, ref } from 'firebase/storage';
 import UserContext from '../UserContext';
 import FollowButton from './FollowButton';
+import InfoSection from './InfoSection';
 
 export default function Profile() {
   const urlId = useParams().id;
@@ -39,6 +40,7 @@ export default function Profile() {
     following: '',
     followers: '',
   });
+  const [editMode, setEditMode] = useState(false);
 
   useEffect(() => {
     if (urlId === user.userId) {
@@ -81,6 +83,8 @@ export default function Profile() {
     setCurrentTab(e.currentTarget.classList[0]);
   };
 
+  const handleEdit = () => {};
+
   return (
     <>
       <div className="profilePage page">
@@ -104,19 +108,27 @@ export default function Profile() {
         <div className="profileInfo">
           <ProfilePic picURL={profile.picURL} />
           {isUser ? (
-            <div className="editButton profileButton">Edit profile</div>
+            <div
+              className="editButton profileButton"
+              onClick={() => {
+                setEditMode(true);
+              }}
+            >
+              Edit profile
+            </div>
           ) : (
             <FollowButton isProfile={true} />
           )}
-          <div className="accountNames">
-            <h1 className="name">{profile.name}</h1>
-            <h2 className="at">@{profile.username}</h2>
-          </div>
-          <p className="bio">{profile.bio}</p>
+          {editMode ? (
+            <InfoSection profile={profile} editMode={editMode} />
+          ) : (
+            <InfoSection profile={profile} />
+          )}
           <div className="joinDate">
             <img src={Calendar} alt="" />
             <p>Joined {profile.joinDate}</p>
           </div>
+
           <div className="followStats">
             <p className="following">
               <span className="number">{profile.following}</span> Following
