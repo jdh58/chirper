@@ -60,9 +60,6 @@ export default function Profile() {
 
       const chirpList = chirps.map((chirp) => {
         const chirpData = chirp.data();
-
-        console.log(chirpData);
-
         return <Chirp chirpData={chirpData} profile={profile} />;
       });
 

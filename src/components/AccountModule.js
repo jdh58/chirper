@@ -1,13 +1,13 @@
 import ProfilePic from './ProfilePic';
 import '../styles/AccountModule.css';
 
-export default function AccountModule() {
+export default function AccountModule({ profile }) {
   return (
     <div className="accountModule">
-      <ProfilePic />
+      <ProfilePic picURL={profile.picURL} />
       <div className="accountInfo">
-        <p className="name">Full Clout</p>
-        <p className="at">@marlon_humphrey</p>
+        <p className="name">{profile.name}</p>
+        <p className="at">@{profile.username}</p>
       </div>
       <button className="follow">Follow</button>
     </div>

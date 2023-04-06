@@ -2,9 +2,36 @@ import '../styles/RightBar.css';
 import TrendItem from './TrendItem';
 import Search from './Search';
 import AccountModule from './AccountModule';
+import { useEffect, useState } from 'react';
+import {
+  collection,
+  getDocs,
+  getFirestore,
+  limit,
+  orderBy,
+  query,
+} from 'firebase/firestore';
+import { app } from '../firebase-config';
 
 export default function RightBar({ noSearch }) {
-  // TODO: Fill out copyright with my github and sites
+  const [accounts, setAccounts] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+      const accountDocs = await getDocs(
+        query(collection(getFirestore(app), 'accounts')),
+        limit(3)
+      );
+
+      const accountList = accountDocs.docs.map((account) => (
+        <AccountModule profile={account.data()} />
+      ));
+
+      console.log(accountList);
+
+      setAccounts(accountList);
+    })();
+  }, []);
 
   return (
     <div className="rightBar">
@@ -25,11 +52,7 @@ export default function RightBar({ noSearch }) {
 
       <div className={!noSearch ? 'accounts' : 'accounts only'}>
         <h2 className="title">Who to follow</h2>
-        <div className="accountItems">
-          <AccountModule />
-          <AccountModule />
-          <AccountModule />
-        </div>
+        <div className="accountItems">{accounts}</div>
       </div>
 
       <div className="copyright">

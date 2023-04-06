@@ -118,7 +118,7 @@ export default function FinishSignUp({}) {
             id="name"
             onChange={checkUserInput}
             minLength={3}
-            maxLength={40}
+            maxLength={25}
           />
           <div className={`placeholder namePlaceholder ${userInput}`}>Name</div>
           <input
@@ -127,7 +127,7 @@ export default function FinishSignUp({}) {
             name="username"
             id="username"
             minLength={3}
-            maxLength={25}
+            maxLength={15}
           />
           <div className={`userPlaceholder`}>@</div>
           <textarea
