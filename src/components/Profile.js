@@ -46,6 +46,8 @@ export default function Profile() {
   useEffect(() => {
     if (urlId === user.userId) {
       setIsUser(true);
+    } else {
+      setIsUser(false);
     }
 
     (async () => {
@@ -169,7 +171,7 @@ export default function Profile() {
               Edit profile
             </div>
           ) : (
-            <FollowButton isProfile={true} />
+            <FollowButton profile={profile} isProfile={true} />
           )}
           {editMode ? (
             <InfoSection profile={profile} editMode={editMode} />
@@ -183,10 +185,12 @@ export default function Profile() {
 
           <div className="followStats">
             <p className="following">
-              <span className="number">{profile.following}</span> Following
+              <span className="number">{profile.following.length || 0}</span>{' '}
+              Following
             </p>
             <p className="followers">
-              <span className="number">{profile.followers}</span> Followers
+              <span className="number">{profile.followers.length || 0}</span>{' '}
+              Followers
             </p>
           </div>
         </div>

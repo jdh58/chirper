@@ -176,6 +176,7 @@ header .backContainer:hover {
   background-color: var(--black-hover);
 }
 
+.unfollowButton:hover,
 .editButton:hover {
   cursor: pointer;
   background-color: var(--white-hover);
