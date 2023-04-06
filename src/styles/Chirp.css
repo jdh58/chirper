@@ -1,4 +1,5 @@
 .chirp {
+  position: relative;
   width: 100%;
   display: grid;
   grid-template-columns: 75px 1fr;
@@ -11,7 +12,11 @@
 
 .chirp:hover {
   cursor: pointer;
-  background-color: rgb(249, 249, 249);
+  background-color: var(--white-hover);
+}
+
+.chirp:has(.moreMenu:hover) {
+  background-color: transparent;
 }
 
 .chirpInfo {

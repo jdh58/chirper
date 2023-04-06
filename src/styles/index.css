@@ -182,6 +182,7 @@ table {
   --blue-hover-border: rgb(196, 221, 235);
   --light-black: rgb(101, 101, 101);
   --light-grey: rgb(231, 231, 231);
+  --white-hover: rgb(249, 249, 249);
 }
 body {
   display: flex;
@@ -192,4 +193,11 @@ body {
   margin: auto;
   display: grid;
   grid-template-columns: 270px 600px 380px;
+}
+
+.clickDetector {
+  position: fixed;
+  z-index: 1000;
+  height: 100%;
+  width: 100%;
 }

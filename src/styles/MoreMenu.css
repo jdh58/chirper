@@ -1,0 +1,43 @@
+.moreMenu {
+  z-index: 1;
+  background-color: #fff;
+  border-radius: 10px;
+  position: absolute;
+  right: 12.5px;
+  top: 12.5px;
+  width: 350px;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+}
+
+.moreMenu .option {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  gap: 5px;
+  padding: 0;
+}
+
+.moreMenu .option img {
+  width: 20px;
+  margin-left: 15px;
+}
+
+.moreMenu .option:hover {
+  cursor: pointer;
+  background-color: var(--white-hover);
+}
+
+.delete {
+  color: red;
+}
+
+.delete img {
+  filter: invert(14%) sepia(100%) saturate(7494%) hue-rotate(2deg)
+    brightness(110%) contrast(113%);
+}

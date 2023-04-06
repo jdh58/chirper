@@ -6,7 +6,7 @@ import Like from '../assets/like.svg';
 import Share from '../assets/share.svg';
 import '../styles/ProfilePic.css';
 import '../styles/Chirp.css';
-import { useEffect, useState } from 'react';
+import { createElement, useEffect, useState } from 'react';
 import {
   collection,
   getDocs,
@@ -17,9 +17,12 @@ import {
 import { app } from '../firebase-config';
 import { format, formatDistanceToNowStrict, parseISO } from 'date-fns';
 import { Link, useNavigate } from 'react-router-dom';
+import MoreMenu from './MoreMenu';
+import { click } from '@testing-library/user-event/dist/click';
 
 export default function Chirp({ chirpData, profile }) {
   const navigate = useNavigate();
+  const [displayMore, setDisplayMore] = useState(false);
   const [account, setAccount] = useState({
     name: null,
     username: null,
@@ -80,67 +83,83 @@ export default function Chirp({ chirpData, profile }) {
   };
 
   return (
-    <div className="chirp" onClick={handleChirpClick}>
-      <ProfilePic
-        picURL={account.picURL}
-        onClick={() => {
-          navigate(`/profile/${account.userId}`);
-        }}
-      />
-      <div className="chirpInfo">
-        <p
-          className="name"
+    <>
+      {displayMore ? (
+        <div
+          className="clickDetector"
+          onClick={() => {
+            setDisplayMore(false);
+          }}
+        ></div>
+      ) : null}
+      <div className="chirp" onClick={handleChirpClick}>
+        {displayMore ? <MoreMenu chirpData={chirpData} /> : null}
+        <ProfilePic
+          picURL={account.picURL}
           onClick={() => {
             navigate(`/profile/${account.userId}`);
           }}
-        >
-          {account.name}
-        </p>
-        <p
-          className="at"
-          onClick={() => {
-            navigate(`/profile/${account.userId}`);
-          }}
-        >
-          @{account.username}
-        </p>
-        <div className="separator"></div>
-        <p className="time">{formatDistanceShort()}</p>
-        <div className="settingContainer">
-          <img src={More} alt="" />
+        />
+        <div className="chirpInfo">
+          <p
+            className="name"
+            onClick={() => {
+              navigate(`/profile/${account.userId}`);
+            }}
+          >
+            {account.name}
+          </p>
+          <p
+            className="at"
+            onClick={() => {
+              navigate(`/profile/${account.userId}`);
+            }}
+          >
+            @{account.username}
+          </p>
+          <div className="separator"></div>
+          <p className="time">{formatDistanceShort()}</p>
+          <div
+            className="settingContainer"
+            onClick={() => {
+              setDisplayMore(true);
+            }}
+          >
+            <img src={More} alt="" />
+          </div>
+        </div>
+        <div className="chirpSubmit">
+          <div className="chirpWords">{chirpData.text}</div>
+          {chirpData.imageURL ? (
+            <img src={chirpData.imageURL} alt="" className="chirpImage" />
+          ) : null}
+        </div>
+        <div className="chirpIcons">
+          <div className="icon chat">
+            <div className="container">
+              <img src={Chat} alt="" />
+            </div>
+            <p className="count">{chirpData.replies}</p>
+          </div>
+          <div className="icon reChirp">
+            <div className="container">
+              <img src={ReChirp} alt="" />
+            </div>
+            <p className="count">{chirpData.reChirps}</p>
+          </div>
+          <div className="icon likes">
+            <div className="container">
+              <img src={Like} alt="" />
+            </div>
+            <p className="count">{chirpData.likes}</p>
+          </div>
+          <div className="icon share">
+            <div className="container">
+              <img src={Share} alt="" />
+            </div>
+          </div>
         </div>
       </div>
-      <div className="chirpSubmit">
-        <div className="chirpWords">{chirpData.text}</div>
-        {chirpData.imageURL ? (
-          <img src={chirpData.imageURL} alt="" className="chirpImage" />
-        ) : null}
-      </div>
-      <div className="chirpIcons">
-        <div className="icon chat">
-          <div className="container">
-            <img src={Chat} alt="" />
-          </div>
-          <p className="count">{chirpData.replies}</p>
-        </div>
-        <div className="icon reChirp">
-          <div className="container">
-            <img src={ReChirp} alt="" />
-          </div>
-          <p className="count">{chirpData.reChirps}</p>
-        </div>
-        <div className="icon likes">
-          <div className="container">
-            <img src={Like} alt="" />
-          </div>
-          <p className="count">{chirpData.likes}</p>
-        </div>
-        <div className="icon share">
-          <div className="container">
-            <img src={Share} alt="" />
-          </div>
-        </div>
-      </div>
-    </div>
+    </>
   );
 }
