@@ -69,11 +69,7 @@ export default function ChirpPage() {
   return (
     <>
       <div className="chirpPage page">
-        <header
-          onClick={() => {
-            navigate(-1);
-          }}
-        >
+        <header>
           <div
             className="backContainer"
             onClick={() => {
