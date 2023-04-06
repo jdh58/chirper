@@ -90,20 +90,29 @@ export default function ChirpPage() {
             ) : null}
           </div>
           <div className="time">
-            {format(parseISO(chirpData.postTime), 'hh:mm a')}
+            {format(parseISO(chirpData.postTime), 'h:mm a')}
             <div className="separator"></div>
             {format(parseISO(chirpData.postTime), 'MMMM d, yyyy')}
           </div>
           <div className="chirpStats">
-            <p className="replyCount">
+            <div className="replyCount countContainer">
               <p className="count">{chirpData.replies}</p>
-            </p>
-            <p className="reChirpCount">
+              <p className="label">
+                {chirpData.replies === 1 ? 'Reply' : 'Replies'}
+              </p>
+            </div>
+            <div className="reChirpCount countContainer">
               <p className="count">{chirpData.reChirps}</p>
-            </p>
-            <p className="likesCount">
+              <p className="label">
+                {chirpData.reChirps === 1 ? 'ReChirp' : 'ReChirps'}
+              </p>
+            </div>
+            <div className="likesCount countContainer">
               <p className="count">{chirpData.likes}</p>
-            </p>
+              <p className="label">
+                {chirpData.likes === 1 ? 'Like' : 'Likes'}
+              </p>
+            </div>
           </div>
           <div className="chirpIcons">
             <div className="icon chat">

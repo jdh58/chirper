@@ -1,12 +1,16 @@
 .chirpPage header {
-  height: 50px;
+  height: 52.5px;
   display: flex;
+  border: none;
 }
 
 .chirpPage .chirp {
   grid-template-columns: 1fr;
-  grid-template-rows: 100px 1fr 50px 50px 50px;
+  grid-template-rows: 75px 1fr 50px 50px 50px;
   display: grid;
+  padding: 0 15px;
+  border: none;
+  margin-bottom: 15px;
 }
 
 .chirpPage .chirp:hover {
@@ -19,13 +23,14 @@
   grid-row: 1 / 2;
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 12.5px;
 }
 
 .profileArea .chirpInfo {
   display: flex;
   flex-direction: column;
   justify-self: flex-start;
+  align-items: start;
 }
 
 .profileArea .profilePicContainer {
@@ -33,22 +38,57 @@
   height: 48px;
 }
 
-.profileArea .chirpInfo .settingContainer {
+.profileArea .settingContainer {
   margin-left: auto;
+}
+.chirpPage .chirpSubmit .chirpWords {
+  font-size: 1.75rem;
+}
+
+.chirpPage .time .separator {
+  width: 2px;
+  height: 2px;
+  background-color: var(--light-black);
+}
+
+.chirpPage .chirpStats {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.chirpPage .countContainer {
+  display: flex;
+  font-size: 1.4rem;
+  gap: 4px;
+  color: var(--light-black);
+}
+
+.countContainer .count {
+  font-weight: 700;
+  color: black;
 }
 
 .chirpPage .chirpSubmit {
   grid-column: 1 / -1;
   grid-row: 2 / 3;
+  padding: 0;
+  gap: 11px;
 }
 .chirpPage .time {
   grid-column: 1 / -1;
   grid-row: 3 / 4;
+  border-bottom: 1px solid var(--light-grey);
+  display: flex;
+  align-items: center;
+  font-size: 1.5rem;
+  color: var(--light-black);
+  gap: 5px;
 }
 .chirpPage .chirpStats {
   grid-column: 1 / -1;
   grid-row: 4 / 5;
-  border: 1px solid var(--light-grey);
+  border-bottom: 1px solid var(--light-grey);
   width: 100%;
 }
 .chirpPage .chirpIcons {
@@ -62,6 +102,7 @@
   align-items: center;
   justify-content: center;
   margin: 0;
+  border-bottom: 1px solid var(--light-grey);
 }
 
 .chirpPage .chirpIcons .icon {
