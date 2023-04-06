@@ -7,7 +7,7 @@ import Tab from './Tab';
 import '../styles/page.css';
 import '../styles/Profile.css';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import existCheck from '../existCheck';
 import {
   collection,
@@ -20,10 +20,16 @@ import {
 } from 'firebase/firestore';
 import { app } from '../firebase-config';
 import { getDownloadURL, getStorage, ref } from 'firebase/storage';
+import UserContext from '../UserContext';
+import FollowButton from './FollowButton';
 
 export default function Profile() {
   const urlId = useParams().id;
+  const user = useContext(UserContext) || {
+    userId: '',
+  };
   const navigate = useNavigate();
+  const [isUser, setIsUser] = useState(false);
   const [profileChirps, setProfileChirps] = useState(null);
   const [currentTab, setCurrentTab] = useState('chirps');
   const [profile, setProfile] = useState({
@@ -35,6 +41,10 @@ export default function Profile() {
   });
 
   useEffect(() => {
+    if (urlId === user.userId) {
+      setIsUser(true);
+    }
+
     (async () => {
       const profileDocs = await existCheck(urlId);
       if (!profileDocs) {
@@ -44,7 +54,7 @@ export default function Profile() {
 
       setProfile(profileInfo);
     })();
-  }, [urlId]);
+  }, [urlId, user]);
 
   useEffect(() => {
     (async () => {
@@ -93,6 +103,11 @@ export default function Profile() {
         </div>
         <div className="profileInfo">
           <ProfilePic picURL={profile.picURL} />
+          {isUser ? (
+            <div className="editButton profileButton">Edit profile</div>
+          ) : (
+            <FollowButton isProfile={true} />
+          )}
           <div className="accountNames">
             <h1 className="name">{profile.name}</h1>
             <h2 className="at">@{profile.username}</h2>
