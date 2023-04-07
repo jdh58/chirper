@@ -1,5 +1,5 @@
 import { format, parseISO } from 'date-fns';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Chirp from './Chirp';
 import ProfilePic from './ProfilePic';
 import More from '../assets/more.svg';
@@ -23,9 +23,11 @@ import '../styles/ChirpPage.css';
 import getAccount from '../getAccount';
 import getChirp from '../getChirp';
 import '../styles/Chirp.css';
+import UserContext from '../UserContext';
 
 export default function ChirpPage() {
   const id = useParams().id;
+  const user = useContext(UserContext);
   const navigate = useNavigate();
   const [account, setAccount] = useState(null);
   const [chirpData, setChirpData] = useState(null);
@@ -38,7 +40,7 @@ export default function ChirpPage() {
       const chirpDoc = await getChirp(parseInt(id));
       setChirpData(chirpDoc.data());
     })();
-  }, []);
+  }, [id, user]);
 
   useEffect(() => {
     (async () => {
