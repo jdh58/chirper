@@ -22,6 +22,7 @@ import {
   collection,
   getDocs,
   getFirestore,
+  onSnapshot,
   query,
   where,
 } from 'firebase/firestore';
@@ -64,10 +65,11 @@ rather than iterating when adding or subtracting. */
             )
           );
 
-          let account = accountDoc.docs;
-          account = account[0].data();
+          let account = accountDoc.docs[0];
 
-          setUserInfo(account);
+          onSnapshot(account.ref, (account) => {
+            setUserInfo(account.data());
+          });
         }
       })();
     }

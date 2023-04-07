@@ -121,7 +121,6 @@ export default function ChirpModule({
       const chirpModule = e.target.parentElement.parentElement;
       const textBox = chirpModule.querySelector('#chirpInput');
       const text = textBox.value;
-      const image = uploadedImage;
       const accountId = getAuth(app).currentUser.uid;
       let chirpId = null;
 
@@ -154,7 +153,7 @@ export default function ChirpModule({
       // If there was an image, store it. Otherwise, set to null
       let imageURL = null;
       let storageURL = null;
-      if (image) {
+      if (uploadedImage) {
         const imagePath = `${accountId}/${chirpId}`;
         const newImageRef = ref(getStorage(app), imagePath);
         const fileSnapshot = await uploadBytesResumable(
