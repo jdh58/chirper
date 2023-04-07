@@ -15,13 +15,16 @@ import {
   arrayUnion,
 } from 'firebase/firestore';
 import { app } from '../firebase-config';
+import getChirp from '../getChirp';
+import getAccount from '../getAccount';
+import ToastContext from '../ToastContext';
 
 export default function MoreMenu({ chirpData, killMenu }) {
   const [isUsers, setIsUsers] = useState(false);
-
   const user = useContext(UserContext) || {
     userId: '',
   };
+  const displayToast = useContext(ToastContext);
 
   // Detect if the chirp is the user's, so we know if we show delete
   useEffect(() => {
@@ -33,18 +36,19 @@ export default function MoreMenu({ chirpData, killMenu }) {
   const handleDelete = async () => {
     try {
       killMenu();
-      const chirpToDelete = await getDocs(
-        query(
-          collection(getFirestore(app), 'chirps'),
-          where('chirpId', '==', chirpData.chirpId)
-        )
-      );
+      const userDoc = await getAccount(user.userId);
+      const chirpToDelete = await getChirp(chirpData.chirpId);
 
-      await deleteDoc(chirpToDelete.docs[0].ref);
+      await deleteDoc(chirpToDelete.ref);
 
       // Lower chirp count by 1... o
+      const currentChirps = userDoc.data().chirps;
+      await updateDoc(userDoc.ref, {
+        chirps: currentChirps - 1,
+      });
 
-      // Display toast notification, refactor it to context over prop
+      // Display toast notification
+      displayToast('Your Chirp was deleted');
     } catch (error) {
       console.error('Failed to delete Chirp', error);
     }
@@ -80,17 +84,19 @@ export default function MoreMenu({ chirpData, killMenu }) {
   };
 
   return (
-    <div className={isUsers ? 'moreMenu users' : 'moreMenu'}>
-      {isUsers ? (
-        <div className="delete option" onClick={handleDelete}>
-          <img src={Delete} alt="" />
-          <p>Delete</p>
+    <>
+      <div className={isUsers ? 'moreMenu users' : 'moreMenu'}>
+        {isUsers ? (
+          <div className="delete option" onClick={handleDelete}>
+            <img src={Delete} alt="" />
+            <p>Delete</p>
+          </div>
+        ) : null}
+        <div className="bookmark option" onClick={handleBookmark}>
+          <img src={Bookmark} alt="" />
+          <p>Bookmark</p>
         </div>
-      ) : null}
-      <div className="bookmark option" onClick={handleBookmark}>
-        <img src={Bookmark} alt="" />
-        <p>Bookmark</p>
       </div>
-    </div>
+    </>
   );
 }

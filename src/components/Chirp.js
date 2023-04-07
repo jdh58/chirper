@@ -26,10 +26,12 @@ import { click } from '@testing-library/user-event/dist/click';
 import getChirp from '../getChirp';
 import UserContext from '../UserContext';
 import getAccount from '../getAccount';
+import ToastNotification from './ToastNotification';
 
 export default function Chirp({ chirpData, profile }) {
   const navigate = useNavigate();
   const [displayMore, setDisplayMore] = useState(false);
+  const [toast, setToast] = useState(null);
   const user = useContext(UserContext) || {
     likes: '',
   };

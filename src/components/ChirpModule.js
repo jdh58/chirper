@@ -29,19 +29,16 @@ import {
 } from 'firebase/storage';
 import { format } from 'date-fns';
 import UserContext from '../UserContext';
+import ToastContext from '../ToastContext';
 
-export default function ChirpModule({
-  overlay,
-  killModule,
-  isReply,
-  displayToast,
-}) {
+export default function ChirpModule({ overlay, killModule, isReply }) {
   const user = useContext(UserContext);
 
   const [characters, setCharacters] = useState(0);
   const [disabled, setDisabled] = useState(true);
   const [uploadedImage, setUploadedImage] = useState(null);
   const [imageDisplay, setImageDisplay] = useState(null);
+  const displayToast = useContext(ToastContext);
 
   useEffect(() => {
     if (!uploadedImage) {

@@ -28,6 +28,7 @@ import {
 } from 'firebase/firestore';
 import SearchPage from './components/SearchPage';
 import ChirpPage from './components/ChirpPage';
+import ToastContext from './ToastContext';
 
 function App() {
   const [overlay, setOverlay] = useState(false);
@@ -95,78 +96,76 @@ rather than iterating when adding or subtracting. */
   return (
     <BrowserRouter>
       <UserContext.Provider value={userInfo}>
-        {toast}
-        {overlay === 'chirp' ? (
-          <ChirpModule
-            overlay={true}
-            killModule={() => {
-              setOverlay(false);
-            }}
-            isReply={false}
-            displayToast={displayToast}
-          />
-        ) : null}
-        {overlay === 'signIn' ? (
-          <SignIn
-            killModule={() => {
-              setOverlay(false);
-            }}
-            toSignUp={() => {
-              setOverlay('signUp');
-            }}
-          />
-        ) : null}
-        {overlay === 'signUp' ? (
-          <SignUp
-            killModule={() => {
-              setOverlay(false);
-            }}
-            toSignIn={() => {
-              setOverlay('signIn');
-            }}
-            finalize={() => {
-              setOverlay('finalize');
-            }}
-          />
-        ) : null}
-        {overlay === 'finalize' ? (
-          <FinishSignUp
-            killModule={() => {
-              setOverlay(false);
-            }}
-          />
-        ) : null}
+        <ToastContext.Provider value={displayToast}>
+          {toast}
+          {overlay === 'chirp' ? (
+            <ChirpModule
+              overlay={true}
+              killModule={() => {
+                setOverlay(false);
+              }}
+              isReply={false}
+            />
+          ) : null}
+          {overlay === 'signIn' ? (
+            <SignIn
+              killModule={() => {
+                setOverlay(false);
+              }}
+              toSignUp={() => {
+                setOverlay('signUp');
+              }}
+            />
+          ) : null}
+          {overlay === 'signUp' ? (
+            <SignUp
+              killModule={() => {
+                setOverlay(false);
+              }}
+              toSignIn={() => {
+                setOverlay('signIn');
+              }}
+              finalize={() => {
+                setOverlay('finalize');
+              }}
+            />
+          ) : null}
+          {overlay === 'finalize' ? (
+            <FinishSignUp
+              killModule={() => {
+                setOverlay(false);
+              }}
+            />
+          ) : null}
 
-        {!user ? (
-          <SignInBanner
-            onSignIn={() => {
-              setOverlay('signIn');
-            }}
-            onSignUp={() => {
-              setOverlay('signUp');
+          {!user ? (
+            <SignInBanner
+              onSignIn={() => {
+                setOverlay('signIn');
+              }}
+              onSignUp={() => {
+                setOverlay('signUp');
+              }}
+            />
+          ) : null}
+
+          <Nav
+            chirpOverlay={() => {
+              setOverlay('chirp');
             }}
           />
-        ) : null}
-
-        <Nav
-          chirpOverlay={() => {
-            setOverlay('chirp');
-          }}
-        />
-        <Routes>
-          <Route
-            path="/"
-            element={<Home displayToast={displayToast} />}
-          ></Route>
-          <Route path="/signin" element={<SignIn />}></Route>
-          <Route path="/signup" element={<SignUp />}></Route>
-          <Route path="/chirp/:id" element={<ChirpPage />}></Route>
-          <Route path="/search/:query" element={<SearchPage />}></Route>
-          <Route path="/explore" element={<Explore />}></Route>
-          <Route path="/notifications" element={<Notifications />}></Route>
-          <Route path="/bookmarks" element={<Bookmarks />}></Route>
-          <Route path="/profile/:id?" element={<Profile />}></Route>
-        </Routes>
+          <Routes>
+            <Route path="/" element={<Home />}></Route>
+            <Route path="/signin" element={<SignIn />}></Route>
+            <Route path="/signup" element={<SignUp />}></Route>
+            <Route path="/chirp/:id" element={<ChirpPage />}></Route>
+            <Route path="/search/:query" element={<SearchPage />}></Route>
+            <Route path="/explore" element={<Explore />}></Route>
+            <Route path="/notifications" element={<Notifications />}></Route>
+            <Route path="/bookmarks" element={<Bookmarks />}></Route>
+            <Route path="/profile/:id?" element={<Profile />}></Route>
+          </Routes>
+        </ToastContext.Provider>
       </UserContext.Provider>
     </BrowserRouter>
   );

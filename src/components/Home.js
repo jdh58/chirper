@@ -7,7 +7,7 @@ import ChirpModule from './ChirpModule';
 import Chirp from './Chirp';
 import UserContext from '../UserContext';
 
-export default function Home({ overlay, displayToast }) {
+export default function Home() {
   const user = useContext(UserContext);
   const [currentTab, setCurrentTab] = useState('foryou');
 
@@ -34,7 +34,7 @@ export default function Home({ overlay, displayToast }) {
           />
           <div className={`indicator ${currentTab}`}></div>
         </header>
-        <ChirpModule isReply={false} displayToast={displayToast} />
+        <ChirpModule isReply={false} />
       </div>
       <RightBar />
     </>
