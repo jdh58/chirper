@@ -25,6 +25,7 @@ import { getDownloadURL, getStorage, ref } from 'firebase/storage';
 import UserContext from '../UserContext';
 import FollowButton from './FollowButton';
 import InfoSection from './InfoSection';
+import ToastContext from '../ToastContext';
 
 export default function Profile() {
   const urlId = useParams().id;
@@ -43,6 +44,7 @@ export default function Profile() {
     followers: '',
   });
   const [editMode, setEditMode] = useState(false);
+  const displayToast = useContext(ToastContext);
 
   useEffect(() => {
     if (urlId === user.userId) {
@@ -126,6 +128,7 @@ export default function Profile() {
     setProfile(newAccountDoc.docs[0].data());
 
     // Display notification letting user know their profile has been updated
+    displayToast('Your profile has been updated');
   };
 
   return (

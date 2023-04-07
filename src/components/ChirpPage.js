@@ -20,42 +20,49 @@ import { app } from '../firebase-config';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import ChirpModule from './ChirpModule';
 import '../styles/ChirpPage.css';
+import getAccount from '../getAccount';
+import getChirp from '../getChirp';
+import '../styles/Chirp.css';
 
 export default function ChirpPage() {
   const id = useParams().id;
   const navigate = useNavigate();
   const [account, setAccount] = useState(null);
   const [chirpData, setChirpData] = useState(null);
+  const [chirpReplies, setChirpReplies] = useState(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
 
     (async () => {
-      const chirpDoc = await getDocs(
-        query(
-          collection(getFirestore(app), 'chirps'),
-          where('chirpId', '==', parseInt(id))
-        )
-      );
-
-      console.log(chirpDoc.docs);
-
-      setChirpData(chirpDoc.docs[0].data());
+      const chirpDoc = await getChirp(parseInt(id));
+      setChirpData(chirpDoc.data());
     })();
   }, []);
 
   useEffect(() => {
     (async () => {
-      const accountDoc = await getDocs(
-        query(
-          collection(getFirestore(app), 'accounts'),
-          where('userId', '==', `${chirpData.accountId}`)
-        )
-      );
+      const accountDoc = await getAccount(chirpData.accountId);
+      setAccount(accountDoc.data());
 
-      setAccount(accountDoc.docs[0].data());
+      updateReplies();
     })();
   }, [chirpData]);
+
+  const updateReplies = async () => {
+    const replyDocs = await getDocs(
+      query(
+        collection(getFirestore(app), 'chirps'),
+        where('isReply', '==', `${chirpData.chirpId}`)
+      )
+    );
+    const replyList = replyDocs.docs.map((replyDoc) => {
+      const replyData = replyDoc.data();
+      return <Chirp chirpData={replyData} />;
+    });
+
+    setChirpReplies(replyList);
+  };
 
   if (!account || !chirpData) {
     return (
@@ -80,7 +87,7 @@ export default function ChirpPage() {
           </div>
           <h1 className="title">Chirp</h1>
         </header>
-        <div className="chirp">
+        <div className="pageChirp chirp">
           <div className="profileArea">
             <ProfilePic
               picURL={account.picURL}
@@ -127,9 +134,9 @@ export default function ChirpPage() {
               </p>
             </div>
             <div className="likesCount countContainer">
-              <p className="count">{chirpData.likes}</p>
+              <p className="count">{chirpData.likes.length}</p>
               <p className="label">
-                {chirpData.likes === 1 ? 'Like' : 'Likes'}
+                {chirpData.likes.length === 1 ? 'Like' : 'Likes'}
               </p>
             </div>
           </div>
@@ -157,6 +164,7 @@ export default function ChirpPage() {
           </div>
         </div>
         <ChirpModule isReply={id} />
+        {chirpReplies}
       </div>
       <RightBar />
     </>

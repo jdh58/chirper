@@ -99,12 +99,14 @@ export default function ChirpModule({ overlay, killModule, isReply }) {
 
     if (!/image\/*/.test(file.type)) {
       console.error('Incorrect file type. Images only.');
+      displayToast('Incorrect file type. Images only.');
       setUploadedImage(null);
       return;
     }
     if (file.size > 2000000) {
       // Pop up a toast notification letting the user know and log to console.
       console.error('File size too large (Max size 2 MB)');
+      displayToast('File size too large (Max size 2 MB)');
       setUploadedImage(null);
       return;
     }

@@ -41,15 +41,16 @@ export default function MoreMenu({ chirpData, killMenu }) {
 
       await deleteDoc(chirpToDelete.ref);
 
-      // Lower chirp count by 1... o
+      // Lower chirp count by 1
       const currentChirps = userDoc.data().chirps;
       await updateDoc(userDoc.ref, {
         chirps: currentChirps - 1,
       });
 
-      // Display toast notification
       displayToast('Your Chirp was deleted');
     } catch (error) {
+      displayToast('Failed to delete Chirp.');
+
       console.error('Failed to delete Chirp', error);
     }
   };
@@ -77,8 +78,9 @@ export default function MoreMenu({ chirpData, killMenu }) {
         bookmarks: arrayUnion(chirpToBookmarkData),
       });
 
-      // Display toast notification here
+      displayToast('Your Chirp was bookmarked');
     } catch (error) {
+      displayToast('Failed to bookmark Chirp.');
       console.error('Failed to bookmark Chirp.', error);
     }
   };
