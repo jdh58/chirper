@@ -14,6 +14,7 @@ import {
   getDocs,
   getFirestore,
   limit,
+  onSnapshot,
   orderBy,
   query,
   updateDoc,
@@ -55,9 +56,10 @@ export default function Profile() {
       if (!profileDocs) {
         return;
       }
-      const profileInfo = profileDocs[0].data();
 
-      setProfile(profileInfo);
+      onSnapshot(profileDocs[0].ref, (profile) => {
+        setProfile(profile.data());
+      });
     })();
   }, [urlId, user]);
 
@@ -77,7 +79,13 @@ export default function Profile() {
 
       const chirpList = chirps.map((chirp) => {
         const chirpData = chirp.data();
-        return <Chirp chirpData={chirpData} profile={profile} />;
+        return (
+          <Chirp
+            chirpData={chirpData}
+            profile={profile}
+            key={chirpData.chirpId}
+          />
+        );
       });
 
       setProfileChirps(chirpList);

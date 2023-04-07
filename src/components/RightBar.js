@@ -24,7 +24,7 @@ export default function RightBar({ noSearch }) {
       );
 
       const accountList = accountDocs.docs.map((account) => (
-        <AccountModule profile={account.data()} />
+        <AccountModule profile={account.data()} key={account.data().userId} />
       ));
 
       console.log(accountList);
