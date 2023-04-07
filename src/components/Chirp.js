@@ -50,7 +50,9 @@ export default function Chirp({ chirpData, profile }) {
         setAccount(accountDocs.docs[0].data());
       })();
     }
+  }, []);
 
+  useEffect(() => {
     // Check if the user has it liked, if not, like it, if they do, unlike it
     for (let i = 0; i < user.likes.length; i++) {
       if (user.likes[i].chirpId === chirpData.chirpId) {

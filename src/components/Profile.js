@@ -57,9 +57,7 @@ export default function Profile() {
         return;
       }
 
-      onSnapshot(profileDocs[0].ref, (profile) => {
-        setProfile(profile.data());
-      });
+      setProfile(profileDocs[0].data());
     })();
   }, [urlId, user]);
 
