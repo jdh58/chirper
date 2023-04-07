@@ -3,6 +3,7 @@ import More from '../assets/more.svg';
 import Chat from '../assets/chat.svg';
 import ReChirp from '../assets/rechirp.svg';
 import Like from '../assets/like.svg';
+import LikeFill from '../assets/likeFill.svg';
 import Share from '../assets/share.svg';
 import '../styles/ProfilePic.css';
 import '../styles/Chirp.css';
@@ -37,6 +38,7 @@ export default function Chirp({ chirpData, profile }) {
     username: null,
     image: null,
   });
+  const [isLiked, setIsLiked] = useState(false);
 
   useEffect(() => {
     if (profile) {
@@ -48,7 +50,15 @@ export default function Chirp({ chirpData, profile }) {
         setAccount(accountDocs.docs[0].data());
       })();
     }
-  }, []);
+
+    // Check if the user has it liked, if not, like it, if they do, unlike it
+    for (let i = 0; i < user.likes.length; i++) {
+      if (user.likes[i].chirpId === chirpData.chirpId) {
+        setIsLiked(true);
+        return;
+      }
+    }
+  }, [user, profile]);
 
   function formatDistanceShort() {
     const distance = formatDistanceToNowStrict(parseISO(chirpData.postTime), {
@@ -90,17 +100,22 @@ export default function Chirp({ chirpData, profile }) {
 
   const handleLikeToggle = async () => {
     try {
+      // Pre-emptively set isLiked state for responsive UI
+      if (isLiked) {
+        setIsLiked(false);
+      } else {
+        setIsLiked(true);
+      }
+
       // Update the chirp's likes and current user's likes
       const chirpDoc = await getChirp(chirpData.chirpId);
       const userDoc = await getAccount(user.userId);
-
-      const currentLikes = chirpDoc.data().likes;
 
       // Check if the user has it liked, if not, like it, if they do, unlike it
       for (let i = 0; i < user.likes.length; i++) {
         if (user.likes[i].chirpId === chirpData.chirpId) {
           updateDoc(chirpDoc.ref, {
-            likes: currentLikes - 1,
+            likes: arrayRemove(user.userId),
           });
           updateDoc(userDoc.ref, {
             likes: arrayRemove(user.likes[i]),
@@ -109,7 +124,7 @@ export default function Chirp({ chirpData, profile }) {
         }
       }
       updateDoc(chirpDoc.ref, {
-        likes: currentLikes + 1,
+        likes: arrayUnion(user.userId),
       });
       updateDoc(userDoc.ref, {
         likes: arrayUnion(chirpData),
@@ -197,10 +212,14 @@ export default function Chirp({ chirpData, profile }) {
           </div>
           <div className="icon likes">
             <div className="container" onClick={handleLikeToggle}>
-              <img src={Like} alt="" />
+              {isLiked ? (
+                <img src={LikeFill} alt="" className="fill" />
+              ) : (
+                <img src={Like} alt="" />
+              )}
             </div>
             <p className="count">
-              {chirpData.likes > 0 ? chirpData.likes : null}
+              {chirpData.likes.length > 0 ? chirpData.likes.length : null}
             </p>
           </div>
           <div className="icon share">

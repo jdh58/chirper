@@ -132,10 +132,10 @@
   color: #ff2f60;
 }
 
-.chirpIcons .icon.likes:hover .container > img {
+/* .chirpIcons .icon.likes:hover .container > img {
   filter: invert(29%) sepia(86%) saturate(1365%) hue-rotate(336deg)
     brightness(110%) contrast(106%);
-}
+} */
 
 .chirpIcons .icon.reChirp:hover {
   color: hsl(130, 80%, 39%);
@@ -159,4 +159,19 @@
 .chirpInfo .settingContainer:hover > img {
   filter: invert(23%) sepia(87%) saturate(3655%) hue-rotate(267deg)
     brightness(89%) contrast(116%);
+}
+
+.chirpIcons .icon.likes .container > img.fill {
+  animation-name: likeAnimation;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes likeAnimation {
+  50% {
+    transform: scale(130%);
+  }
+  100% {
+    transform: scale(100%);
+  }
 }
