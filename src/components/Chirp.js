@@ -31,7 +31,6 @@ import ToastNotification from './ToastNotification';
 export default function Chirp({ chirpData, profile }) {
   const navigate = useNavigate();
   const [displayMore, setDisplayMore] = useState(false);
-  const [toast, setToast] = useState(null);
   const user = useContext(UserContext) || {
     likes: '',
   };
@@ -49,7 +48,7 @@ export default function Chirp({ chirpData, profile }) {
       (async () => {
         const accountDocs = await getAccount(chirpData.accountId);
 
-        setAccount(accountDocs.docs[0].data());
+        setAccount(accountDocs.data());
       })();
     }
   }, []);

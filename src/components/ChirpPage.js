@@ -58,7 +58,8 @@ export default function ChirpPage() {
     );
     const replyList = replyDocs.docs.map((replyDoc) => {
       const replyData = replyDoc.data();
-      return <Chirp chirpData={replyData} />;
+      console.log(replyData);
+      return <Chirp chirpData={replyData} key={replyData.chirpId} />;
     });
 
     setChirpReplies(replyList);
