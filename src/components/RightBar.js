@@ -37,7 +37,9 @@ export default function RightBar({ noSearch }) {
     <div className="rightBar">
       {!noSearch ? (
         <>
-          <Search />
+          <div className="searchContainer">
+            <Search />
+          </div>
           <div className="trends">
             <h2 className="title">What's happening</h2>
             <div className="whItems">

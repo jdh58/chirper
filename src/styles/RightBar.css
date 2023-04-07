@@ -3,7 +3,15 @@
   flex-direction: column;
   gap: 15px;
   margin-left: 25px;
-  margin-top: 5px;
+  height: 100%;
+}
+
+.rightBar .searchContainer {
+  z-index: 1;
+  position: sticky;
+  top: 0px;
+  padding: 5px 0;
+  background-color: #fff;
 }
 
 .rightBar .trends,
