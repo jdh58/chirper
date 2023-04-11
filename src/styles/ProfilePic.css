@@ -7,6 +7,7 @@
   align-items: center;
   justify-content: center;
   width: 48px;
+  height: 48px;
 }
 
 .imageOverlay {
@@ -25,6 +26,7 @@
 }
 
 .profilePicContainer > img {
+  object-fit: cover;
   width: 100%;
   height: 100%;
   border-radius: 1000px;

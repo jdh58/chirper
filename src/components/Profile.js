@@ -21,7 +21,12 @@ import {
   where,
 } from 'firebase/firestore';
 import { app } from '../firebase-config';
-import { getDownloadURL, getStorage, ref } from 'firebase/storage';
+import {
+  getDownloadURL,
+  getStorage,
+  ref,
+  uploadBytesResumable,
+} from 'firebase/storage';
 import UserContext from '../UserContext';
 import FollowButton from './FollowButton';
 import InfoSection from './InfoSection';
@@ -45,7 +50,6 @@ export default function Profile() {
     followers: '',
   });
   const [editMode, setEditMode] = useState(false);
-  const [uploadedProfilePic, setUploadedProfilePic] = useState(null);
   const displayToast = useContext(ToastContext);
 
   useEffect(() => {
@@ -141,25 +145,48 @@ export default function Profile() {
     displayToast('Your profile has been updated');
   };
 
-  // const handleImageAdded = (e) => {
-  //   const file = e.target.files[0];
+  const handleProfilePicAdded = async (e) => {
+    try {
+      const file = e.target.files[0];
 
-  //   if (!/image\/*/.test(file.type)) {
-  //     console.error('Incorrect file type. Images only.');
-  //     displayToast('Incorrect file type. Images only.');
-  //     setUploadedImage(null);
-  //     return;
-  //   }
-  //   if (file.size > 2000000) {
-  //     // Pop up a toast notification letting the user know and log to console.
-  //     console.error('File size too large (Max size 2 MB)');
-  //     displayToast('File size too large (Max size 2 MB)');
-  //     setUploadedImage(null);
-  //     return;
-  //   }
+      if (!/image\/*/.test(file.type)) {
+        console.error('Incorrect file type. Images only.');
+        displayToast('Incorrect file type. Images only.');
+        return;
+      }
+      if (file.size > 2000000) {
+        // Pop up a toast notification letting the user know and log to console.
+        console.error('File size too large (Max size 2 MB)');
+        displayToast('File size too large (Max size 2 MB)');
+        return;
+      }
 
-  //   setUploadedImage(file);
-  // };
+      /* Now store the profile pic (overwrites if existing) */
+      const newProfilePicPath = `profilePics/${profile.userId}`;
+      const newProfilePicRef = ref(getStorage(app), newProfilePicPath);
+      const newProfilePicSnapshot = await uploadBytesResumable(
+        newProfilePicRef,
+        file
+      );
+
+      const newProfilePicURL = await getDownloadURL(newProfilePicRef);
+      const newProfilePicStorageURL = newProfilePicSnapshot.metadata.fullPath;
+
+      // Now update the profile
+      const profileDoc = await getAccount(profile.userId);
+
+      updateDoc(profileDoc.ref, {
+        picURL: newProfilePicURL,
+        picStorageURL: newProfilePicStorageURL,
+      });
+
+      // Alert the user it was successful
+      displayToast('Your profile picture has been updated');
+    } catch (error) {
+      console.error('Failed to update profile picture.', error);
+      displayToast('Failed to update profile picture');
+    }
+  };
 
   return (
     <>
@@ -182,7 +209,11 @@ export default function Profile() {
           <img src="" alt="" className="banner" />
         </div>
         <div className="profileInfo">
-          <ProfilePic picURL={profile.picURL} editMode={editMode} />
+          <ProfilePic
+            picURL={profile.picURL}
+            editMode={editMode}
+            inputOnClick={handleProfilePicAdded}
+          />
           {editMode ? (
             <>
               <div

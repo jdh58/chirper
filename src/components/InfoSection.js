@@ -30,9 +30,12 @@ export default function InfoSection({ profile, editMode }) {
             />
           </div>
         </div>
-        <textarea className="bio" id="bio" onChange={autoGrow}>
-          {profile.bio}
-        </textarea>
+        <textarea
+          className="bio"
+          id="bio"
+          onChange={autoGrow}
+          defaultValue={profile.bio}
+        />
       </form>
     );
   } else {
