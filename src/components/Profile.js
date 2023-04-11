@@ -32,6 +32,7 @@ import FollowButton from './FollowButton';
 import InfoSection from './InfoSection';
 import ToastContext from '../ToastContext';
 import getAccount from '../getAccount';
+import AddPic from '../assets/addPic.svg';
 
 export default function Profile() {
   const urlId = useParams().id;
@@ -206,7 +207,16 @@ export default function Profile() {
           </div>
         </header>
         <div className="banner">
-          <img src="" alt="" className="banner" />
+          {editMode ? (
+            <div className="bannerInputContainer">
+              <img className="inputIcon" src={AddPic} alt="" />
+              <input type="file" name="bannerInput" id="bannerInput" />
+
+              <img src={profile.bannerUrl} alt="" className="bannerImage" />
+            </div>
+          ) : (
+            <img src={profile.bannerUrl} alt="" className="banner" />
+          )}
         </div>
         <div className="profileInfo">
           <ProfilePic
