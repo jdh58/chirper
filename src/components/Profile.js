@@ -26,6 +26,7 @@ import UserContext from '../UserContext';
 import FollowButton from './FollowButton';
 import InfoSection from './InfoSection';
 import ToastContext from '../ToastContext';
+import getAccount from '../getAccount';
 
 export default function Profile() {
   const urlId = useParams().id;
@@ -102,30 +103,38 @@ export default function Profile() {
     const newUsername = form.querySelector('input.at').value;
     const newBio = form.querySelector('textarea#bio').value;
 
-    // Go back to the normal
+    // Go back to the normal view
     setEditMode(false);
 
-    const accountDoc = await getDocs(
-      query(
-        collection(getFirestore(app), 'accounts'),
-        where('userId', '==', `${profile.userId}`)
-      )
-    );
+    // If changed, check if the new username already exists
+    if (newUsername !== user.username) {
+      let isExistingUsername = await getDocs(
+        query(
+          collection(getFirestore(app), 'accounts'),
+          where('username', '==', newUsername)
+        )
+      );
 
-    await updateDoc(accountDoc.docs[0].ref, {
+      isExistingUsername = isExistingUsername.docs[0];
+
+      if (isExistingUsername) {
+        console.error(`Can not update profile: Username already exists`);
+        displayToast(`Can not update profile: Username already exists`);
+        return;
+      }
+    }
+
+    const accountDoc = await getAccount(profile.userId);
+
+    await updateDoc(accountDoc.ref, {
       name: newName,
       username: newUsername,
       bio: newBio,
     });
 
-    const newAccountDoc = await getDocs(
-      query(
-        collection(getFirestore(app), 'accounts'),
-        where('userId', '==', `${profile.userId}`)
-      )
-    );
+    const newAccountDoc = await getAccount(profile.userId);
 
-    setProfile(newAccountDoc.docs[0].data());
+    setProfile(newAccountDoc.data());
 
     // Display notification letting user know their profile has been updated
     displayToast('Your profile has been updated');
