@@ -23,8 +23,8 @@ export default function SignUp({ killModule, toSignIn, finalize }) {
       } else {
         killModule();
       }
-    } catch {
-      console.error('Sign up Failed');
+    } catch (error) {
+      console.error('Sign up Failed', error);
     }
   };
 

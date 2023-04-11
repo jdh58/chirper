@@ -5,9 +5,28 @@ import Apple from '../assets/apple-original.svg';
 import Close from '../assets/close.svg';
 import { useState } from 'react';
 import { app } from '../firebase-config';
+import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import existCheck from '../existCheck.js';
 
-export default function SignIn({ killModule, toSignUp }) {
+export default function SignIn({ killModule, toSignUp, finalize }) {
   const [userInput, setUserInput] = useState('');
+
+  const handleGoogle = async () => {
+    try {
+      const google = new GoogleAuthProvider();
+      await signInWithPopup(getAuth(app), google);
+      const existingAccount = await existCheck(getAuth(app).currentUser.uid);
+      console.log(getAuth(app));
+
+      if (!!getAuth(app).currentUser && existingAccount.length === 0) {
+        finalize();
+      } else {
+        killModule();
+      }
+    } catch {
+      console.error('Sign in Failed');
+    }
+  };
 
   const checkUserInput = (e) => {
     const inputVal = e.target.value;
@@ -26,7 +45,7 @@ export default function SignIn({ killModule, toSignUp }) {
         <img src={Logo} alt="" className="logo" />
         <h1 className="title">Sign in to Chirper</h1>
         <div className="otherSignIn">
-          <button className="signInButton google">
+          <button className="signInButton google" onClick={handleGoogle}>
             <img src={Google} alt="" />
             <p>Sign in with Google</p>
           </button>
