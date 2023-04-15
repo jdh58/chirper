@@ -116,7 +116,7 @@ export default function Chirp({ chirpData, profile }) {
 
       // Check if the user has it liked, if not, like it, if they do, unlike it
       for (let i = 0; i < user.likes.length; i++) {
-        if (user.likes[i].chirpId === chirpData.chirpId) {
+        if (user.likes[i] === chirpData.chirpId) {
           updateDoc(chirpDoc.ref, {
             likes: arrayRemove(user.userId),
           });
@@ -130,7 +130,7 @@ export default function Chirp({ chirpData, profile }) {
         likes: arrayUnion(user.userId),
       });
       updateDoc(userDoc.ref, {
-        likes: arrayUnion(chirpData),
+        likes: arrayUnion(chirpData.chirpId),
       });
     } catch (error) {
       console.log('Failed to like chirp.' + error);

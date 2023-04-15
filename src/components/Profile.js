@@ -33,6 +33,7 @@ import InfoSection from './InfoSection';
 import ToastContext from '../ToastContext';
 import getAccount from '../getAccount';
 import AddPic from '../assets/addPic.svg';
+import getChirp from '../getChirp';
 
 export default function Profile() {
   const urlId = useParams().id;
@@ -42,6 +43,7 @@ export default function Profile() {
   const navigate = useNavigate();
   const [isUser, setIsUser] = useState(false);
   const [profileChirps, setProfileChirps] = useState(null);
+  const [profileLikes, setProfileLikes] = useState(null);
   const [currentTab, setCurrentTab] = useState('chirps');
   const [profile, setProfile] = useState({
     name: '',
@@ -49,6 +51,7 @@ export default function Profile() {
     bio: '',
     following: '',
     followers: '',
+    likes: [],
   });
   const [editMode, setEditMode] = useState(false);
   const displayToast = useContext(ToastContext);
@@ -65,10 +68,24 @@ export default function Profile() {
       if (!profileDocs) {
         return;
       }
-
       setProfile(profileDocs[0].data());
     })();
   }, [urlId, user]);
+
+  useEffect(() => {
+    (async () => {
+      console.log(profile.likes);
+      const likesList = await Promise.all(
+        profile.likes.map(async (likedChirpId) => {
+          const likedChirpDoc = await getChirp(likedChirpId);
+          const likedChirpData = likedChirpDoc.data();
+          return <Chirp chirpData={likedChirpData} key={likedChirpId} />;
+        })
+      );
+      console.log(likesList);
+      setProfileLikes(likesList);
+    })();
+  }, [profile]);
 
   useEffect(() => {
     /* Sort the tweets so newest render at the top, set state
@@ -301,7 +318,8 @@ export default function Profile() {
           />
           <div className={`indicator ${currentTab}`}></div>
         </div>
-        {profileChirps}
+        {currentTab === 'chirps' ? profileChirps : null}
+        {currentTab === 'likes' ? profileLikes : null}
       </div>
       <RightBar />
     </>
