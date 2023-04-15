@@ -76,13 +76,13 @@ export default function Profile() {
     (async () => {
       console.log(profile.likes);
       const likesList = await Promise.all(
-        profile.likes.map(async (likedChirpId) => {
+        profile.likes.reverse().map(async (likedChirpId) => {
           const likedChirpDoc = await getChirp(likedChirpId);
           const likedChirpData = likedChirpDoc.data();
           return <Chirp chirpData={likedChirpData} key={likedChirpId} />;
         })
       );
-      console.log(likesList);
+      console.log();
       setProfileLikes(likesList);
     })();
   }, [profile]);

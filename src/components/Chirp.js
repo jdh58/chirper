@@ -40,6 +40,7 @@ export default function Chirp({ chirpData, profile }) {
     image: null,
   });
   const [isLiked, setIsLiked] = useState(false);
+  const [chirpLikes, setChirpLikes] = useState(chirpData.likes.length);
 
   useEffect(() => {
     if (profile) {
@@ -56,7 +57,7 @@ export default function Chirp({ chirpData, profile }) {
   useEffect(() => {
     // Check if the user has it liked, if not, like it, if they do, unlike it
     for (let i = 0; i < user.likes.length; i++) {
-      if (user.likes[i].chirpId === chirpData.chirpId) {
+      if (user.likes[i] === chirpData.chirpId) {
         setIsLiked(true);
         return;
       }
@@ -103,11 +104,13 @@ export default function Chirp({ chirpData, profile }) {
 
   const handleLikeToggle = async () => {
     try {
-      // Pre-emptively set isLiked state for responsive UI
+      // Pre-emptively set isLiked state and update number for responsive UI
       if (isLiked) {
         setIsLiked(false);
+        setChirpLikes(chirpLikes - 1);
       } else {
         setIsLiked(true);
+        setChirpLikes(chirpLikes + 1);
       }
 
       // Update the chirp's likes and current user's likes
@@ -221,9 +224,7 @@ export default function Chirp({ chirpData, profile }) {
                 <img src={Like} alt="" />
               )}
             </div>
-            <p className="count">
-              {chirpData.likes.length > 0 ? chirpData.likes.length : null}
-            </p>
+            <p className="count">{chirpLikes > 0 ? chirpLikes : null}</p>
           </div>
           <div className="icon share">
             <div className="container">
