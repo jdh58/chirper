@@ -82,7 +82,6 @@ export default function Profile() {
           return <Chirp chirpData={likedChirpData} key={likedChirpId} />;
         })
       );
-      console.log();
       setProfileLikes(likesList);
     })();
   }, [profile]);
@@ -167,17 +166,7 @@ export default function Profile() {
     try {
       const file = e.target.files[0];
 
-      if (!/image\/*/.test(file.type)) {
-        console.error('Incorrect file type. Images only.');
-        displayToast('Incorrect file type. Images only.');
-        return;
-      }
-      if (file.size > 2000000) {
-        // Pop up a toast notification letting the user know and log to console.
-        console.error('File size too large (Max size 2 MB)');
-        displayToast('File size too large (Max size 2 MB)');
-        return;
-      }
+      checkValidImage(file);
 
       /* Now store the profile pic (overwrites if existing) */
       const newProfilePicPath = `profilePics/${profile.userId}`;
@@ -191,9 +180,9 @@ export default function Profile() {
       const newProfilePicStorageURL = newProfilePicSnapshot.metadata.fullPath;
 
       // Now update the profile
-      const profileDoc = await getAccount(profile.userId);
+      const userDoc = await getAccount(user.userId);
 
-      updateDoc(profileDoc.ref, {
+      updateDoc(userDoc.ref, {
         picURL: newProfilePicURL,
         picStorageURL: newProfilePicStorageURL,
       });
@@ -203,6 +192,50 @@ export default function Profile() {
     } catch (error) {
       console.error('Failed to update profile picture.', error);
       displayToast('Failed to update profile picture');
+    }
+  };
+
+  const handleBannerUpload = async (e) => {
+    try {
+      const file = e.target.files[0];
+
+      checkValidImage(file);
+
+      /* Now store the profile pic (overwrites if existing) */
+      const newBannerPath = `banners/${profile.userId}`;
+      const newBannerRef = ref(getStorage(app), newBannerPath);
+      const newBannerSnapshot = await uploadBytesResumable(newBannerRef, file);
+
+      const newBannerURL = await getDownloadURL(newBannerRef);
+      const newBannerStorageURL = newBannerSnapshot.metadata.fullPath;
+
+      // Now update the profile
+      const userDoc = await getAccount(user.userId);
+
+      updateDoc(userDoc.ref, {
+        bannerURL: newBannerURL,
+        bannerStorageURL: newBannerStorageURL,
+      });
+
+      // Alert the user it was successful
+      displayToast('Your banner has been updated');
+    } catch (error) {
+      console.error('Could not upload banner', error);
+      displayToast('Could not upload banner.');
+    }
+  };
+
+  const checkValidImage = (file) => {
+    if (!/image\/*/.test(file.type)) {
+      console.error('Incorrect file type. Images only.');
+      displayToast('Incorrect file type. Images only.');
+      return;
+    }
+    if (file.size > 2000000) {
+      // Pop up a toast notification letting the user know and log to console.
+      console.error('File size too large (Max size 2 MB)');
+      displayToast('File size too large (Max size 2 MB)');
+      return;
     }
   };
 
@@ -226,13 +259,18 @@ export default function Profile() {
         <div className="banner">
           {editMode ? (
             <div className="bannerInputContainer">
+              <input
+                type="file"
+                name="bannerInput"
+                id="bannerInput"
+                onChange={handleBannerUpload}
+              />
               <img className="inputIcon" src={AddPic} alt="" />
-              <input type="file" name="bannerInput" id="bannerInput" />
-
-              <img src={profile.bannerUrl} alt="" className="bannerImage" />
+              <img src={profile.bannerURL} alt="" className="bannerImage" />
+              <div className="imageOverlay"></div>
             </div>
           ) : (
-            <img src={profile.bannerUrl} alt="" className="banner" />
+            <img src={profile.bannerURL} alt="" className="bannerImage" />
           )}
         </div>
         <div className="profileInfo">
