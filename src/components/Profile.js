@@ -57,6 +57,8 @@ export default function Profile() {
   const displayToast = useContext(ToastContext);
 
   useEffect(() => {
+    setEditMode(false);
+
     if (urlId === user.userId) {
       setIsUser(true);
     } else {
@@ -306,7 +308,7 @@ export default function Profile() {
               Edit profile
             </div>
           ) : (
-            <FollowButton profile={profile} isProfile={true} />
+            <FollowButton clickedUser={profile} isProfile={true} />
           )}
           {editMode ? (
             <InfoSection profile={profile} editMode={editMode} />

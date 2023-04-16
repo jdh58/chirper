@@ -1,3 +1,4 @@
+import { click } from '@testing-library/user-event/dist/click';
 import {
   arrayRemove,
   arrayUnion,
@@ -10,61 +11,69 @@ import {
 } from 'firebase/firestore';
 import { useContext, useEffect, useState } from 'react';
 import { app } from '../firebase-config';
+import getAccount from '../getAccount';
 import UserContext from '../UserContext';
 
-export default function FollowButton({ profile, isProfile }) {
-  const user = useContext(UserContext) || {
+export default function FollowButton({ clickedUser, isProfile }) {
+  const loggedInUser = useContext(UserContext) || {
     following: '',
   };
   const [isFollowing, setIsFollowing] = useState(false);
+  const [loggedInUserDoc, setLoggedInUserDoc] = useState(null);
+  const [clickedUserDoc, setClickedUserDoc] = useState(null);
 
   useEffect(() => {
-    for (let i = 0; i < user.following.length; i++) {
-      if (user.following[i].userId) {
+    if (loggedInUser.userId) {
+      (async () => {
+        setLoggedInUserDoc(await getAccount(loggedInUser.userId));
+      })();
+    }
+  }, [loggedInUser]);
+
+  useEffect(() => {
+    if (clickedUser.userId) {
+      (async () => {
+        setClickedUserDoc(await getAccount(clickedUser.userId));
+      })();
+    }
+  }, [clickedUser]);
+
+  useEffect(() => {
+    for (let i = 0; i < loggedInUser.following.length; i++) {
+      if (loggedInUser.following[i]) {
         setIsFollowing(true);
         return;
       }
     }
-  }, [user]);
+  }, [loggedInUser]);
 
   const handleFollow = async () => {
+    // Change state so button updates
     setIsFollowing(true);
 
-    const userDoc = await getDocs(
-      query(
-        collection(getFirestore(app), 'accounts'),
-        where('userId', '==', `${user.userId}`)
-      )
-    );
+    // Update logged in user's following
+    await updateDoc(loggedInUserDoc.ref, {
+      following: arrayUnion(clickedUser.userId),
+    });
 
-    await updateDoc(userDoc.docs[0].ref, {
-      following: arrayUnion(profile),
+    // Update clicked user's followers
+    await updateDoc(clickedUserDoc.ref, {
+      followers: arrayUnion(loggedInUser.userId),
     });
   };
 
   const handleUnfollow = async () => {
+    // Update state so button updates
     setIsFollowing(false);
 
-    const userDoc = await getDocs(
-      query(
-        collection(getFirestore(app), 'accounts'),
-        where('userId', '==', `${user.userId}`)
-      )
-    );
+    // Update logged in user's following
+    await updateDoc(loggedInUserDoc.ref, {
+      following: arrayRemove(clickedUser.userId),
+    });
 
-    const userData = userDoc.docs[0].data();
-    let removeObject;
-
-    for (let i = 0; i < userData.following.length; i++) {
-      console.log(userData.following[i].userId);
-      if (userData.following[i].userId === profile.userId) {
-        console.log('banana');
-        removeObject = userData.following[i];
-      }
-    }
-
-    await updateDoc(userDoc.docs[0].ref, {
-      following: arrayRemove(removeObject),
+    // Update clicked user's followers
+    await updateDoc(clickedUserDoc.ref, {
+      followers: arrayRemove(loggedInUser.userId),
     });
   };
 
