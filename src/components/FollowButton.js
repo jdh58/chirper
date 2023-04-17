@@ -40,12 +40,12 @@ export default function FollowButton({ clickedUser, isProfile }) {
 
   useEffect(() => {
     for (let i = 0; i < loggedInUser.following.length; i++) {
-      if (loggedInUser.following[i]) {
+      if (loggedInUser.following[i] === clickedUser.userId) {
         setIsFollowing(true);
         return;
       }
     }
-  }, [loggedInUser]);
+  }, [loggedInUser, clickedUser]);
 
   const handleFollow = async () => {
     // Change state so button updates
@@ -80,21 +80,21 @@ export default function FollowButton({ clickedUser, isProfile }) {
   return (
     <>
       {isFollowing ? (
-        <div
+        <button
           className={
             isProfile ? 'unfollowButton profileButton' : 'unfollowButton'
           }
           onClick={handleUnfollow}
         >
           Unfollow
-        </div>
+        </button>
       ) : (
-        <div
+        <button
           className={isProfile ? 'followButton profileButton' : 'followButton'}
           onClick={handleFollow}
         >
           Follow
-        </div>
+        </button>
       )}
     </>
   );

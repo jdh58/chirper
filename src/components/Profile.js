@@ -34,6 +34,7 @@ import ToastContext from '../ToastContext';
 import getAccount from '../getAccount';
 import AddPic from '../assets/addPic.svg';
 import getChirp from '../getChirp';
+import Header from './Header';
 
 export default function Profile() {
   const urlId = useParams().id;
@@ -244,20 +245,11 @@ export default function Profile() {
   return (
     <>
       <div className="profilePage page">
-        <header>
-          <div
-            className="backContainer"
-            onClick={() => {
-              navigate(-1);
-            }}
-          >
-            <img src={Back} alt="" className="backButton" />
-          </div>
-          <div className="info">
-            <p className="name">{profile.name}</p>
-            <p className="chirps">{profile.chirps} Chirps</p>
-          </div>
-        </header>
+        <Header
+          hasBack={true}
+          top={profile.name}
+          bottom={`${profile.chirps} Chirps`}
+        />
         <div className="banner">
           {editMode ? (
             <div className="bannerInputContainer">

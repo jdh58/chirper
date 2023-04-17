@@ -1,4 +1,4 @@
-.bookmarkPage header {
+header:not(.homePage header, .searchPage header, .explorePage header) {
   padding: 0 10px;
   display: flex;
   gap: 15px;
@@ -6,7 +6,7 @@
   height: 52.5px;
 }
 
-.bookmarkPage header .info {
+header .info {
   height: 100%;
   padding: 6px 0;
   margin-left: 10px;
@@ -15,16 +15,16 @@
   justify-content: space-between;
 }
 
-.bookmarkPage header .name {
+header .top {
   font-size: 2rem;
   font-weight: 700;
 }
 
-.bookmarkPage header .at {
+header .bottom {
   font-size: 1.4rem;
   color: var(--light-black);
 }
 
-.bookmarkPage header img {
+header img {
   width: 22px;
 }

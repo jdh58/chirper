@@ -3,7 +3,7 @@ import getChirp from '../getChirp';
 import UserContext from '../UserContext';
 import Chirp from './Chirp';
 import RightBar from './RightBar';
-import '../styles/BookmarkPage.css';
+import Header from './Header';
 
 export default function BookmarkPage() {
   const user = useContext(UserContext);
@@ -38,12 +38,7 @@ export default function BookmarkPage() {
   return (
     <>
       <div className="bookmarkPage page">
-        <header>
-          <div className="info">
-            <p className="name">Bookmarks</p>
-            <p className="at">@{user.username}</p>
-          </div>
-        </header>
+        <Header hasBack={false} top="Bookmarks" bottom={`@${user.username}`} />
         {bookmarkedChirps}
       </div>
       <RightBar />

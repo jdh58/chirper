@@ -313,8 +313,8 @@ textarea:focus {
   opacity: 1;
 }
 
-.followers:hover,
-.following:hover {
+.profilePage .followers:hover,
+.profilePage .following:hover {
   cursor: pointer;
   text-decoration: underline;
 }

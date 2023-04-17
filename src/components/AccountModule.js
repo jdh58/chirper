@@ -1,6 +1,7 @@
 import ProfilePic from './ProfilePic';
 import '../styles/AccountModule.css';
 import { useNavigate } from 'react-router-dom';
+import FollowButton from './FollowButton';
 
 export default function AccountModule({ profile }) {
   const navigate = useNavigate();
@@ -18,7 +19,7 @@ export default function AccountModule({ profile }) {
         <p className="name">{profile.name}</p>
         <p className="at">@{profile.username}</p>
       </div>
-      <button className="follow">Follow</button>
+      <FollowButton clickedUser={profile} isProfile={false} />
     </div>
   );
 }

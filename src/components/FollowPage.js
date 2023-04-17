@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import getAccount from '../getAccount';
 import AccountModule from './AccountModule';
+import Header from './Header';
 import RightBar from './RightBar';
 
 export default function FollowPage() {
@@ -47,7 +48,14 @@ export default function FollowPage() {
 
   return (
     <>
-      <div className="followPage page">{accountModuleList}</div>
+      <div className="followPage page">
+        <Header
+          hasBack={true}
+          top={`${accountType[0].toUpperCase()}${accountType.slice(1)}`}
+          bottom={profileDoc ? `@${profileDoc.data().username}` : null}
+        />
+        {accountModuleList}
+      </div>
       <RightBar />
     </>
   );
