@@ -87,7 +87,7 @@ export default function ChirpModule({ overlay, killModule, isReply }) {
     }
 
     // Disable the button if there's no text, otherwise enable it.
-    if (textBox.textContent.length === 0) {
+    if (textBox.textContent.length === 0 || textBox.textContent.length > 280) {
       setDisabled(true);
     } else {
       setDisabled(false);
@@ -132,6 +132,7 @@ export default function ChirpModule({ overlay, killModule, isReply }) {
       // Remove excessive newlines
       text = text.replace(/\n\n+/g, '\n\n');
       text = text.replace(/\n$/, '');
+      text = text.replace(/^\n/, '');
 
       /* Clear box + image once value is saved, and let the module know to 
       update. This also disables the button so the user can't double Chirp.
