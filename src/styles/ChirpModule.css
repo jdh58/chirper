@@ -13,6 +13,7 @@
   grid-template-columns: 70px 1fr;
   grid-row: 1 / 2;
   grid-column: 1 / -1;
+  position: relative;
 }
 
 .uploadedImage {
@@ -83,11 +84,27 @@
   cursor: text;
 }
 
-#chirpInput > p {
-  display: inline;
+#chirpInput.invis {
+  position: relative;
+  z-index: 2;
+  color: transparent;
+  caret-color: black;
+}
+
+#chirpInput.copy {
+  position: absolute;
+  left: 70px;
+  width: calc(100% - 70px);
+  overflow: hidden;
+  white-space: pre-wrap;
+  word-wrap: break-word;
 }
 
 #chirpInput > span {
+  display: inline;
+}
+
+#chirpInput > .hashtag {
   display: inline;
   color: var(--blue);
 }

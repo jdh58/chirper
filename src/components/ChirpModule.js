@@ -71,20 +71,25 @@ export default function ChirpModule({ overlay, killModule, isReply }) {
     return null;
   }
 
-  const autoGrow = (textBox) => {
+  const autoGrow = (textBox, copyTextBox) => {
     textBox.style.height = '54px';
     textBox.style.height = `${textBox.scrollHeight}px`;
+    copyTextBox.style.height = '54px';
+    copyTextBox.style.height = `${copyTextBox.scrollHeight}px`;
   };
 
   const handleChirpChange = (textBox) => {
     if (!textBox.nodeName) {
       textBox = textBox.target;
     }
+    const copyTextBox = textBox.parentElement.querySelector('#chirpInput.copy');
 
-    // Make sure the box size changes dynamically if it's not an overlay
-    if (!overlay) {
-      autoGrow(textBox);
-    }
+    // Set text copy equal to new input
+    document.querySelector('#chirpInput.copy').textContent =
+      textBox.textContent;
+
+    // Make sure the box size changes dynamically
+    autoGrow(textBox, copyTextBox);
 
     // Disable the button if there's no text, otherwise enable it.
     if (textBox.textContent.length === 0 || textBox.textContent.length > 280) {
@@ -99,8 +104,13 @@ export default function ChirpModule({ overlay, killModule, isReply }) {
     // Find and highlight all of the @'s and #'s
     const match = /#[a-zA-Z0-9]+/g.exec(textBox.textContent);
 
+    // If there are any hashtags, we got work to do
     if (match) {
-      console.log(match);
+      // Find the current caret position
+
+      // Find the element I'm on
+
+      // Set the text input
       const currentInput = textBox.textContent;
       textBox.textContent = '';
       textBox.appendChild(document.createElement('p')).textContent =
@@ -109,9 +119,16 @@ export default function ChirpModule({ overlay, killModule, isReply }) {
         match[0];
       textBox.appendChild(document.createElement('p')).textContent =
         currentInput.slice(match.index + match[0].length);
-    }
 
-    console.log(match);
+      const selection = document.getSelection();
+      // Set the caret to the beggining
+      selection.collapse(textBox, 0);
+
+      // Move the caret to the position
+      for (let i = 0; i < 3; i++) {
+        selection.modify('move', 'forward', 'character');
+      }
+    }
   };
 
   const handleImageAdded = (e) => {
@@ -245,7 +262,7 @@ export default function ChirpModule({ overlay, killModule, isReply }) {
           <img src={user ? user.picURL : null} alt="" className="profilePic" />
           <div className="inputContainer">
             <span
-              className="textarea"
+              className="textarea invis"
               contentEditable="true"
               name="chirpInput"
               id="chirpInput"
@@ -253,7 +270,11 @@ export default function ChirpModule({ overlay, killModule, isReply }) {
                 isReply ? 'Chirp your reply' : "What's happening?"
               }
               onInput={handleChirpChange}
-              maxLength="280"
+            ></span>
+            <span
+              className="textarea copy"
+              name="chirpInput"
+              id="chirpInput"
             ></span>
           </div>
           {imageDisplay}
