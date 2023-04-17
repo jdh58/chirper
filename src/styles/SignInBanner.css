@@ -58,6 +58,11 @@
   background-color: var(--blue-hover);
 }
 
+.buttons .signUp {
+  border: 1px solid var(--light-grey);
+  background-color: #fff;
+}
+
 .buttons .signUp:hover {
   cursor: pointer;
   background-color: var(--light-grey);
