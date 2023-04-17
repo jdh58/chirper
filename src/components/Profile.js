@@ -44,6 +44,8 @@ export default function Profile() {
   const navigate = useNavigate();
   const [isUser, setIsUser] = useState(false);
   const [profileChirps, setProfileChirps] = useState(null);
+  const [profileReplies, setProfileReplies] = useState(null);
+  const [profileMediaChirps, setProfileMediaChirps] = useState(null);
   const [profileLikes, setProfileLikes] = useState(null);
   const [currentTab, setCurrentTab] = useState('chirps');
   const [profile, setProfile] = useState({
@@ -93,7 +95,7 @@ export default function Profile() {
     /* Sort the tweets so newest render at the top, set state
    to be a mapped list of the user's chirps as chirp elements */
     (async () => {
-      const chirpDocs = await getDocs(
+      let chirpDocs = await getDocs(
         query(
           collection(getFirestore(app), 'chirps'),
           where('accountId', '==', `${profile.userId}`),
@@ -101,20 +103,48 @@ export default function Profile() {
         )
       );
 
-      const chirps = chirpDocs.docs;
+      chirpDocs = chirpDocs.docs;
 
-      const chirpList = chirps.map((chirp) => {
+      function convertToComponents(array) {
+        return array.map((chirp) => {
+          const chirpData = chirp.data();
+          return (
+            <Chirp
+              chirpData={chirpData}
+              profile={profile}
+              key={chirpData.chirpId}
+            />
+          );
+        });
+      }
+
+      const chirpList = convertToComponents(chirpDocs);
+
+      const mediaChirpDocs = chirpDocs.filter((chirp) => {
         const chirpData = chirp.data();
-        return (
-          <Chirp
-            chirpData={chirpData}
-            profile={profile}
-            key={chirpData.chirpId}
-          />
-        );
+        if (chirpData.imageURL) {
+          return true;
+        } else {
+          return false;
+        }
       });
 
+      const mediaChirpList = convertToComponents(mediaChirpDocs);
+
+      const replyDocs = chirpDocs.filter((chirp) => {
+        const chirpData = chirp.data();
+        if (chirpData.isReply) {
+          return true;
+        } else {
+          return false;
+        }
+      });
+
+      const replyList = convertToComponents(replyDocs);
+
       setProfileChirps(chirpList);
+      setProfileReplies(replyList);
+      setProfileMediaChirps(mediaChirpList);
     })();
   }, [profile]);
 
@@ -351,6 +381,8 @@ export default function Profile() {
           <div className={`indicator ${currentTab}`}></div>
         </div>
         {currentTab === 'chirps' ? profileChirps : null}
+        {currentTab === 'replies' ? profileReplies : null}
+        {currentTab === 'media' ? profileMediaChirps : null}
         {currentTab === 'likes' ? profileLikes : null}
       </div>
       <RightBar />
