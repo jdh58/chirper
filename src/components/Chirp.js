@@ -27,6 +27,7 @@ import getChirp from '../getChirp';
 import UserContext from '../UserContext';
 import getAccount from '../getAccount';
 import ToastNotification from './ToastNotification';
+import ChirpIcons from './ChirpIcons';
 
 export default function Chirp({ chirpData, profile }) {
   const navigate = useNavigate();
@@ -53,16 +54,6 @@ export default function Chirp({ chirpData, profile }) {
       })();
     }
   }, [chirpData, profile]);
-
-  useEffect(() => {
-    // Check if the user has it liked, if not, like it, if they do, unlike it
-    for (let i = 0; i < user.likes.length; i++) {
-      if (user.likes[i] === chirpData.chirpId) {
-        setIsLiked(true);
-        return;
-      }
-    }
-  }, [user, profile]);
 
   function formatDistanceShort() {
     const distance = formatDistanceToNowStrict(parseISO(chirpData.postTime), {
@@ -99,44 +90,6 @@ export default function Chirp({ chirpData, profile }) {
     ) {
       /* If any of these are clicked, redirect to chirp page */
       navigate(`/chirp/${chirpData.chirpId}`);
-    }
-  };
-
-  const handleLikeToggle = async () => {
-    try {
-      // Pre-emptively set isLiked state and update number for responsive UI
-      if (isLiked) {
-        setIsLiked(false);
-        setChirpLikes(chirpLikes - 1);
-      } else {
-        setIsLiked(true);
-        setChirpLikes(chirpLikes + 1);
-      }
-
-      // Update the chirp's likes and current user's likes
-      const chirpDoc = await getChirp(chirpData.chirpId);
-      const userDoc = await getAccount(user.userId);
-
-      // Check if the user has it liked, if not, like it, if they do, unlike it
-      for (let i = 0; i < user.likes.length; i++) {
-        if (user.likes[i] === chirpData.chirpId) {
-          updateDoc(chirpDoc.ref, {
-            likes: arrayRemove(user.userId),
-          });
-          updateDoc(userDoc.ref, {
-            likes: arrayRemove(user.likes[i]),
-          });
-          return;
-        }
-      }
-      updateDoc(chirpDoc.ref, {
-        likes: arrayUnion(user.userId),
-      });
-      updateDoc(userDoc.ref, {
-        likes: arrayUnion(chirpData.chirpId),
-      });
-    } catch (error) {
-      console.log('Failed to like chirp.' + error);
     }
   };
 
@@ -199,39 +152,7 @@ export default function Chirp({ chirpData, profile }) {
             <img src={chirpData.imageURL} alt="" className="chirpImage" />
           ) : null}
         </div>
-        <div className="chirpIcons">
-          <div className="icon chat">
-            <div className="container">
-              <img src={Chat} alt="" />
-            </div>
-            <p className="count">
-              {chirpData.replies > 0 ? chirpData.replies : null}
-            </p>
-          </div>
-          <div className="icon reChirp">
-            <div className="container">
-              <img src={ReChirp} alt="" />
-            </div>
-            <p className="count">
-              {chirpData.reChirps > 0 ? chirpData.reChirps : null}
-            </p>
-          </div>
-          <div className="icon likes">
-            <div className="container" onClick={handleLikeToggle}>
-              {isLiked ? (
-                <img src={LikeFill} alt="" className="fill" />
-              ) : (
-                <img src={Like} alt="" />
-              )}
-            </div>
-            <p className="count">{chirpLikes > 0 ? chirpLikes : null}</p>
-          </div>
-          <div className="icon share">
-            <div className="container">
-              <img src={Share} alt="" />
-            </div>
-          </div>
-        </div>
+        <ChirpIcons chirpData={chirpData} fullPage={false} />
       </div>
     </>
   );

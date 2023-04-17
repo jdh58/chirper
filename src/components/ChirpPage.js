@@ -10,10 +10,13 @@ import Share from '../assets/share.svg';
 import Back from '../assets/back.svg';
 import RightBar from './RightBar';
 import {
+  arrayRemove,
+  arrayUnion,
   collection,
   getDocs,
   getFirestore,
   query,
+  updateDoc,
   where,
 } from 'firebase/firestore';
 import { app } from '../firebase-config';
@@ -24,6 +27,7 @@ import getAccount from '../getAccount';
 import getChirp from '../getChirp';
 import '../styles/Chirp.css';
 import UserContext from '../UserContext';
+import ChirpIcons from './ChirpIcons';
 
 export default function ChirpPage() {
   const id = useParams().id;
@@ -32,10 +36,13 @@ export default function ChirpPage() {
   const [account, setAccount] = useState(null);
   const [chirpData, setChirpData] = useState(null);
   const [chirpReplies, setChirpReplies] = useState(null);
+  const [isLiked, setIsLiked] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
+  }, []);
 
+  useEffect(() => {
     (async () => {
       const chirpDoc = await getChirp(parseInt(id));
       setChirpData(chirpDoc.data());
@@ -123,48 +130,7 @@ export default function ChirpPage() {
             <div className="separator"></div>
             {format(parseISO(chirpData.postTime), 'MMMM d, yyyy')}
           </div>
-          <div className="chirpStats">
-            <div className="replyCount countContainer">
-              <p className="count">{chirpData.replies}</p>
-              <p className="label">
-                {chirpData.replies === 1 ? 'Reply' : 'Replies'}
-              </p>
-            </div>
-            <div className="reChirpCount countContainer">
-              <p className="count">{chirpData.reChirps}</p>
-              <p className="label">
-                {chirpData.reChirps === 1 ? 'ReChirp' : 'ReChirps'}
-              </p>
-            </div>
-            <div className="likesCount countContainer">
-              <p className="count">{chirpData.likes.length}</p>
-              <p className="label">
-                {chirpData.likes.length === 1 ? 'Like' : 'Likes'}
-              </p>
-            </div>
-          </div>
-          <div className="chirpIcons">
-            <div className="icon chat">
-              <div className="container">
-                <img src={Chat} alt="" />
-              </div>
-            </div>
-            <div className="icon reChirp">
-              <div className="container">
-                <img src={ReChirp} alt="" />
-              </div>
-            </div>
-            <div className="icon likes">
-              <div className="container">
-                <img src={Like} alt="" />
-              </div>
-            </div>
-            <div className="icon share">
-              <div className="container">
-                <img src={Share} alt="" />
-              </div>
-            </div>
-          </div>
+          <ChirpIcons chirpData={chirpData} fullPage={true} />
         </div>
         <ChirpModule isReply={id} />
         {chirpReplies}
