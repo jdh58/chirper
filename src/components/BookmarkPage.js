@@ -15,7 +15,7 @@ export default function BookmarkPage() {
       (async () => {
         try {
           const chirpList = await Promise.all(
-            user.bookmarks.map(async (chirpId) => {
+            user.bookmarks.reverse().map(async (chirpId) => {
               return await getChirp(chirpId);
             })
           );
