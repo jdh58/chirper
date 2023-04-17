@@ -52,7 +52,7 @@ export default function Chirp({ chirpData, profile }) {
         setAccount(accountDocs.data());
       })();
     }
-  }, []);
+  }, [chirpData, profile]);
 
   useEffect(() => {
     // Check if the user has it liked, if not, like it, if they do, unlike it

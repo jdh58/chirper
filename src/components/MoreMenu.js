@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import UserContext from '../UserContext';
 import Delete from '../assets/delete.svg';
 import Bookmark from '../assets/bookmark.svg';
+import BookmarkFill from '../assets/bookmark_fill.svg';
 import '../styles/MoreMenu.css';
 import {
   collection,
@@ -13,6 +14,7 @@ import {
   doc,
   updateDoc,
   arrayUnion,
+  arrayRemove,
 } from 'firebase/firestore';
 import { app } from '../firebase-config';
 import getChirp from '../getChirp';
@@ -21,8 +23,10 @@ import ToastContext from '../ToastContext';
 
 export default function MoreMenu({ chirpData, killMenu }) {
   const [isUsers, setIsUsers] = useState(false);
+  const [alreadyBookmarked, setAlreadyBookmarked] = useState(false);
   const user = useContext(UserContext) || {
     userId: '',
+    bookmarks: [],
   };
   const displayToast = useContext(ToastContext);
   const [userDoc, setUserDoc] = useState(null);
@@ -33,13 +37,18 @@ export default function MoreMenu({ chirpData, killMenu }) {
       setIsUsers(true);
     }
 
+    // Check if the user already has it bookmarked
+    if (user.bookmarks.includes(chirpData.chirpId)) {
+      setAlreadyBookmarked(true);
+    }
+
     // Set the user document from the user context.
     (async () => {
       if (user.userId) {
         setUserDoc(await getAccount(user.userId));
       }
     })();
-  }, []);
+  }, [user, chirpData]);
 
   const handleDelete = async () => {
     try {
@@ -64,13 +73,17 @@ export default function MoreMenu({ chirpData, killMenu }) {
   const handleBookmark = async () => {
     try {
       killMenu();
-      const chirpToBookmark = await getChirp(chirpData.chirpId);
-
-      await updateDoc(userDoc.ref, {
-        bookmarks: arrayUnion(chirpToBookmark.data().chirpId),
-      });
-
-      displayToast('Your Chirp was bookmarked');
+      if (alreadyBookmarked) {
+        await updateDoc(userDoc.ref, {
+          bookmarks: arrayRemove(chirpData.chirpId),
+        });
+        displayToast('Removed bookmark.');
+      } else {
+        await updateDoc(userDoc.ref, {
+          bookmarks: arrayUnion(chirpData.chirpId),
+        });
+        displayToast('Bookmarked Chirp.');
+      }
     } catch (error) {
       displayToast('Failed to bookmark Chirp.');
       console.error('Failed to bookmark Chirp.', error);
@@ -87,8 +100,8 @@ export default function MoreMenu({ chirpData, killMenu }) {
           </div>
         ) : null}
         <div className="bookmark option" onClick={handleBookmark}>
-          <img src={Bookmark} alt="" />
-          <p>Bookmark</p>
+          <img src={alreadyBookmarked ? BookmarkFill : Bookmark} alt="" />
+          <p>{alreadyBookmarked ? 'Remove Bookmark' : 'Bookmark'}</p>
         </div>
       </div>
     </>
