@@ -106,28 +106,18 @@ export default function ChirpModule({ overlay, killModule, isReply }) {
 
     // If there are any hashtags, we got work to do
     if (match) {
-      // Find the current caret position
-
-      // Find the element I'm on
-
       // Set the text input
       const currentInput = textBox.textContent;
-      textBox.textContent = '';
-      textBox.appendChild(document.createElement('p')).textContent =
+      copyTextBox.textContent = '';
+      copyTextBox.appendChild(document.createElement('p')).textContent =
         currentInput.slice(0, match.index);
-      textBox.appendChild(document.createElement('span')).textContent =
-        match[0];
-      textBox.appendChild(document.createElement('p')).textContent =
+      copyTextBox
+        .appendChild(document.createElement('span'))
+        .classList.add('hashtag');
+      copyTextBox.querySelector('.hashtag').textContent = match[0];
+
+      copyTextBox.appendChild(document.createElement('p')).textContent =
         currentInput.slice(match.index + match[0].length);
-
-      const selection = document.getSelection();
-      // Set the caret to the beggining
-      selection.collapse(textBox, 0);
-
-      // Move the caret to the position
-      for (let i = 0; i < 3; i++) {
-        selection.modify('move', 'forward', 'character');
-      }
     }
   };
 
