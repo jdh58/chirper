@@ -29,6 +29,7 @@ import {
 import SearchPage from './components/SearchPage';
 import ChirpPage from './components/ChirpPage';
 import ToastContext from './ToastContext';
+import FollowPage from './components/FollowPage';
 
 function App() {
   const [overlay, setOverlay] = useState(false);
@@ -164,6 +165,8 @@ rather than iterating when adding or subtracting. */
             <Route path="/notifications" element={<Notifications />}></Route>
             <Route path="/bookmarks" element={<BookmarkPage />}></Route>
             <Route path="/profile/:id?" element={<Profile />}></Route>
+            <Route path="/profile/:id?/:type" element={<FollowPage />}></Route>
+            <Route path="/profile/:id?/:type" element={<FollowPage />}></Route>
           </Routes>
         </ToastContext.Provider>
       </UserContext.Provider>

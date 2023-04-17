@@ -27,12 +27,13 @@ export default function MoreMenu({ chirpData, killMenu }) {
   const displayToast = useContext(ToastContext);
   const [userDoc, setUserDoc] = useState(null);
 
-  // Detect if the chirp is the user's, so we know if we show delete
   useEffect(() => {
+    // Check if this is the user's own chirp
     if (user.userId === chirpData.accountId) {
       setIsUsers(true);
     }
 
+    // Set the user document from the user context.
     (async () => {
       if (user.userId) {
         setUserDoc(await getAccount(user.userId));

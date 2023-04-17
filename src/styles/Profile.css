@@ -312,3 +312,9 @@ textarea:focus {
 .bannerInputContainer:hover .inputIcon {
   opacity: 1;
 }
+
+.followers:hover,
+.following:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}

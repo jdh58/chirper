@@ -6,7 +6,7 @@ import ProfilePic from './ProfilePic';
 import Tab from './Tab';
 import '../styles/page.css';
 import '../styles/Profile.css';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, Link } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
 import existCheck from '../existCheck';
 import {
@@ -321,14 +321,14 @@ export default function Profile() {
           </div>
 
           <div className="followStats">
-            <p className="following">
+            <Link to={`/profile/${urlId}/following`} className="following">
               <span className="number">{profile.following.length || 0}</span>{' '}
               Following
-            </p>
-            <p className="followers">
+            </Link>
+            <Link to={`/profile/${urlId}/followers`} className="followers">
               <span className="number">{profile.followers.length || 0}</span>{' '}
               Followers
-            </p>
+            </Link>
           </div>
         </div>
         <div className="tabs">

@@ -61,7 +61,9 @@ export default function RightBar({ noSearch }) {
         <a href="https://jonathanhawes.dev" target="_blank" rel="noreferrer">
           My Website
         </a>
-        <a href="https://github.com/jdh58">GitHub</a>
+        <a href="https://github.com/jdh58" target="_blank" rel="noreferrer">
+          GitHub
+        </a>
         <div className="forcewrap"></div>
         <p>© 2023 Nobody, Inc.</p>
       </div>
