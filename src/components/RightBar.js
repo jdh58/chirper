@@ -34,7 +34,7 @@ export default function RightBar({ noSearch }) {
   }, []);
 
   return (
-    <div className="rightBar">
+    <aside className="rightBar">
       {!noSearch ? (
         <>
           <div className="searchContainer">
@@ -58,11 +58,13 @@ export default function RightBar({ noSearch }) {
       </div>
 
       <div className="copyright">
-        <a href="https://jonathanhawes.dev">My Website</a>
+        <a href="https://jonathanhawes.dev" target="_blank" rel="noreferrer">
+          My Website
+        </a>
         <a href="https://github.com/jdh58">GitHub</a>
         <div className="forcewrap"></div>
         <p>© 2023 Nobody, Inc.</p>
       </div>
-    </div>
+    </aside>
   );
 }

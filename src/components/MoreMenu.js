@@ -25,18 +25,24 @@ export default function MoreMenu({ chirpData, killMenu }) {
     userId: '',
   };
   const displayToast = useContext(ToastContext);
+  const [userDoc, setUserDoc] = useState(null);
 
   // Detect if the chirp is the user's, so we know if we show delete
   useEffect(() => {
     if (user.userId === chirpData.accountId) {
       setIsUsers(true);
     }
+
+    (async () => {
+      if (user.userId) {
+        setUserDoc(await getAccount(user.userId));
+      }
+    })();
   }, []);
 
   const handleDelete = async () => {
     try {
       killMenu();
-      const userDoc = await getAccount(user.userId);
       const chirpToDelete = await getChirp(chirpData.chirpId);
 
       await deleteDoc(chirpToDelete.ref);
@@ -50,7 +56,6 @@ export default function MoreMenu({ chirpData, killMenu }) {
       displayToast('Your Chirp was deleted');
     } catch (error) {
       displayToast('Failed to delete Chirp.');
-
       console.error('Failed to delete Chirp', error);
     }
   };
@@ -58,24 +63,10 @@ export default function MoreMenu({ chirpData, killMenu }) {
   const handleBookmark = async () => {
     try {
       killMenu();
-      const chirpToBookmark = await getDocs(
-        query(
-          collection(getFirestore(app), 'chirps'),
-          where('chirpId', '==', chirpData.chirpId)
-        )
-      );
+      const chirpToBookmark = await getChirp(chirpData.chirpId);
 
-      const chirpToBookmarkData = chirpToBookmark.docs[0].data();
-
-      const accountToAddBookmark = await getDocs(
-        query(
-          collection(getFirestore(app), 'accounts'),
-          where('userId', '==', `${chirpData.accountId}`)
-        )
-      );
-
-      await updateDoc(accountToAddBookmark.docs[0].ref, {
-        bookmarks: arrayUnion(chirpToBookmarkData),
+      await updateDoc(userDoc.ref, {
+        bookmarks: arrayUnion(chirpToBookmark.data().chirpId),
       });
 
       displayToast('Your Chirp was bookmarked');

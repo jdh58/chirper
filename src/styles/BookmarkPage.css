@@ -1,0 +1,30 @@
+.bookmarkPage header {
+  padding: 0 10px;
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  height: 52.5px;
+}
+
+.bookmarkPage header .info {
+  height: 100%;
+  padding: 6px 0;
+  margin-left: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.bookmarkPage header .name {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.bookmarkPage header .at {
+  font-size: 1.4rem;
+  color: var(--light-black);
+}
+
+.bookmarkPage header img {
+  width: 22px;
+}

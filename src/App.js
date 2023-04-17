@@ -1,7 +1,7 @@
 import './styles/App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import SignIn from './components/SignIn';
-import Bookmarks from './components/Bookmarks';
+import BookmarkPage from './components/BookmarkPage';
 import Notifications from './components/Notifications';
 import Explore from './components/Explore';
 import Home from './components/Home';
@@ -162,7 +162,7 @@ rather than iterating when adding or subtracting. */
             <Route path="/search/:query" element={<SearchPage />}></Route>
             <Route path="/explore" element={<Explore />}></Route>
             <Route path="/notifications" element={<Notifications />}></Route>
-            <Route path="/bookmarks" element={<Bookmarks />}></Route>
+            <Route path="/bookmarks" element={<BookmarkPage />}></Route>
             <Route path="/profile/:id?" element={<Profile />}></Route>
           </Routes>
         </ToastContext.Provider>
