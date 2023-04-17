@@ -97,7 +97,21 @@ export default function ChirpModule({ overlay, killModule, isReply }) {
     setCharacters(textBox.textContent.length);
 
     // Find and highlight all of the @'s and #'s
-    textBox.textContent.replace(/#*/, '<span class="hashtag">#dsada</span>');
+    const match = /#[a-zA-Z0-9]+/g.exec(textBox.textContent);
+
+    if (match) {
+      console.log(match);
+      const currentInput = textBox.textContent;
+      textBox.textContent = '';
+      textBox.appendChild(document.createElement('p')).textContent =
+        currentInput.slice(0, match.index);
+      textBox.appendChild(document.createElement('span')).textContent =
+        match[0];
+      textBox.appendChild(document.createElement('p')).textContent =
+        currentInput.slice(match.index + match[0].length);
+    }
+
+    console.log(match);
   };
 
   const handleImageAdded = (e) => {

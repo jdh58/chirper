@@ -83,6 +83,19 @@
   cursor: text;
 }
 
+#chirpInput > p {
+  display: inline;
+}
+
+#chirpInput > span {
+  display: inline;
+  color: var(--blue);
+}
+#chirpInput > span:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
 #chirpInput:empty::before {
   content: attr(data-placeholder);
   display: block;
