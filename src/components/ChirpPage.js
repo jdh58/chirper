@@ -36,7 +36,6 @@ export default function ChirpPage() {
   const [account, setAccount] = useState(null);
   const [chirpData, setChirpData] = useState(null);
   const [chirpReplies, setChirpReplies] = useState(null);
-  const [isLiked, setIsLiked] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -50,12 +49,14 @@ export default function ChirpPage() {
   }, [id, user]);
 
   useEffect(() => {
-    (async () => {
-      const accountDoc = await getAccount(chirpData.accountId);
-      setAccount(accountDoc.data());
+    if (chirpData) {
+      (async () => {
+        const accountDoc = await getAccount(chirpData.accountId);
+        setAccount(accountDoc.data());
 
-      updateReplies();
-    })();
+        updateReplies();
+      })();
+    }
   }, [chirpData]);
 
   const updateReplies = async () => {
@@ -130,7 +131,11 @@ export default function ChirpPage() {
             <div className="separator"></div>
             {format(parseISO(chirpData.postTime), 'MMMM d, yyyy')}
           </div>
-          <ChirpIcons chirpData={chirpData} fullPage={true} />
+          <ChirpIcons
+            chirpData={chirpData}
+            fullPage={true}
+            key={chirpData.chirpId}
+          />
         </div>
         <ChirpModule isReply={id} />
         {chirpReplies}

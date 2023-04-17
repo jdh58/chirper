@@ -1,4 +1,13 @@
-import { arrayRemove, arrayUnion, updateDoc } from 'firebase/firestore';
+import {
+  arrayRemove,
+  arrayUnion,
+  collection,
+  getDocs,
+  getFirestore,
+  query,
+  updateDoc,
+  where,
+} from 'firebase/firestore';
 import { useContext, useEffect, useState } from 'react';
 import getAccount from '../getAccount';
 import getChirp from '../getChirp';
@@ -8,23 +17,64 @@ import ReChirp from '../assets/rechirp.svg';
 import Like from '../assets/like.svg';
 import LikeFill from '../assets/likeFill.svg';
 import Share from '../assets/share.svg';
+import { app } from '../firebase-config';
+import { useParams } from 'react-router-dom';
 
 export default function ChirpIcons({ chirpData, fullPage }) {
   const user = useContext(UserContext);
+  const urlId = useParams().id;
   const [isLiked, setIsLiked] = useState(false);
   const [chirpLikes, setChirpLikes] = useState(chirpData.likes.length);
+  const [chirpReChirps, setChirpReChirps] = useState(chirpData.reChirps.length);
 
   useEffect(() => {
+    setIsLiked(false);
     // Check if the user has it liked, if not, like it, if they do, unlike it
-    for (let i = 0; i < user.likes.length; i++) {
-      if (user.likes[i] === chirpData.chirpId) {
-        setIsLiked(true);
-        return;
-      }
+    if (user.likes.includes(chirpData.chirpId)) {
+      setIsLiked(true);
+      return;
     }
-  }, [user, chirpData]);
+
+    setChirpLikes(chirpData.likes.length);
+  }, [urlId, chirpData]);
 
   const handleLikeToggle = async () => {
+    try {
+      // Pre-emptively set isLiked state and update number for responsive UI
+      if (isLiked) {
+        setIsLiked(false);
+        setChirpLikes(chirpLikes - 1);
+      } else {
+        setIsLiked(true);
+        setChirpLikes(chirpLikes + 1);
+      }
+
+      // Update the chirp's likes and current user's likes
+      const chirpDoc = await getChirp(chirpData.chirpId);
+      const userDoc = await getAccount(user.userId);
+
+      // Check if the user has it liked, if not, like it, if they do, unlike it
+      if (isLiked) {
+        updateDoc(chirpDoc.ref, {
+          likes: arrayRemove(user.userId),
+        });
+        updateDoc(userDoc.ref, {
+          likes: arrayRemove(chirpData.chirpId),
+        });
+      } else {
+        updateDoc(chirpDoc.ref, {
+          likes: arrayUnion(user.userId),
+        });
+        updateDoc(userDoc.ref, {
+          likes: arrayUnion(chirpData.chirpId),
+        });
+      }
+    } catch (error) {
+      console.log('Failed to like chirp.' + error);
+    }
+  };
+
+  const handleReChirpToggle = async () => {
     try {
       // Pre-emptively set isLiked state and update number for responsive UI
       if (isLiked) {
@@ -66,15 +116,15 @@ export default function ChirpIcons({ chirpData, fullPage }) {
         <>
           <div className="chirpStats">
             <div className="replyCount countContainer">
-              <p className="count">{chirpData.replies}</p>
+              <p className="count">{chirpData.replies.length}</p>
               <p className="label">
-                {chirpData.replies === 1 ? 'Reply' : 'Replies'}
+                {chirpData.replies.length === 1 ? 'Reply' : 'Replies'}
               </p>
             </div>
             <div className="reChirpCount countContainer">
-              <p className="count">{chirpData.reChirps}</p>
+              <p className="count">{chirpReChirps}</p>
               <p className="label">
-                {chirpData.reChirps === 1 ? 'ReChirp' : 'ReChirps'}
+                {chirpReChirps === 1 ? 'ReChirp' : 'ReChirps'}
               </p>
             </div>
             <div className="likesCount countContainer">
@@ -116,16 +166,14 @@ export default function ChirpIcons({ chirpData, fullPage }) {
               <img src={Chat} alt="" />
             </div>
             <p className="count">
-              {chirpData.replies > 0 ? chirpData.replies : null}
+              {chirpData.replies.length > 0 ? chirpData.replies.length : null}
             </p>
           </div>
           <div className="icon reChirp">
             <div className="container">
               <img src={ReChirp} alt="" />
             </div>
-            <p className="count">
-              {chirpData.reChirps > 0 ? chirpData.reChirps : null}
-            </p>
+            <p className="count">{chirpReChirps > 0 ? chirpReChirps : null}</p>
           </div>
           <div className="icon likes">
             <div className="container" onClick={handleLikeToggle}>

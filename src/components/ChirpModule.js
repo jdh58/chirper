@@ -14,6 +14,7 @@ import { app } from '../firebase-config';
 import { upload } from '@testing-library/user-event/dist/upload';
 import {
   addDoc,
+  arrayUnion,
   collection,
   getDocs,
   getFirestore,
@@ -30,6 +31,8 @@ import {
 import { format } from 'date-fns';
 import UserContext from '../UserContext';
 import ToastContext from '../ToastContext';
+import getAccount from '../getAccount';
+import getChirp from '../getChirp';
 
 export default function ChirpModule({ overlay, killModule, isReply }) {
   const user = useContext(UserContext);
@@ -171,25 +174,27 @@ export default function ChirpModule({ overlay, killModule, isReply }) {
         imageURL,
         storageURL,
         isReply,
-        replies: 0,
-        reChirps: 0,
-        likes: 0,
+        replies: [],
+        reChirps: [],
+        likes: [],
         postTime: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
       });
 
+      // If it had a reply, add it to the reply array for the chirp it replied to
+      if (isReply) {
+        const repliedToChirp = await getChirp(parseInt(isReply));
+
+        updateDoc(repliedToChirp.ref, {
+          replies: arrayUnion(chirpId),
+        });
+      }
+
       // Now we need to update the account's chirp count.
-      let accountDoc = await getDocs(
-        query(
-          collection(getFirestore(app), 'accounts'),
-          where('userId', '==', `${accountId}`)
-        )
-      );
+      const accountDoc = await getAccount(accountId);
 
-      accountDoc = accountDoc.docs[0];
       const accountChirps = accountDoc.data().chirps + 1;
-      const accountRef = accountDoc.ref;
 
-      await updateDoc(accountRef, {
+      await updateDoc(accountDoc.ref, {
         chirps: accountChirps,
       });
 
