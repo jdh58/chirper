@@ -30,12 +30,14 @@ import SearchPage from './components/SearchPage';
 import ChirpPage from './components/ChirpPage';
 import ToastContext from './ToastContext';
 import FollowPage from './components/FollowPage';
+import OverlayContext from './OverlayContext';
 
 function App() {
   const [overlay, setOverlay] = useState(false);
   const [user, setUser] = useState(null);
   const [toast, setToast] = useState(null);
   const [userInfo, setUserInfo] = useState(null);
+  const [replyId, setReplyId] = useState(null);
 
   /* TODO: Change showToastnotification to context so it can be used easily anywhere
 TODO: Update things like chirpcount, followers, following using the actual array nums
@@ -94,80 +96,104 @@ rather than iterating when adding or subtracting. */
     }, timeAlive);
   };
 
+  const overlayFunction = (value, replyId) => {
+    if (replyId) {
+      setReplyId(replyId.toString());
+    }
+    setOverlay(value);
+  };
+
   return (
     <BrowserRouter>
       <UserContext.Provider value={userInfo}>
         <ToastContext.Provider value={displayToast}>
-          {toast}
-          {overlay === 'chirp' ? (
-            <ChirpModule
-              overlay={true}
-              killModule={() => {
-                setOverlay(false);
-              }}
-              isReply={false}
-            />
-          ) : null}
-          {overlay === 'signIn' ? (
-            <SignIn
-              killModule={() => {
-                setOverlay(false);
-              }}
-              toSignUp={() => {
-                setOverlay('signUp');
-              }}
-            />
-          ) : null}
-          {overlay === 'signUp' ? (
-            <SignUp
-              killModule={() => {
-                setOverlay(false);
-              }}
-              toSignIn={() => {
-                setOverlay('signIn');
-              }}
-              finalize={() => {
-                setOverlay('finalize');
-              }}
-            />
-          ) : null}
-          {overlay === 'finalize' ? (
-            <FinishSignUp
-              killModule={() => {
-                setOverlay(false);
-              }}
-            />
-          ) : null}
+          <OverlayContext.Provider value={overlayFunction}>
+            {toast}
+            {overlay === 'reply' ? (
+              <ChirpModule
+                overlay={true}
+                killModule={() => {
+                  setOverlay(false);
+                }}
+                isReply={replyId}
+              />
+            ) : null}
+            {overlay === 'chirp' ? (
+              <ChirpModule
+                overlay={true}
+                killModule={() => {
+                  setOverlay(false);
+                }}
+                isReply={false}
+              />
+            ) : null}
+            {overlay === 'signIn' ? (
+              <SignIn
+                killModule={() => {
+                  setOverlay(false);
+                }}
+                toSignUp={() => {
+                  setOverlay('signUp');
+                }}
+              />
+            ) : null}
+            {overlay === 'signUp' ? (
+              <SignUp
+                killModule={() => {
+                  setOverlay(false);
+                }}
+                toSignIn={() => {
+                  setOverlay('signIn');
+                }}
+                finalize={() => {
+                  setOverlay('finalize');
+                }}
+              />
+            ) : null}
+            {overlay === 'finalize' ? (
+              <FinishSignUp
+                killModule={() => {
+                  setOverlay(false);
+                }}
+              />
+            ) : null}
 
-          {!user ? (
-            <SignInBanner
-              onSignIn={() => {
-                setOverlay('signIn');
-              }}
-              onSignUp={() => {
-                setOverlay('signUp');
+            {!user ? (
+              <SignInBanner
+                onSignIn={() => {
+                  setOverlay('signIn');
+                }}
+                onSignUp={() => {
+                  setOverlay('signUp');
+                }}
+              />
+            ) : null}
+
+            <Nav
+              chirpOverlay={() => {
+                setOverlay('chirp');
               }}
             />
-          ) : null}
-
-          <Nav
-            chirpOverlay={() => {
-              setOverlay('chirp');
-            }}
-          />
-          <Routes>
-            <Route path="/" element={<Home />}></Route>
-            <Route path="/signin" element={<SignIn />}></Route>
-            <Route path="/signup" element={<SignUp />}></Route>
-            <Route path="/chirp/:id" element={<ChirpPage />}></Route>
-            <Route path="/search/:query" element={<SearchPage />}></Route>
-            <Route path="/explore" element={<Explore />}></Route>
-            <Route path="/notifications" element={<Notifications />}></Route>
-            <Route path="/bookmarks" element={<BookmarkPage />}></Route>
-            <Route path="/profile/:id?" element={<Profile />}></Route>
-            <Route path="/profile/:id?/:type" element={<FollowPage />}></Route>
-            <Route path="/profile/:id?/:type" element={<FollowPage />}></Route>
-          </Routes>
+            <Routes>
+              <Route path="/" element={<Home />}></Route>
+              <Route path="/signin" element={<SignIn />}></Route>
+              <Route path="/signup" element={<SignUp />}></Route>
+              <Route path="/chirp/:id" element={<ChirpPage />}></Route>
+              <Route path="/search/:query" element={<SearchPage />}></Route>
+              <Route path="/explore" element={<Explore />}></Route>
+              <Route path="/notifications" element={<Notifications />}></Route>
+              <Route path="/bookmarks" element={<BookmarkPage />}></Route>
+              <Route path="/profile/:id?" element={<Profile />}></Route>
+              <Route
+                path="/profile/:id?/:type"
+                element={<FollowPage />}
+              ></Route>
+              <Route
+                path="/profile/:id?/:type"
+                element={<FollowPage />}
+              ></Route>
+            </Routes>
+          </OverlayContext.Provider>
         </ToastContext.Provider>
       </UserContext.Provider>
     </BrowserRouter>

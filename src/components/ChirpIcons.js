@@ -19,10 +19,12 @@ import LikeFill from '../assets/likeFill.svg';
 import Share from '../assets/share.svg';
 import { app } from '../firebase-config';
 import { useParams } from 'react-router-dom';
+import OverlayContext from '../OverlayContext';
 
 export default function ChirpIcons({ chirpData, fullPage }) {
   const user = useContext(UserContext);
   const urlId = useParams().id;
+  const overlayFunction = useContext(OverlayContext);
   const [isLiked, setIsLiked] = useState(false);
   const [chirpLikes, setChirpLikes] = useState(chirpData.likes.length);
   const [chirpReChirps, setChirpReChirps] = useState(chirpData.reChirps.length);
@@ -133,7 +135,12 @@ export default function ChirpIcons({ chirpData, fullPage }) {
             </div>
           </div>
           <div className="chirpIcons">
-            <div className="icon chat">
+            <div
+              className="icon chat"
+              onClick={() => {
+                overlayFunction('reply', chirpData.chirpId);
+              }}
+            >
               <div className="container">
                 <img src={Chat} alt="" />
               </div>
@@ -161,7 +168,12 @@ export default function ChirpIcons({ chirpData, fullPage }) {
         </>
       ) : (
         <div className="chirpIcons">
-          <div className="icon chat">
+          <div
+            className="icon chat"
+            onClick={() => {
+              overlayFunction('reply', chirpData.chirpId);
+            }}
+          >
             <div className="container">
               <img src={Chat} alt="" />
             </div>

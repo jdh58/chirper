@@ -202,7 +202,7 @@ export default function Profile() {
       checkValidImage(file);
 
       /* Now store the profile pic (overwrites if existing) */
-      const newProfilePicPath = `profilePics/${profile.userId}`;
+      const newProfilePicPath = `profilePics/${user.userId}`;
       const newProfilePicRef = ref(getStorage(app), newProfilePicPath);
       const newProfilePicSnapshot = await uploadBytesResumable(
         newProfilePicRef,
@@ -235,7 +235,7 @@ export default function Profile() {
       checkValidImage(file);
 
       /* Now store the profile pic (overwrites if existing) */
-      const newBannerPath = `banners/${profile.userId}`;
+      const newBannerPath = `banners/${user.userId}`;
       const newBannerRef = ref(getStorage(app), newBannerPath);
       const newBannerSnapshot = await uploadBytesResumable(newBannerRef, file);
 
