@@ -122,9 +122,12 @@ export default function ChirpModule({ overlay, killModule, isReply }) {
       // We go up from the button to ensure we grab the corresponding input
       const chirpModule = e.target.parentElement.parentElement;
       const textBox = chirpModule.querySelector('#chirpInput');
-      const text = textBox.value;
+      let text = textBox.value;
       const accountId = getAuth(app).currentUser.uid;
       let chirpId = null;
+
+      // Remove excessive newlines
+      text = text.replace(/\n\n+/g, '\n\n');
 
       /* Clear box + image once value is saved, and let the module know to 
       update. This also disables the button so the user can't double Chirp.
