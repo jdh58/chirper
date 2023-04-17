@@ -75,6 +75,8 @@
   display: flex;
   flex-direction: column;
   gap: 15px;
+  overflow: auto;
+  word-wrap: break-word;
 }
 
 .chirpSubmit > .chirpImage {

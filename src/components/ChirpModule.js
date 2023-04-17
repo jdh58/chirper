@@ -131,6 +131,7 @@ export default function ChirpModule({ overlay, killModule, isReply }) {
 
       // Remove excessive newlines
       text = text.replace(/\n\n+/g, '\n\n');
+      text = text.replace(/\n$/, '');
 
       /* Clear box + image once value is saved, and let the module know to 
       update. This also disables the button so the user can't double Chirp.
