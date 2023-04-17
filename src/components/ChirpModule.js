@@ -87,14 +87,17 @@ export default function ChirpModule({ overlay, killModule, isReply }) {
     }
 
     // Disable the button if there's no text, otherwise enable it.
-    if (textBox.value.length === 0) {
+    if (textBox.textContent.length === 0) {
       setDisabled(true);
     } else {
       setDisabled(false);
     }
 
     // Update character count
-    setCharacters(textBox.value.length);
+    setCharacters(textBox.textContent.length);
+
+    // Find and highlight all of the @'s and #'s
+    textBox.textContent.replace(/#*/, '<span class="hashtag">#dsada</span>');
   };
 
   const handleImageAdded = (e) => {
@@ -122,7 +125,7 @@ export default function ChirpModule({ overlay, killModule, isReply }) {
       // We go up from the button to ensure we grab the corresponding input
       const chirpModule = e.target.parentElement.parentElement;
       const textBox = chirpModule.querySelector('#chirpInput');
-      let text = textBox.value;
+      let text = textBox.textContent;
       const accountId = getAuth(app).currentUser.uid;
       let chirpId = null;
 
@@ -132,7 +135,7 @@ export default function ChirpModule({ overlay, killModule, isReply }) {
       /* Clear box + image once value is saved, and let the module know to 
       update. This also disables the button so the user can't double Chirp.
       If it is an overaly chirp, close the overlay as well. */
-      textBox.value = '';
+      textBox.textContent = '';
       setUploadedImage(null);
       handleChirpChange(textBox);
       if (overlay) {
@@ -224,13 +227,19 @@ export default function ChirpModule({ overlay, killModule, isReply }) {
         ) : null}
         <div className="chirpWriting">
           <img src={user ? user.picURL : null} alt="" className="profilePic" />
-          <textarea
-            name="chirpInput"
-            id="chirpInput"
-            placeholder={isReply ? 'Chirp your reply' : "What's happening?"}
-            onChange={handleChirpChange}
-            maxLength="280"
-          />
+          <div className="inputContainer">
+            <span
+              className="textarea"
+              contentEditable="true"
+              name="chirpInput"
+              id="chirpInput"
+              data-placeholder={
+                isReply ? 'Chirp your reply' : "What's happening?"
+              }
+              onInput={handleChirpChange}
+              maxLength="280"
+            ></span>
+          </div>
           {imageDisplay}
         </div>
         <div className="toolbar">
