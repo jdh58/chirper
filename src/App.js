@@ -2,7 +2,7 @@ import './styles/App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import SignIn from './components/SignIn';
 import BookmarkPage from './components/BookmarkPage';
-import Notifications from './components/Notifications';
+import NotificationPage from './components/NotificationPage';
 import Explore from './components/Explore';
 import Home from './components/Home';
 import Nav from './components/Nav';
@@ -180,7 +180,10 @@ function App() {
               <Route path="/chirp/:id" element={<ChirpPage />}></Route>
               <Route path="/search/:query" element={<SearchPage />}></Route>
               <Route path="/explore" element={<Explore />}></Route>
-              <Route path="/notifications" element={<Notifications />}></Route>
+              <Route
+                path="/notifications"
+                element={<NotificationPage />}
+              ></Route>
               <Route path="/bookmarks" element={<BookmarkPage />}></Route>
               <Route path="/profile/:id?" element={<Profile />}></Route>
               <Route
