@@ -85,8 +85,7 @@ export default function ChirpModule({ overlay, killModule, isReply }) {
     const copyTextBox = textBox.parentElement.querySelector('#chirpInput.copy');
 
     // Set text copy equal to new input
-    document.querySelector('#chirpInput.copy').textContent =
-      textBox.textContent;
+    copyTextBox.textContent = textBox.textContent;
 
     // Make sure the box size changes dynamically
     autoGrow(textBox, copyTextBox);
@@ -102,22 +101,37 @@ export default function ChirpModule({ overlay, killModule, isReply }) {
     setCharacters(textBox.textContent.length);
 
     // Find and highlight all of the @'s and #'s
-    const match = /#[a-zA-Z0-9]+/g.exec(textBox.textContent);
+    // const match = /#[a-zA-Z0-9]+/g.exec(textBox.textContent);
+    const regex = /#[a-zA-Z0-9]+/g;
+    // console.log(match);
+    const matches = [];
+    let match;
 
-    // If there are any hashtags, we got work to do
-    if (match) {
-      // Set the text input
-      const currentInput = textBox.textContent;
+    while ((match = regex.exec(textBox.textContent)) !== null) {
+      matches.push(match);
+    }
+
+    if (matches.length > 0) {
       copyTextBox.textContent = '';
-      copyTextBox.appendChild(document.createElement('p')).textContent =
-        currentInput.slice(0, match.index);
-      copyTextBox
-        .appendChild(document.createElement('span'))
-        .classList.add('hashtag');
-      copyTextBox.querySelector('.hashtag').textContent = match[0];
+      console.log(matches);
+      for (let i = 0; i < matches.length; i++) {
+        let startPoint = copyTextBox.textContent.length;
+        const hashtagStart = matches[i].index;
 
-      copyTextBox.appendChild(document.createElement('p')).textContent =
-        currentInput.slice(match.index + match[0].length);
+        const currentInput = textBox.textContent;
+        copyTextBox.appendChild(document.createElement('p')).textContent =
+          currentInput.slice(startPoint, hashtagStart);
+        copyTextBox
+          .appendChild(document.createElement('span'))
+          .classList.add('hashtag');
+        copyTextBox.querySelector('.hashtag:last-child').textContent =
+          matches[i][0];
+
+        if (!matches[i + 1]) {
+          copyTextBox.appendChild(document.createElement('p')).textContent =
+            currentInput.slice(hashtagStart + matches[i][0].length);
+        }
+      }
     }
   };
 
