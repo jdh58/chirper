@@ -82,9 +82,9 @@ export default function ChirpModule({ overlay, killModule, isReply }) {
     if (!textBox.nodeName) {
       textBox = textBox.target;
     }
-    const copyTextBox = textBox.parentElement.querySelector('#chirpInput.copy');
 
     // Set text copy equal to new input
+    const copyTextBox = textBox.parentElement.querySelector('#chirpInput.copy');
     copyTextBox.textContent = textBox.textContent;
 
     // Make sure the box size changes dynamically
@@ -101,19 +101,20 @@ export default function ChirpModule({ overlay, killModule, isReply }) {
     setCharacters(textBox.textContent.length);
 
     // Find and highlight all of the @'s and #'s
-    // const match = /#[a-zA-Z0-9]+/g.exec(textBox.textContent);
-    const regex = /#[a-zA-Z0-9]+/g;
-    // console.log(match);
+    const regex = /[#@][a-zA-Z0-9]+/g;
+
+    // Collect all the matches with thier indexes
     const matches = [];
     let match;
-
     while ((match = regex.exec(textBox.textContent)) !== null) {
       matches.push(match);
     }
 
+    /* For each tag, start at the end of the string, then insert
+    all of the plain text before it as a <p>, and add a <span> 
+    for the hashtag. If it's the last hashtag, add the rest as a <p>. */
     if (matches.length > 0) {
       copyTextBox.textContent = '';
-      console.log(matches);
       for (let i = 0; i < matches.length; i++) {
         let startPoint = copyTextBox.textContent.length;
         const hashtagStart = matches[i].index;
