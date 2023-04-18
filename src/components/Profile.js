@@ -61,7 +61,7 @@ export default function Profile() {
 
   useEffect(() => {
     setEditMode(false);
-
+    setCurrentTab('chirps');
     if (urlId === user.userId) {
       setIsUser(true);
     } else {
