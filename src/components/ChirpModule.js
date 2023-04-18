@@ -210,6 +210,17 @@ export default function ChirpModule({ overlay, killModule, isReply }) {
         storageURL = fileSnapshot.metadata.fullPath;
       }
 
+      // If the user tagged anybody, save it so they can get notified
+      const regex = /@[a-zA-Z0-9]+/g;
+      const tagArray = [];
+      let match;
+
+      while ((match = regex.exec(text)) !== null) {
+        tagArray.push(match[0]);
+      }
+
+      console.log(tagArray);
+
       // Log the chirp to the database
       await addDoc(collection(getFirestore(app), 'chirps'), {
         accountId,
@@ -221,6 +232,7 @@ export default function ChirpModule({ overlay, killModule, isReply }) {
         replies: [],
         reChirps: [],
         likes: [],
+        tags: tagArray,
         postTime: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
       });
 

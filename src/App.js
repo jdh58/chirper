@@ -39,9 +39,8 @@ function App() {
   const [userInfo, setUserInfo] = useState(null);
   const [replyId, setReplyId] = useState(null);
 
-  /* TODO: Change showToastnotification to context so it can be used easily anywhere
-TODO: Update things like chirpcount, followers, following using the actual array nums
-rather than iterating when adding or subtracting. */
+  /* TODO: Change profile urls from ids to usernames.
+  TODO: Set postDate to just the normal date, format later. */
 
   useEffect(() => {
     onAuthStateChanged(getAuth(app), async (user) => {
