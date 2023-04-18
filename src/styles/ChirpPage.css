@@ -156,3 +156,8 @@ header .backContainer:hover {
 .pageChirp .container img {
   width: 100%;
 }
+
+.hashtag:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}

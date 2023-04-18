@@ -1,4 +1,34 @@
-export default function addTags(text) {
+import {
+  collection,
+  getDocs,
+  getFirestore,
+  query,
+  where,
+} from 'firebase/firestore';
+import { app } from './firebase-config';
+
+export default function addTags(text, navigate, displayToast) {
+  const handleTagClick = async (e) => {
+    if (e.target.textContent.startsWith('#')) {
+      navigate(`/search/${e.target.textContent}`);
+    }
+    if (e.target.textContent.startsWith('@')) {
+      try {
+        const accountDoc = await getDocs(
+          query(
+            collection(getFirestore(app), 'accounts'),
+            where('username', '==', `${e.target.textContent.slice(1)}`)
+          )
+        );
+
+        navigate(`/profile/${accountDoc.docs[0].data().userId}`);
+      } catch (error) {
+        displayToast('Account does not exist.');
+        console.error('Could not go to account.', error);
+      }
+    }
+  };
+
   // Find and highlight all of the @'s and #'s
   const regex = /[#@][a-zA-Z0-9]+/g;
 
@@ -49,6 +79,10 @@ export default function addTags(text) {
   console.log(dataArray);
 
   return dataArray.map((element) => {
-    return <span className={element.className}>{element.textContent}</span>;
+    return (
+      <span onClick={handleTagClick} className={element.className}>
+        {element.textContent}
+      </span>
+    );
   });
 }

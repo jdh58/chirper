@@ -29,8 +29,10 @@ import getAccount from '../getAccount';
 import ToastNotification from './ToastNotification';
 import ChirpIcons from './ChirpIcons';
 import addTags from '../addTags';
+import ToastContext from '../ToastContext';
 
 export default function Chirp({ chirpData, profile }) {
+  const displayToast = useContext(ToastContext);
   const navigate = useNavigate();
   const [displayMore, setDisplayMore] = useState(false);
   const user = useContext(UserContext) || {
@@ -56,7 +58,7 @@ export default function Chirp({ chirpData, profile }) {
   }, [chirpData, profile]);
 
   useEffect(() => {
-    setChirpText(addTags(chirpData.text));
+    setChirpText(addTags(chirpData.text, navigate, displayToast));
   }, [chirpData]);
 
   function formatDistanceShort() {

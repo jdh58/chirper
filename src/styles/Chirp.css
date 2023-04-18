@@ -93,6 +93,11 @@
   margin-left: -7.5px;
 }
 
+.hashtag:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
 .chirpIcons .icon {
   display: flex;
   align-items: center;

@@ -13,6 +13,7 @@ import {
   arrayRemove,
   arrayUnion,
   collection,
+  getDoc,
   getDocs,
   getFirestore,
   query,
@@ -59,7 +60,7 @@ export default function ChirpPage() {
         updateReplies();
       })();
 
-      setChirpText(addTags(chirpData.text));
+      setChirpText(addTags(chirpData.text, navigate));
     }
   }, [chirpData]);
 
