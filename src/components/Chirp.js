@@ -28,6 +28,7 @@ import UserContext from '../UserContext';
 import getAccount from '../getAccount';
 import ToastNotification from './ToastNotification';
 import ChirpIcons from './ChirpIcons';
+import addTags from '../addTags';
 
 export default function Chirp({ chirpData, profile }) {
   const navigate = useNavigate();
@@ -55,62 +56,7 @@ export default function Chirp({ chirpData, profile }) {
   }, [chirpData, profile]);
 
   useEffect(() => {
-    // Find and highlight all of the @'s and #'s
-    const regex = /[#@][a-zA-Z0-9]+/g;
-
-    // Collect all the matches with thier indexes
-    const matches = [];
-    let match;
-    while ((match = regex.exec(chirpData.text)) !== null) {
-      matches.push(match);
-    }
-
-    const dataArray = [];
-
-    /* For each tag, start at the end of the string, then insert
-    all of the plain text before it as a <p>, and add a <span> 
-    for the hashtag. If it's the last hashtag, add the rest as a <p>. */
-    if (matches.length > 0) {
-      for (let i = 0; i < matches.length; i++) {
-        let startPoint = 0;
-        dataArray.forEach((element) => {
-          startPoint += element.textContent.length;
-        });
-        const hashtagStart = matches[i].index;
-
-        const currentInput = chirpData.text;
-        dataArray.push({
-          className: 'normalText',
-          textContent: currentInput.slice(startPoint, hashtagStart),
-        });
-        dataArray.push({
-          className: 'hashtag',
-          textContent: matches[i][0],
-        });
-
-        if (!matches[i + 1]) {
-          dataArray.push({
-            className: 'normalText',
-            textContent: currentInput.slice(
-              hashtagStart + matches[i][0].length
-            ),
-          });
-        }
-      }
-    } else {
-      dataArray.push({
-        className: 'normalText',
-        textContent: chirpData.text,
-      });
-    }
-
-    console.log(dataArray);
-
-    setChirpText(
-      dataArray.map((element) => {
-        return <span className={element.className}>{element.textContent}</span>;
-      })
-    );
+    setChirpText(addTags(chirpData.text));
   }, [chirpData]);
 
   function formatDistanceShort() {
@@ -144,7 +90,8 @@ export default function Chirp({ chirpData, profile }) {
     if (
       divClass === 'chirp' ||
       divClass === 'chirpWords' ||
-      divClass === 'chirpIcons'
+      divClass === 'chirpIcons' ||
+      divClass === 'normalText'
     ) {
       /* If any of these are clicked, redirect to chirp page */
       navigate(`/chirp/${chirpData.chirpId}`);
@@ -205,7 +152,7 @@ export default function Chirp({ chirpData, profile }) {
           </div>
         </div>
         <div className="chirpSubmit">
-          <div className="chirpWriting">{chirpText}</div>
+          <div className="chirpWords">{chirpText}</div>
           {chirpData.imageURL ? (
             <img src={chirpData.imageURL} alt="" className="chirpImage" />
           ) : null}

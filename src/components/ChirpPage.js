@@ -28,6 +28,7 @@ import getChirp from '../getChirp';
 import '../styles/Chirp.css';
 import UserContext from '../UserContext';
 import ChirpIcons from './ChirpIcons';
+import addTags from '../addTags';
 
 export default function ChirpPage() {
   const id = useParams().id;
@@ -36,6 +37,7 @@ export default function ChirpPage() {
   const [account, setAccount] = useState(null);
   const [chirpData, setChirpData] = useState(null);
   const [chirpReplies, setChirpReplies] = useState(null);
+  const [chirpText, setChirpText] = useState(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -56,6 +58,8 @@ export default function ChirpPage() {
 
         updateReplies();
       })();
+
+      setChirpText(addTags(chirpData.text));
     }
   }, [chirpData]);
 
@@ -121,7 +125,7 @@ export default function ChirpPage() {
           </div>
 
           <div className="chirpSubmit">
-            <p className="chirpWords">{chirpData.text}</p>
+            <p className="chirpWords">{chirpText}</p>
             {chirpData.imageURL ? (
               <img src={chirpData.imageURL} alt="" className="chirpImage" />
             ) : null}
