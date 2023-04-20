@@ -35,8 +35,8 @@
   padding-bottom: 15px;
 }
 
-.rightBar > .trends > .title,
-.rightBar > .accounts > .title {
+.rightBar .trends > .title,
+.rightBar .accounts > .title {
   font-weight: 700;
   font-size: 2.1rem;
   margin-bottom: 12.5px;
@@ -77,4 +77,13 @@
 
 .copyright a:hover {
   text-decoration: underline;
+}
+
+.rightBarMain {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  height: fit-content;
+  position: sticky;
+  top: -160px;
 }

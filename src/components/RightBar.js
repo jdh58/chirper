@@ -16,7 +16,7 @@ import useGrabTrends from '../useGrabTrends';
 
 export default function RightBar({ noSearch }) {
   const [accounts, setAccounts] = useState(null);
-  const trendList = useGrabTrends(4);
+  const trendList = useGrabTrends(5);
 
   useEffect(() => {
     (async () => {
@@ -41,27 +41,29 @@ export default function RightBar({ noSearch }) {
           <div className="searchContainer">
             <Search />
           </div>
-          <div className="trends">
-            <h2 className="title">What's happening</h2>
-            <div className="whItems">{trendList}</div>
-          </div>
         </>
       ) : null}
 
-      <div className={!noSearch ? 'accounts' : 'accounts only'}>
-        <h2 className="title">Who to follow</h2>
-        <div className="accountItems">{accounts}</div>
-      </div>
+      <div className="rightBarMain">
+        <div className="trends">
+          <h2 className="title">What's happening</h2>
+          <div className="whItems">{trendList}</div>
+        </div>
 
-      <div className="copyright">
-        <a href="https://jonathanhawes.dev" target="_blank" rel="noreferrer">
-          My Website
-        </a>
-        <a href="https://github.com/jdh58" target="_blank" rel="noreferrer">
-          GitHub
-        </a>
-        <div className="forcewrap"></div>
-        <p>© 2023 Nobody, Inc.</p>
+        <div className="accounts">
+          <h2 className="title">Who to follow</h2>
+          <div className="accountItems">{accounts}</div>
+        </div>
+        <div className="copyright">
+          <a href="https://jonathanhawes.dev" target="_blank" rel="noreferrer">
+            My Website
+          </a>
+          <a href="https://github.com/jdh58" target="_blank" rel="noreferrer">
+            GitHub
+          </a>
+          <div className="forcewrap"></div>
+          <p>© 2023 Nobody, Inc.</p>
+        </div>
       </div>
     </aside>
   );
