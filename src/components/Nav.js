@@ -5,8 +5,6 @@ import Tag from '../assets/tag.svg';
 import TagFill from '../assets/tag_fill.svg';
 import Notifications from '../assets/notifications.svg';
 import NotificationsFill from '../assets/notifications_fill.svg';
-import Messages from '../assets/messages.svg';
-import MessagesFill from '../assets/messages_fill.svg';
 import Bookmarks from '../assets/bookmark.svg';
 import BookmarksFill from '../assets/bookmark_fill.svg';
 import Profile from '../assets/profile.svg';
@@ -15,12 +13,9 @@ import { useLocation } from 'react-router-dom';
 import NavItem from './NavItem';
 import NavChirpButton from './NavChirpButton';
 import '../styles/Nav.css';
-import { app } from '../firebase-config';
-import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import UserContext from '../UserContext';
 import ProfileIndicator from './ProfileIndicator';
-import existCheck from '../existCheck';
 
 export default function Nav({ chirpOverlay }) {
   const user = useContext(UserContext);

@@ -1,17 +1,11 @@
-import Pic from '../assets/fakepic.jpeg';
 import ChirpButton from './ChirpButton';
 import GifBox from '../assets/gifbox.svg';
 import ImageIcon from '../assets/image.svg';
-import Poll from '../assets/list.svg';
-import Emoji from '../assets/smile.svg';
-import Clock from '../assets/clock.svg';
-import Pin from '../assets/map-pin.svg';
 import Close from '../assets/close.svg';
 import '../styles/ChirpModule.css';
 import { useContext, useEffect, useState } from 'react';
 import { getAuth } from 'firebase/auth';
 import { app } from '../firebase-config';
-import { upload } from '@testing-library/user-event/dist/upload';
 import {
   addDoc,
   arrayUnion,

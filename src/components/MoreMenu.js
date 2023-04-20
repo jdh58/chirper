@@ -11,7 +11,6 @@ import {
   query,
   where,
   deleteDoc,
-  doc,
   updateDoc,
   arrayUnion,
   arrayRemove,
@@ -24,14 +23,14 @@ import ToastContext from '../ToastContext';
 export default function MoreMenu({ chirpData, killMenu }) {
   const [isUsers, setIsUsers] = useState(false);
   const [alreadyBookmarked, setAlreadyBookmarked] = useState(false);
-  const user = useContext(UserContext) || {
-    userId: '',
-    bookmarks: [],
-  };
+  const user = useContext(UserContext);
   const displayToast = useContext(ToastContext);
   const [userDoc, setUserDoc] = useState(null);
 
   useEffect(() => {
+    if (!user) {
+      return;
+    }
     // Check if this is the user's own chirp
     if (user.userId === chirpData.accountId) {
       setIsUsers(true);

@@ -1,6 +1,4 @@
 import { getAuth } from 'firebase/auth';
-
-import { useEffect, useState } from 'react';
 import { app } from '../firebase-config';
 import '../styles/ChirpButton.css';
 

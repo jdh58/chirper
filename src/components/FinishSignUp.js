@@ -1,6 +1,6 @@
 import '../styles/SignIn.css';
 import Logo from '../assets/logo.svg';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { app } from '../firebase-config';
 import {
   addDoc,
@@ -10,11 +10,11 @@ import {
   query,
   where,
 } from 'firebase/firestore';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { getAuth } from 'firebase/auth';
 import { format } from 'date-fns';
 import { getDownloadURL, getStorage, ref } from 'firebase/storage';
 
-export default function FinishSignUp({}) {
+export default function FinishSignUp() {
   const [userInput, setUserInput] = useState('');
 
   const checkUserInput = (e) => {

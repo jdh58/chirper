@@ -1,5 +1,4 @@
 import { getAuth, signOut } from 'firebase/auth';
-import { useContext } from 'react';
 import { app } from '../firebase-config';
 import LogOut from '../assets/logout.svg';
 import ProfilePic from './ProfilePic';

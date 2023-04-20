@@ -1,32 +1,12 @@
 import ProfilePic from './ProfilePic';
 import More from '../assets/more.svg';
-import Chat from '../assets/chat.svg';
-import ReChirp from '../assets/rechirp.svg';
-import Like from '../assets/like.svg';
-import LikeFill from '../assets/likeFill.svg';
-import Share from '../assets/share.svg';
 import '../styles/ProfilePic.css';
 import '../styles/Chirp.css';
-import { createElement, useContext, useEffect, useState } from 'react';
-import {
-  arrayRemove,
-  arrayUnion,
-  collection,
-  getDocs,
-  getFirestore,
-  query,
-  updateDoc,
-  where,
-} from 'firebase/firestore';
-import { app } from '../firebase-config';
+import { useContext, useEffect, useState } from 'react';
 import { format, formatDistanceToNowStrict, parseISO } from 'date-fns';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import MoreMenu from './MoreMenu';
-import { click } from '@testing-library/user-event/dist/click';
-import getChirp from '../getChirp';
-import UserContext from '../UserContext';
 import getAccount from '../getAccount';
-import ToastNotification from './ToastNotification';
 import ChirpIcons from './ChirpIcons';
 import addTags from '../addTags';
 import ToastContext from '../ToastContext';
@@ -35,9 +15,6 @@ export default function Chirp({ chirpData, profile }) {
   const displayToast = useContext(ToastContext);
   const navigate = useNavigate();
   const [displayMore, setDisplayMore] = useState(false);
-  const user = useContext(UserContext) || {
-    likes: '',
-  };
   const [account, setAccount] = useState({
     name: null,
     username: null,
@@ -59,6 +36,7 @@ export default function Chirp({ chirpData, profile }) {
 
   useEffect(() => {
     setChirpText(addTags(chirpData.text, navigate, displayToast));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chirpData]);
 
   function formatDistanceShort() {

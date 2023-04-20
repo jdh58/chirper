@@ -1,5 +1,4 @@
 import '../styles/RightBar.css';
-import TrendItem from './TrendItem';
 import Search from './Search';
 import AccountModule from './AccountModule';
 import { useEffect, useState } from 'react';
@@ -8,7 +7,6 @@ import {
   getDocs,
   getFirestore,
   limit,
-  orderBy,
   query,
 } from 'firebase/firestore';
 import { app } from '../firebase-config';

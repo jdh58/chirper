@@ -1,27 +1,18 @@
-import { click } from '@testing-library/user-event/dist/click';
-import {
-  arrayRemove,
-  arrayUnion,
-  collection,
-  getDocs,
-  getFirestore,
-  query,
-  updateDoc,
-  where,
-} from 'firebase/firestore';
+import { arrayRemove, arrayUnion, updateDoc } from 'firebase/firestore';
 import { useContext, useEffect, useState } from 'react';
-import { app } from '../firebase-config';
 import getAccount from '../getAccount';
 import UserContext from '../UserContext';
 
 export default function FollowButton({ clickedUser, isProfile }) {
-  const loggedInUser = useContext(UserContext) || {
-    following: '',
-  };
+  const loggedInUser = useContext(UserContext);
   const [isFollowing, setIsFollowing] = useState(false);
 
   useEffect(() => {
     setIsFollowing(false);
+    if (!loggedInUser) {
+      return;
+    }
+
     for (let i = 0; i < loggedInUser.following.length; i++) {
       if (loggedInUser.following[i] === clickedUser.userId) {
         setIsFollowing(true);

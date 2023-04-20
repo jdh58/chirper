@@ -1,9 +1,6 @@
-import { getAuth } from 'firebase/auth';
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { app } from '../firebase-config';
 import UserContext from '../UserContext';
-import ChirpModule from './ChirpModule';
 
 export default function NavItem({ name, emptyIcon, fillIcon }) {
   let location = useLocation();

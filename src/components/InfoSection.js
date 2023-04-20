@@ -1,6 +1,3 @@
-import { useEffect } from 'react';
-import Calendar from '../assets/calendar.svg';
-
 export default function InfoSection({ profile, editMode }) {
   const autoGrow = (e) => {
     const textBox = e.target;

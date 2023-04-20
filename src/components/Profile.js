@@ -1,20 +1,17 @@
 import RightBar from './RightBar';
-import Back from '../assets/back.svg';
 import Calendar from '../assets/calendar.svg';
 import Chirp from './Chirp';
 import ProfilePic from './ProfilePic';
 import Tab from './Tab';
 import '../styles/page.css';
 import '../styles/Profile.css';
-import { useNavigate, useParams, Link } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
 import existCheck from '../existCheck';
 import {
   collection,
   getDocs,
   getFirestore,
-  limit,
-  onSnapshot,
   orderBy,
   query,
   updateDoc,
@@ -39,10 +36,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 
 export default function Profile() {
   const urlId = useParams().id;
-  const user = useContext(UserContext) || {
-    userId: '',
-  };
-  const navigate = useNavigate();
+  const user = useContext(UserContext);
   const [isUser, setIsUser] = useState(false);
   const [profileChirps, setProfileChirps] = useState(null);
   const [profileReplies, setProfileReplies] = useState(null);
@@ -63,10 +57,13 @@ export default function Profile() {
   useEffect(() => {
     setEditMode(false);
     setCurrentTab('chirps');
-    if (urlId === user.userId) {
-      setIsUser(true);
-    } else {
-      setIsUser(false);
+
+    if (user) {
+      if (urlId === user.userId) {
+        setIsUser(true);
+      } else {
+        setIsUser(false);
+      }
     }
 
     (async () => {

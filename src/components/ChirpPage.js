@@ -3,25 +3,17 @@ import { useContext, useEffect, useState } from 'react';
 import Chirp from './Chirp';
 import ProfilePic from './ProfilePic';
 import More from '../assets/more.svg';
-import Chat from '../assets/chat.svg';
-import ReChirp from '../assets/rechirp.svg';
-import Like from '../assets/like.svg';
-import Share from '../assets/share.svg';
 import Back from '../assets/back.svg';
 import RightBar from './RightBar';
 import {
-  arrayRemove,
-  arrayUnion,
   collection,
-  getDoc,
   getDocs,
   getFirestore,
   query,
-  updateDoc,
   where,
 } from 'firebase/firestore';
 import { app } from '../firebase-config';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import ChirpModule from './ChirpModule';
 import '../styles/ChirpPage.css';
 import getAccount from '../getAccount';
