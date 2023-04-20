@@ -76,8 +76,6 @@ export default function addTags(text, navigate, displayToast) {
     });
   }
 
-  console.log(dataArray);
-
   return dataArray.map((element) => {
     return (
       <span onClick={handleTagClick} className={element.className}>
