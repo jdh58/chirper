@@ -44,7 +44,7 @@ export default function RightBar({ noSearch }) {
         </>
       ) : null}
 
-      <div className="rightBarMain">
+      <div className={noSearch ? 'rightBarMain only' : 'rightBarMain'}>
         <div className="trends">
           <h2 className="title">What's happening</h2>
           <div className="whItems">{trendList}</div>

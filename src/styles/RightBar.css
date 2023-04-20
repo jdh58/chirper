@@ -1,7 +1,6 @@
 .rightBar {
   display: flex;
   flex-direction: column;
-  gap: 15px;
   margin-left: 25px;
   height: 100%;
 }
@@ -80,10 +79,17 @@
 }
 
 .rightBarMain {
+  margin-top: 10px;
   display: flex;
   flex-direction: column;
   gap: 15px;
   height: fit-content;
   position: sticky;
+  padding-bottom: 75px;
   top: -160px;
+}
+
+.rightBarMain.only {
+  margin-top: 15px;
+  top: -175px;
 }
