@@ -4,8 +4,10 @@ import '../styles/SearchPage.css';
 import Search from './Search';
 import Tab from './Tab';
 import RightBar from './RightBar';
+import { useParams } from 'react-router-dom';
 
 export default function SearchPage() {
+  const defaultSearchQuery = useParams().query;
   const [currentTab, setCurrentTab] = useState('top');
 
   const setTab = (e) => {
@@ -17,7 +19,7 @@ export default function SearchPage() {
       <div className="searchPage page">
         <div className="explorePage page">
           <header>
-            <Search />
+            <Search defaultValue={defaultSearchQuery} />
             <Tab
               currentTab={currentTab}
               setTab={setTab}

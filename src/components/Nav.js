@@ -44,11 +44,11 @@ export default function Nav({ chirpOverlay }) {
             emptyIcon={Notifications}
             fillIcon={NotificationsFill}
           />
-          <NavItem
+          {/* <NavItem
             name="Messages"
             emptyIcon={Messages}
             fillIcon={MessagesFill}
-          />
+          /> */}
           <NavItem
             name="Bookmarks"
             emptyIcon={Bookmarks}

@@ -10,6 +10,7 @@ import useGrabTrends from '../useGrabTrends';
 export default function Explore() {
   const [currentTab, setCurrentTab] = useState('trending');
   const trendList = useGrabTrends(25);
+  // const accountList = useGrabAccounts(25);
 
   const setTab = (e) => {
     setCurrentTab(e.currentTarget.classList[0]);
@@ -25,12 +26,6 @@ export default function Explore() {
             setTab={setTab}
             tabName={'Trending'}
             className={'trending'}
-          />
-          <Tab
-            currentTab={currentTab}
-            setTab={setTab}
-            tabName={'Sports'}
-            className={'sports'}
           />
           <Tab
             currentTab={currentTab}

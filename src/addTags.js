@@ -20,6 +20,7 @@ export default function addTags(text, navigate, displayToast) {
             where('username', '==', `${e.target.textContent.slice(1)}`)
           )
         );
+        console.log('get account for addTags click');
 
         navigate(`/profile/${accountDoc.docs[0].data().userId}`);
       } catch (error) {

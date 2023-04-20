@@ -3,7 +3,7 @@
 
 .explorePage header {
   align-items: center;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
 }
 
 .explorePage header .searchBar {
@@ -16,7 +16,7 @@
 }
 
 .indicator.trending {
-  left: 73px;
+  left: 122.5px;
 }
 
 .indicator.popularAccounts {
