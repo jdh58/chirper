@@ -80,7 +80,6 @@ export default function Profile() {
 
   useEffect(() => {
     (async () => {
-      console.log(profile.likes);
       const likesList = await Promise.all(
         profile.likes.reverse().map(async (likedChirpId) => {
           const likedChirpDoc = await getChirp(likedChirpId);
@@ -170,6 +169,7 @@ export default function Profile() {
           where('username', '==', newUsername)
         )
       );
+      console.log('get chirp for profileupdate');
 
       isExistingUsername = isExistingUsername.docs[0];
 

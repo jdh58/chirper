@@ -67,6 +67,7 @@ function App() {
               where('userId', '==', `${user.uid}`)
             )
           );
+          console.log('get account for user context');
 
           let account = accountDoc.docs[0];
 

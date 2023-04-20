@@ -24,12 +24,11 @@ export default function RightBar({ noSearch }) {
         query(collection(getFirestore(app), 'accounts')),
         limit(3)
       );
+      console.log('get accounts for profile module');
 
       const accountList = accountDocs.docs.map((account) => (
         <AccountModule profile={account.data()} key={account.data().userId} />
       ));
-
-      console.log(accountList);
 
       setAccounts(accountList);
     })();

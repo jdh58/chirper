@@ -44,12 +44,6 @@ export default function FinishSignUp({}) {
       const picNum = Math.ceil(Math.random() * 7);
       const joinDate = format(new Date(), 'MMMM yyyy');
 
-      const nameDocs = await getDocs(
-        query(
-          collection(getFirestore(app), 'accounts'),
-          where('name', '==', `${name}`)
-        )
-      );
       const usernameDocs = await getDocs(
         query(
           collection(getFirestore(app), 'accounts'),
@@ -57,18 +51,9 @@ export default function FinishSignUp({}) {
         )
       );
 
-      // Will consolidate these into one function later, too lazy right nows
-      if (nameDocs.docs.length > 0) {
-        console.error(`Name already exists`);
-        const nameInput = document.querySelector(`.finish #name`);
-        nameInput.setCustomValidity(`Name already exists`);
-        nameInput.reportValidity();
-        nameInput.setCustomValidity('');
+      console.log('get username for existcheck on signup');
 
-        // Let user try again
-        button.disabled = false;
-        return false;
-      }
+      // Will consolidate these into one function later, too lazy right nows
       if (usernameDocs.docs.length > 0) {
         console.error(`Username already exists`);
         const usernameInput = document.querySelector(`.finish #username`);

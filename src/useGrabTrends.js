@@ -23,13 +23,12 @@ export default function useGrabTrends(limitNum) {
           limit(limitNum)
         )
       );
+      console.log('get trends for usegrabtrends');
 
       const trendArray = [];
 
       trendDocs.docs.forEach((trend, index) => {
         const trendData = trend.data();
-
-        console.log(trendData);
 
         trendArray.push(
           <TrendItem
@@ -43,7 +42,7 @@ export default function useGrabTrends(limitNum) {
 
       setTrendList(trendArray);
     })();
-  }, [limit]);
+  }, [limitNum]);
 
   return trendList;
 }

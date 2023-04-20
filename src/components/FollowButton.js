@@ -19,24 +19,6 @@ export default function FollowButton({ clickedUser, isProfile }) {
     following: '',
   };
   const [isFollowing, setIsFollowing] = useState(false);
-  const [loggedInUserDoc, setLoggedInUserDoc] = useState(null);
-  const [clickedUserDoc, setClickedUserDoc] = useState(null);
-
-  useEffect(() => {
-    if (loggedInUser.userId) {
-      (async () => {
-        setLoggedInUserDoc(await getAccount(loggedInUser.userId));
-      })();
-    }
-  }, [loggedInUser]);
-
-  useEffect(() => {
-    if (clickedUser.userId) {
-      (async () => {
-        setClickedUserDoc(await getAccount(clickedUser.userId));
-      })();
-    }
-  }, [clickedUser]);
 
   useEffect(() => {
     for (let i = 0; i < loggedInUser.following.length; i++) {
@@ -50,6 +32,9 @@ export default function FollowButton({ clickedUser, isProfile }) {
   const handleFollow = async () => {
     // Change state so button updates
     setIsFollowing(true);
+
+    const loggedInUserDoc = getAccount(loggedInUser.userId);
+    const clickedUserDoc = getAccount(clickedUser.userId);
 
     // Update logged in user's following
     await updateDoc(loggedInUserDoc.ref, {
@@ -65,6 +50,9 @@ export default function FollowButton({ clickedUser, isProfile }) {
   const handleUnfollow = async () => {
     // Update state so button updates
     setIsFollowing(false);
+
+    const loggedInUserDoc = getAccount(loggedInUser.userId);
+    const clickedUserDoc = getAccount(clickedUser.userId);
 
     // Update logged in user's following
     await updateDoc(loggedInUserDoc.ref, {

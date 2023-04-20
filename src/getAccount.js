@@ -14,6 +14,7 @@ export default async function getAccount(userId) {
       where('userId', '==', userId)
     )
   );
+  console.log('get accounts for getAccount');
 
   return accountDoc.docs[0];
 }

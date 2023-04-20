@@ -190,6 +190,7 @@ export default function ChirpModule({ overlay, killModule, isReply }) {
             where('chirpId', '==', `${chirpId}`)
           )
         ).docs;
+        console.log('get chirp for checkchirpid');
 
         if (!existing) {
           repeat = false;
@@ -251,6 +252,7 @@ export default function ChirpModule({ overlay, killModule, isReply }) {
               where('name', '==', `${hashtag}`)
             )
           );
+          console.log('get hashtag for checkhashtag');
 
           if (!!hashtagDoc.docs[0]) {
             // If the hashtag has been seen before, iterate the count by 1.

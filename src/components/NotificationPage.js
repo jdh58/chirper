@@ -26,6 +26,7 @@ export default function NotificationPage() {
               where('tags', 'array-contains', `@${user.username}`)
             )
           );
+          console.log('get chirp for mentions');
 
           console.log(mentionDocs.docs[0]);
 

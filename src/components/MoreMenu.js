@@ -81,6 +81,7 @@ export default function MoreMenu({ chirpData, killMenu }) {
               where('name', '==', `${hashtag}`)
             )
           );
+          console.log('get hashtag for handleDelete');
 
           const hashtagCount = hashtagDoc.docs[0].data().count;
           const hashtagRef = hashtagDoc.docs[0].ref;

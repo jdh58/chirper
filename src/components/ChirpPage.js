@@ -30,8 +30,10 @@ import '../styles/Chirp.css';
 import UserContext from '../UserContext';
 import ChirpIcons from './ChirpIcons';
 import addTags from '../addTags';
+import ToastContext from '../ToastContext';
 
 export default function ChirpPage() {
+  const displayToast = useContext(ToastContext);
   const id = useParams().id;
   const user = useContext(UserContext);
   const navigate = useNavigate();
@@ -60,7 +62,7 @@ export default function ChirpPage() {
         updateReplies();
       })();
 
-      setChirpText(addTags(chirpData.text, navigate));
+      setChirpText(addTags(chirpData.text, navigate, displayToast));
     }
   }, [chirpData]);
 
@@ -71,6 +73,8 @@ export default function ChirpPage() {
         where('isReply', '==', `${chirpData.chirpId}`)
       )
     );
+    console.log('get chirps for update replies');
+
     const replyList = replyDocs.docs.map((replyDoc) => {
       const replyData = replyDoc.data();
       console.log(replyData);
