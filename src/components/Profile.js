@@ -294,9 +294,9 @@ export default function Profile() {
               <img src={profile.bannerURL} alt="" className="bannerImage" />
               <div className="imageOverlay"></div>
             </div>
-          ) : (
+          ) : profile.bannerURL ? (
             <img src={profile.bannerURL} alt="" className="bannerImage" />
-          )}
+          ) : null}
         </div>
         <div className="profileInfo">
           <ProfilePic
