@@ -3,6 +3,7 @@
   font-weight: 600;
   width: 233px;
   height: 52px;
+  flex-shrink: 0;
   background-color: var(--blue);
   color: white;
   border: none;
