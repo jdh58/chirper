@@ -10,7 +10,7 @@ import { app } from './firebase-config';
 export default function addTags(text, navigate, displayToast) {
   const handleTagClick = async (e) => {
     if (e.target.textContent.startsWith('#')) {
-      navigate(`/search/${e.target.textContent}`);
+      navigate(`/search/${e.target.textContent.slice(1)}`);
     }
     if (e.target.textContent.startsWith('@')) {
       try {
