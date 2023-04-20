@@ -16,6 +16,7 @@ import {
   where,
 } from 'firebase/firestore';
 import { app } from '../firebase-config';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 export default function Home() {
   const user = useContext(UserContext);
@@ -36,6 +37,7 @@ export default function Home() {
               limit(10)
             )
           );
+          console.log('fetched follow');
 
           const followChirpsArray = [];
 
@@ -65,6 +67,7 @@ export default function Home() {
             limit(10)
           )
         );
+        console.log('fetched foryou');
 
         const forYouChirpsArray = [];
 
@@ -81,7 +84,11 @@ export default function Home() {
         console.error('Could not fetch following chirps', error);
       }
     })();
-  });
+  }, []);
+
+  const grabMoreChirps = () => {
+    return <div></div>;
+  };
 
   const setTab = (e) => {
     setCurrentTab(e.currentTarget.classList[0]);
