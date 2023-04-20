@@ -257,13 +257,13 @@ export default function ChirpModule({ overlay, killModule, isReply }) {
             const hashtagCount = hashtagDoc.docs[0].data().count;
             const hashtagRef = hashtagDoc.docs[0].ref;
 
-            updateDoc(hashtagRef, {
+            await updateDoc(hashtagRef, {
               count: hashtagCount + 1,
             });
           } else {
             /* If the hahtag has never been sent before, add a doc 
             for it with initial count of 1. */
-            addDoc(collection(getFirestore(app), 'hashtags'), {
+            await addDoc(collection(getFirestore(app), 'hashtags'), {
               name: hashtag,
               count: 1,
             });

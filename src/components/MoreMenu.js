@@ -63,6 +63,36 @@ export default function MoreMenu({ chirpData, killMenu }) {
         chirps: currentChirps - 1,
       });
 
+      // If the user had any hashtags, update the database.
+      const hashRegex = /#[a-zA-Z0-9]+/g;
+      const hashArray = [];
+      let hashMatch;
+
+      while ((hashMatch = hashRegex.exec(chirpData.text)) !== null) {
+        hashArray.push(hashMatch[0]);
+      }
+
+      if (hashArray.length > 0) {
+        // Subtract one from each hashtag's count
+        hashArray.forEach(async (hashtag) => {
+          const hashtagDoc = await getDocs(
+            query(
+              collection(getFirestore(app), 'hashtags'),
+              where('name', '==', `${hashtag}`)
+            )
+          );
+
+          const hashtagCount = hashtagDoc.docs[0].data().count;
+          const hashtagRef = hashtagDoc.docs[0].ref;
+
+          /* If the hashtag has never been sent before, add a doc 
+                  for it with initial count of 1. */
+          await updateDoc(hashtagRef, {
+            count: hashtagCount - 1,
+          });
+        });
+      }
+
       displayToast('Your Chirp was deleted');
     } catch (error) {
       displayToast('Failed to delete Chirp.');
