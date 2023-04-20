@@ -324,6 +324,9 @@ export default function ChirpModule({ overlay, killModule, isReply }) {
                 isReply ? 'Chirp your reply' : "What's happening?"
               }
               onInput={handleChirpChange}
+              onPaste={(e) => {
+                e.preventDefault();
+              }}
             ></span>
             <span
               className="textarea copy"
