@@ -12,9 +12,11 @@ import {
   query,
 } from 'firebase/firestore';
 import { app } from '../firebase-config';
+import useGrabTrends from '../useGrabTrends';
 
 export default function RightBar({ noSearch }) {
   const [accounts, setAccounts] = useState(null);
+  const trendList = useGrabTrends(4);
 
   useEffect(() => {
     (async () => {
@@ -42,12 +44,7 @@ export default function RightBar({ noSearch }) {
           </div>
           <div className="trends">
             <h2 className="title">What's happening</h2>
-            <div className="whItems">
-              <TrendItem />
-              <TrendItem />
-              <TrendItem />
-              <TrendItem />
-            </div>
+            <div className="whItems">{trendList}</div>
           </div>
         </>
       ) : null}

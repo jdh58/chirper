@@ -4,13 +4,14 @@ import {
   getFirestore,
   orderBy,
   query,
+  limit,
 } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import TrendItem from './components/TrendItem';
 import { app } from './firebase-config';
 import uniqid from 'uniqid';
 
-export default function useGrabTrends() {
+export default function useGrabTrends(limitNum) {
   const [trendList, setTrendList] = useState([]);
 
   useEffect(() => {
@@ -18,7 +19,8 @@ export default function useGrabTrends() {
       const trendDocs = await getDocs(
         query(
           collection(getFirestore(app), 'hashtags'),
-          orderBy('count', 'desc')
+          orderBy('count', 'desc'),
+          limit(limitNum)
         )
       );
 
@@ -41,7 +43,7 @@ export default function useGrabTrends() {
 
       setTrendList(trendArray);
     })();
-  }, []);
+  }, [limit]);
 
   return trendList;
 }
