@@ -21,6 +21,7 @@ export default function FollowButton({ clickedUser, isProfile }) {
   const [isFollowing, setIsFollowing] = useState(false);
 
   useEffect(() => {
+    setIsFollowing(false);
     for (let i = 0; i < loggedInUser.following.length; i++) {
       if (loggedInUser.following[i] === clickedUser.userId) {
         setIsFollowing(true);
