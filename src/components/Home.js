@@ -13,6 +13,7 @@ import {
   limit,
   orderBy,
   query,
+  startAfter,
   where,
 } from 'firebase/firestore';
 import { app } from '../firebase-config';
@@ -23,9 +24,10 @@ export default function Home() {
   const [currentTab, setCurrentTab] = useState('foryou');
   const [followingChirps, setFollowingChirps] = useState([]);
   const [forYouChirps, setForYouChirps] = useState([]);
+  const [finalForYouChirp, setFinalForYouChirp] = useState(null);
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
-    console.log(user);
     if (user) {
       (async () => {
         try {
@@ -79,6 +81,9 @@ export default function Home() {
           );
         });
 
+        console.log(forYouDocs.docs[forYouDocs.docs.length - 1].data());
+
+        setFinalForYouChirp(forYouDocs.docs[forYouDocs.docs.length - 1]);
         setForYouChirps(forYouChirpsArray);
       } catch (error) {
         console.error('Could not fetch following chirps', error);
@@ -86,8 +91,37 @@ export default function Home() {
     })();
   }, []);
 
-  const grabMoreChirps = () => {
-    return <div></div>;
+  const grabMoreForYouChirps = async () => {
+    try {
+      console.log('GOT NEXT');
+      const forYouDocs = await getDocs(
+        query(
+          collection(getFirestore(app), 'chirps'),
+          orderBy('postTime', 'desc'),
+          startAfter(finalForYouChirp),
+          limit(10)
+        )
+      );
+      console.log('fetched more foryou');
+
+      const forYouChirpsArray = [];
+
+      forYouDocs.docs.forEach((chirpDoc) => {
+        const chirpData = chirpDoc.data();
+
+        forYouChirpsArray.push(
+          <Chirp chirpData={chirpData} key={chirpData.chirpId} />
+        );
+      });
+
+      console.log([...forYouChirps, ...forYouChirpsArray]);
+
+      setFinalForYouChirp(forYouDocs.docs[forYouDocs.docs.length - 1]);
+      setForYouChirps([...forYouChirps, ...forYouChirpsArray]);
+      setPage((page) => page + 1);
+    } catch (error) {
+      console.error('Could not fetch following chirps', error);
+    }
   };
 
   const setTab = (e) => {
@@ -114,7 +148,17 @@ export default function Home() {
           <div className={`indicator ${currentTab}`}></div>
         </header>
         <ChirpModule isReply={false} />
-        {currentTab === 'foryou' ? forYouChirps : null}
+        {currentTab === 'foryou' ? (
+          <InfiniteScroll
+            dataLength={page * 10}
+            next={grabMoreForYouChirps}
+            hasMore={true}
+            loader={<h4>Loading...</h4>}
+            scrollThreshold={0.9}
+          >
+            {forYouChirps}
+          </InfiniteScroll>
+        ) : null}
         {currentTab === 'following' ? followingChirps : null}
       </div>
       <RightBar />
