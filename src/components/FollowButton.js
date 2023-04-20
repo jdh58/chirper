@@ -33,8 +33,8 @@ export default function FollowButton({ clickedUser, isProfile }) {
     // Change state so button updates
     setIsFollowing(true);
 
-    const loggedInUserDoc = getAccount(loggedInUser.userId);
-    const clickedUserDoc = getAccount(clickedUser.userId);
+    const loggedInUserDoc = await getAccount(loggedInUser.userId);
+    const clickedUserDoc = await getAccount(clickedUser.userId);
 
     // Update logged in user's following
     await updateDoc(loggedInUserDoc.ref, {
@@ -51,8 +51,8 @@ export default function FollowButton({ clickedUser, isProfile }) {
     // Update state so button updates
     setIsFollowing(false);
 
-    const loggedInUserDoc = getAccount(loggedInUser.userId);
-    const clickedUserDoc = getAccount(clickedUser.userId);
+    const loggedInUserDoc = await getAccount(loggedInUser.userId);
+    const clickedUserDoc = await getAccount(clickedUser.userId);
 
     // Update logged in user's following
     await updateDoc(loggedInUserDoc.ref, {
