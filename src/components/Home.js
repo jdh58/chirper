@@ -21,6 +21,7 @@ export default function Home() {
   const user = useContext(UserContext);
   const [currentTab, setCurrentTab] = useState('foryou');
   const [followingChirps, setFollowingChirps] = useState([]);
+  const [forYouChirps, setForYouChirps] = useState([]);
 
   useEffect(() => {
     console.log(user);
@@ -54,6 +55,34 @@ export default function Home() {
     }
   }, [user]);
 
+  useEffect(() => {
+    (async () => {
+      try {
+        const forYouDocs = await getDocs(
+          query(
+            collection(getFirestore(app), 'chirps'),
+            orderBy('postTime', 'desc'),
+            limit(10)
+          )
+        );
+
+        const forYouChirpsArray = [];
+
+        forYouDocs.docs.forEach((chirpDoc) => {
+          const chirpData = chirpDoc.data();
+
+          forYouChirpsArray.push(
+            <Chirp chirpData={chirpData} key={chirpData.chirpId} />
+          );
+        });
+
+        setForYouChirps(forYouChirpsArray);
+      } catch (error) {
+        console.error('Could not fetch following chirps', error);
+      }
+    })();
+  });
+
   const setTab = (e) => {
     setCurrentTab(e.currentTarget.classList[0]);
   };
@@ -78,7 +107,8 @@ export default function Home() {
           <div className={`indicator ${currentTab}`}></div>
         </header>
         <ChirpModule isReply={false} />
-        {currentTab === 'foryou' ? followingChirps : null}
+        {currentTab === 'foryou' ? forYouChirps : null}
+        {currentTab === 'following' ? followingChirps : null}
       </div>
       <RightBar />
     </>

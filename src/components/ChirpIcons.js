@@ -31,13 +31,16 @@ export default function ChirpIcons({ chirpData, fullPage }) {
 
   useEffect(() => {
     setIsLiked(false);
-    // Check if the user has it liked, if not, like it, if they do, unlike it
-    if (user.likes.includes(chirpData.chirpId)) {
-      setIsLiked(true);
-      return;
-    }
 
-    setChirpLikes(chirpData.likes.length);
+    if (user) {
+      // Check if the user has it liked, if not, like it, if they do, unlike it
+      if (user.likes.includes(chirpData.chirpId)) {
+        setIsLiked(true);
+        return;
+      }
+
+      setChirpLikes(chirpData.likes.length);
+    }
   }, [urlId, chirpData]);
 
   const handleLikeToggle = async () => {
