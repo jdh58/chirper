@@ -35,6 +35,7 @@ import getAccount from '../getAccount';
 import AddPic from '../assets/addPic.svg';
 import getChirp from '../getChirp';
 import Header from './Header';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 export default function Profile() {
   const urlId = useParams().id;
@@ -380,7 +381,21 @@ export default function Profile() {
           />
           <div className={`indicator ${currentTab}`}></div>
         </div>
-        {currentTab === 'chirps' ? profileChirps : null}
+        {currentTab === 'chirps' ? (
+          <InfiniteScroll
+            // next={fetchData}
+            // hasMore={true}
+            // loader={<h4>Loading...</h4>}
+            // endMessage={
+            //   <p style={{ textAlign: 'center' }}>
+            //     <b>Yay! You have seen it all</b>
+            //   </p>
+            // }
+            dataLength={profile.chirps ? profile.chirps : 0}
+          >
+            {profileChirps}
+          </InfiniteScroll>
+        ) : null}
         {currentTab === 'replies' ? profileReplies : null}
         {currentTab === 'media' ? profileMediaChirps : null}
         {currentTab === 'likes' ? profileLikes : null}

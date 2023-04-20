@@ -211,15 +211,13 @@ export default function ChirpModule({ overlay, killModule, isReply }) {
       }
 
       // If the user tagged anybody, save it so they can get notified
-      const regex = /@[a-zA-Z0-9]+/g;
+      const tagRegex = /@[a-zA-Z0-9]+/g;
       const tagArray = [];
-      let match;
+      let tagMatch;
 
-      while ((match = regex.exec(text)) !== null) {
-        tagArray.push(match[0]);
+      while ((tagMatch = tagRegex.exec(text)) !== null) {
+        tagArray.push(tagMatch[0]);
       }
-
-      console.log(tagArray);
 
       // Log the chirp to the database
       await addDoc(collection(getFirestore(app), 'chirps'), {
@@ -235,6 +233,43 @@ export default function ChirpModule({ overlay, killModule, isReply }) {
         tags: tagArray,
         postTime: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
       });
+
+      // If the user had any hashtags, update the database.
+      const hashRegex = /#[a-zA-Z0-9]+/g;
+      const hashArray = [];
+      let hashMatch;
+
+      while ((hashMatch = hashRegex.exec(text)) !== null) {
+        hashArray.push(hashMatch[0]);
+      }
+
+      if (hashArray.length > 0) {
+        hashArray.forEach(async (hashtag) => {
+          const hashtagDoc = await getDocs(
+            query(
+              collection(getFirestore(app), 'hashtags'),
+              where('name', '==', `${hashtag}`)
+            )
+          );
+
+          if (!!hashtagDoc.docs[0]) {
+            // If the hashtag has been seen before, iterate the count by 1.
+            const hashtagCount = hashtagDoc.docs[0].data().count;
+            const hashtagRef = hashtagDoc.docs[0].ref;
+
+            updateDoc(hashtagRef, {
+              count: hashtagCount + 1,
+            });
+          } else {
+            /* If the hahtag has never been sent before, add a doc 
+            for it with initial count of 1. */
+            addDoc(collection(getFirestore(app), 'hashtags'), {
+              name: hashtag,
+              count: 1,
+            });
+          }
+        });
+      }
 
       // If it had a reply, add it to the reply array for the chirp it replied to
       if (isReply) {
