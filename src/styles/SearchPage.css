@@ -2,6 +2,10 @@
   grid-template-columns: repeat(4, 1fr);
 }
 
+.searchPage .subheader {
+  font-size: 1.5rem;
+}
+
 .indicator.top {
   left: 47.5px;
 }
