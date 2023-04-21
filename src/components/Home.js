@@ -18,6 +18,7 @@ import {
 } from 'firebase/firestore';
 import { app } from '../firebase-config';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import grabForInfinite from '../grabForInfinite';
 
 export default function Home() {
   const user = useContext(UserContext);
@@ -65,61 +66,34 @@ export default function Home() {
   }, [user]);
 
   useEffect(() => {
-    (async () => {
-      try {
-        const forYouDocs = await getDocs(
-          query(
-            collection(getFirestore(app), 'chirps'),
-            orderBy('postTime', 'desc'),
-            limit(10)
-          )
-        );
-        console.log('fetched foryou');
-
-        const forYouChirpsArray = [];
-
-        forYouDocs.docs.forEach((chirpDoc) => {
-          const chirpData = chirpDoc.data();
-
-          forYouChirpsArray.push(
-            <Chirp chirpData={chirpData} key={chirpData.chirpId} />
-          );
-        });
-
-        console.log(forYouDocs.docs[forYouDocs.docs.length - 1].data());
-
-        setFinalForYouChirp(forYouDocs.docs[forYouDocs.docs.length - 1]);
-        setForYouChirps(forYouChirpsArray);
-      } catch (error) {
-        console.error('Could not fetch following chirps', error);
-      }
-    })();
+    const first = true;
+    grabMoreForYouChirps(first);
   }, []);
 
-  const grabMoreForYouChirps = async () => {
+  const grabMoreForYouChirps = async (first) => {
     try {
-      const forYouDocs = await getDocs(
-        query(
+      let grabQuery;
+
+      if (first === true) {
+        grabQuery = query(
+          collection(getFirestore(app), 'chirps'),
+          orderBy('postTime', 'desc'),
+          limit(10)
+        );
+      } else {
+        grabQuery = query(
           collection(getFirestore(app), 'chirps'),
           orderBy('postTime', 'desc'),
           startAfter(finalForYouChirp),
           limit(10)
-        )
-      );
-      console.log('fetched more foryou');
-
-      const forYouChirpsArray = [];
-
-      forYouDocs.docs.forEach((chirpDoc) => {
-        const chirpData = chirpDoc.data();
-
-        forYouChirpsArray.push(
-          <Chirp chirpData={chirpData} key={chirpData.chirpId} />
         );
-      });
+      }
 
-      setFinalForYouChirp(forYouDocs.docs[forYouDocs.docs.length - 1]);
-      setForYouChirps([...forYouChirps, ...forYouChirpsArray]);
+      let forYouGrab = await grabForInfinite(grabQuery);
+
+      console.log(forYouChirps);
+      setFinalForYouChirp(forYouGrab.finalChirp);
+      setForYouChirps([...forYouChirps, ...forYouGrab.newChirps]);
       setForYouPage((forYouPage) => forYouPage + 1);
     } catch (error) {
       console.error('Could not fetch following chirps', error);
