@@ -53,7 +53,6 @@
 @media (max-width: 1250px) {
   .navBar {
     justify-self: center;
-    justify-content: center;
     width: 80px;
   }
 
@@ -70,6 +69,9 @@
     width: 52px;
     border-radius: 10000px;
     align-self: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   .navBar .chirpButton p {
     display: none;
@@ -78,5 +80,11 @@
   .navButton {
     margin: auto;
     padding-right: 10px;
+  }
+
+  .navBar .chirpButton img {
+    display: block;
+    width: 28px;
+    filter: invert(100%);
   }
 }

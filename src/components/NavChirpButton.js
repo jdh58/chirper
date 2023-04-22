@@ -1,8 +1,7 @@
-import { useState } from 'react';
-import ChirpModule from './ChirpModule';
 import '../styles/ChirpButton.css';
 import { getAuth } from 'firebase/auth';
 import { app } from '../firebase-config';
+import Compose from '../assets/compose.png';
 
 export default function NavChirpButton(props) {
   // We don't want non-users chirping
@@ -14,6 +13,7 @@ export default function NavChirpButton(props) {
     <>
       <button className="chirpButton nav" onClick={props.chirpOverlay}>
         <p>Chirp</p>
+        <img src={Compose} alt="" />
       </button>
     </>
   );
