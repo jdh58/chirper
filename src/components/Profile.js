@@ -69,14 +69,6 @@ export default function Profile() {
     setEditMode(false);
     setCurrentTab('chirps');
 
-    if (user) {
-      if (urlId === user.userId) {
-        setIsUser(true);
-      } else {
-        setIsUser(false);
-      }
-    }
-
     (async () => {
       const profileDocs = await existCheck(urlId);
       if (!profileDocs) {
@@ -84,6 +76,16 @@ export default function Profile() {
       }
       setProfile(profileDocs[0].data());
     })();
+  }, [urlId]);
+
+  useEffect(() => {
+    if (user) {
+      if (urlId === user.userId) {
+        setIsUser(true);
+      } else {
+        setIsUser(false);
+      }
+    }
   }, [urlId, user]);
 
   useEffect(() => {

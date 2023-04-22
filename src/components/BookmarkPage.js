@@ -18,8 +18,10 @@ export default function BookmarkPage() {
     if (!hasLoaded) {
       (async () => {
         try {
+          const bookmarkArray = user.bookmarks.slice().reverse();
+
           const chirpList = await Promise.all(
-            user.bookmarks.reverse().map(async (chirpId) => {
+            bookmarkArray.map(async (chirpId) => {
               return await getChirp(chirpId);
             })
           );
@@ -27,6 +29,7 @@ export default function BookmarkPage() {
           setBookmarkedChirps(
             chirpList.map((chirpDoc) => {
               const chirpData = chirpDoc.data();
+              console.log(chirpData);
               return <Chirp chirpData={chirpData} />;
             })
           );
@@ -42,7 +45,11 @@ export default function BookmarkPage() {
   return (
     <>
       <div className="bookmarkPage page">
-        <Header hasBack={false} top="Bookmarks" bottom={`@${user.username}`} />
+        <Header
+          hasBack={false}
+          top="Bookmarks"
+          bottom={`@${user !== null ? user.username : ''}`}
+        />
         {bookmarkedChirps}
       </div>
       <RightBar />
