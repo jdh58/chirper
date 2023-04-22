@@ -10,6 +10,7 @@ import LikeFill from '../assets/likeFill.svg';
 import Share from '../assets/share.svg';
 import { useParams } from 'react-router-dom';
 import OverlayContext from '../OverlayContext';
+import ToastContext from '../ToastContext';
 
 export default function ChirpIcons({ chirpData, fullPage }) {
   const user = useContext(UserContext);
@@ -19,6 +20,7 @@ export default function ChirpIcons({ chirpData, fullPage }) {
   const [chirpLikes, setChirpLikes] = useState(chirpData.likes.length);
   // const [chirpReChirps, setChirpReChirps] = useState(chirpData.reChirps.length);
   const chirpReChirps = 0;
+  const displayToast = useContext(ToastContext);
 
   useEffect(() => {
     setIsLiked(false);
@@ -106,6 +108,11 @@ export default function ChirpIcons({ chirpData, fullPage }) {
   //   }
   // };
 
+  const handleShare = () => {
+    displayToast('Chirp link copied to clipboard');
+    navigator.clipboard.writeText(`localhost:3000/chirp/${chirpData.chirpId}`);
+  };
+
   return (
     <>
       {fullPage ? (
@@ -154,7 +161,7 @@ export default function ChirpIcons({ chirpData, fullPage }) {
               </div>
             </div>
             <div className="icon share">
-              <div className="container">
+              <div className="container" onClick={handleShare}>
                 <img src={Share} alt="" />
               </div>
             </div>
@@ -192,7 +199,7 @@ export default function ChirpIcons({ chirpData, fullPage }) {
             <p className="count">{chirpLikes > 0 ? chirpLikes : null}</p>
           </div>
           <div className="icon share">
-            <div className="container">
+            <div className="container" onClick={handleShare}>
               <img src={Share} alt="" />
             </div>
           </div>
