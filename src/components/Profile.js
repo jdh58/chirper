@@ -41,7 +41,6 @@ export default function Profile() {
   const urlId = useParams().id;
   const user = useContext(UserContext);
   const [isUser, setIsUser] = useState(false);
-  const [profileLikes, setProfileLikes] = useState(null);
   const [currentTab, setCurrentTab] = useState('chirps');
   const [profile, setProfile] = useState({
     name: '',
@@ -55,12 +54,15 @@ export default function Profile() {
   const [chirps, setChirps] = useState([]);
   const [replies, setReplies] = useState([]);
   const [media, setMedia] = useState([]);
+  const [likes, setLikes] = useState([]);
   const [finalChirp, setFinalChirp] = useState(null);
   const [finalReply, setFinalReply] = useState(null);
   const [finalMedia, setFinalMedia] = useState(null);
+  const [finalLike, setFinalLike] = useState(0);
   const [chirpPage, setChirpPage] = useState(0);
   const [replyPage, setReplyPage] = useState(0);
   const [mediaPage, setMediaPage] = useState(0);
+  const [likesPage, setLikesPage] = useState(0);
   const displayToast = useContext(ToastContext);
 
   useEffect(() => {
@@ -85,19 +87,6 @@ export default function Profile() {
   }, [urlId, user]);
 
   useEffect(() => {
-    (async () => {
-      const likesList = await Promise.all(
-        profile.likes.reverse().map(async (likedChirpId) => {
-          const likedChirpDoc = await getChirp(likedChirpId);
-          const likedChirpData = likedChirpDoc.data();
-          return <Chirp chirpData={likedChirpData} key={likedChirpId} />;
-        })
-      );
-      setProfileLikes(likesList);
-    })();
-  }, [profile]);
-
-  useEffect(() => {
     if (profile) {
       if (currentTab === 'chirps') {
         grabChirps(true);
@@ -105,9 +94,30 @@ export default function Profile() {
         grabReplies(true);
       } else if (currentTab === 'media') {
         grabMedia(true);
+      } else if (currentTab === 'likes') {
+        grabLikes();
       }
     }
   }, [currentTab, profile]);
+
+  const grabLikes = async () => {
+    const newLikes = [];
+
+    console.log(profile.likes.length);
+    for (let i = 0; i < 10 && i + finalLike < profile.likes.length; i++) {
+      console.log(i);
+      let likedChirpDoc = await getChirp(profile.likes[i + finalLike]);
+      let likedChirpData = likedChirpDoc.data();
+
+      newLikes.push(
+        <Chirp chirpData={likedChirpData} key={profile.likes[i]} />
+      );
+    }
+
+    setFinalLike((finalLike) => finalLike + 10);
+    setLikes([...likes, ...newLikes]);
+    setLikesPage((likesPage) => likesPage + 1);
+  };
 
   const grabChirps = async (first) => {
     let grabQuery;
@@ -451,7 +461,16 @@ export default function Profile() {
             {media}
           </InfiniteScroll>
         ) : null}
-        {currentTab === 'likes' ? profileLikes : null}
+        {currentTab === 'likes' ? (
+          <InfiniteScroll
+            dataLength={likesPage * 10}
+            next={grabLikes}
+            hasMore={true}
+            scrollThreshold={0.9}
+          >
+            {likes}
+          </InfiniteScroll>
+        ) : null}
       </div>
       <RightBar />
     </>
