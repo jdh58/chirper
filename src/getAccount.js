@@ -15,6 +15,5 @@ export default async function getAccount(userId) {
     )
   );
   console.log('get accounts for getAccount');
-  console.trace();
   return accountDoc.docs[0];
 }

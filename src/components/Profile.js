@@ -92,56 +92,48 @@ export default function Profile() {
     /* Sort the tweets so newest render at the top, set state
    to be a mapped list of the user's chirps as chirp elements */
     (async () => {
-      let chirpDocs = await getDocs(
-        query(
-          collection(getFirestore(app), 'chirps'),
-          where('accountId', '==', `${profile.userId}`),
-          orderBy('postTime', 'desc')
-        )
-      );
-
-      chirpDocs = chirpDocs.docs;
-
-      function convertToComponents(array) {
-        return array.map((chirp) => {
-          const chirpData = chirp.data();
-          return (
-            <Chirp
-              chirpData={chirpData}
-              profile={profile}
-              key={chirpData.chirpId}
-            />
-          );
-        });
-      }
-
-      const chirpList = convertToComponents(chirpDocs);
-
-      const mediaChirpDocs = chirpDocs.filter((chirp) => {
-        const chirpData = chirp.data();
-        if (chirpData.imageURL) {
-          return true;
-        } else {
-          return false;
-        }
-      });
-
-      const mediaChirpList = convertToComponents(mediaChirpDocs);
-
-      const replyDocs = chirpDocs.filter((chirp) => {
-        const chirpData = chirp.data();
-        if (chirpData.isReply) {
-          return true;
-        } else {
-          return false;
-        }
-      });
-
-      const replyList = convertToComponents(replyDocs);
-
-      setProfileChirps(chirpList);
-      setProfileReplies(replyList);
-      setProfileMediaChirps(mediaChirpList);
+      //   let chirpDocs = await getDocs(
+      //     query(
+      //       collection(getFirestore(app), 'chirps'),
+      //       where('accountId', '==', `${profile.userId}`),
+      //       orderBy('postTime', 'desc')
+      //     )
+      //   );
+      //   chirpDocs = chirpDocs.docs;
+      //   function convertToComponents(array) {
+      //     return array.map((chirp) => {
+      //       const chirpData = chirp.data();
+      //       return (
+      //         <Chirp
+      //           chirpData={chirpData}
+      //           profile={profile}
+      //           key={chirpData.chirpId}
+      //         />
+      //       );
+      //     });
+      //   }
+      //   const chirpList = convertToComponents(chirpDocs);
+      //   const mediaChirpDocs = chirpDocs.filter((chirp) => {
+      //     const chirpData = chirp.data();
+      //     if (chirpData.imageURL) {
+      //       return true;
+      //     } else {
+      //       return false;
+      //     }
+      //   });
+      //   const mediaChirpList = convertToComponents(mediaChirpDocs);
+      //   const replyDocs = chirpDocs.filter((chirp) => {
+      //     const chirpData = chirp.data();
+      //     if (chirpData.isReply) {
+      //       return true;
+      //     } else {
+      //       return false;
+      //     }
+      //   });
+      //   const replyList = convertToComponents(replyDocs);
+      //   setProfileChirps(chirpList);
+      //   setProfileReplies(replyList);
+      //   setProfileMediaChirps(mediaChirpList);
     })();
   }, [profile]);
 

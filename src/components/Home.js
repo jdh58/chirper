@@ -32,48 +32,17 @@ export default function Home() {
 
   useEffect(() => {
     if (user) {
-      (async () => {
-        try {
-          const followChirpDocs = await getDocs(
-            query(
-              collection(getFirestore(app), 'chirps'),
-              where('accountId', 'in', user.following),
-              orderBy('postTime', 'desc'),
-              limit(10)
-            )
-          );
-          console.log('fetched follow');
-
-          const followChirpsArray = [];
-
-          followChirpDocs.docs.forEach((chirpDoc) => {
-            const chirpData = chirpDoc.data();
-
-            followChirpsArray.push(
-              <Chirp chirpData={chirpData} key={chirpData.chirpId} />
-            );
-          });
-
-          setFinalFollowingChirp(
-            followChirpDocs.docs[followChirpDocs.docs.length - 1]
-          );
-          setFollowingChirps(followChirpsArray);
-        } catch (error) {
-          console.error('Could not fetch following chirps', error);
-        }
-      })();
+      grabFollowingChirps(true);
     }
   }, [user]);
 
   useEffect(() => {
-    const first = true;
-    grabMoreForYouChirps(first);
+    grabForYouChirps(true);
   }, []);
 
-  const grabMoreForYouChirps = async (first) => {
+  const grabForYouChirps = async (first) => {
     try {
       let grabQuery;
-
       if (first === true) {
         grabQuery = query(
           collection(getFirestore(app), 'chirps'),
@@ -100,33 +69,31 @@ export default function Home() {
     }
   };
 
-  const grabMoreFollowingChirps = async () => {
+  const grabFollowingChirps = async (first) => {
     try {
-      const followChirpDocs = await getDocs(
-        query(
+      let grabQuery;
+
+      if (first === true) {
+        grabQuery = query(
+          collection(getFirestore(app), 'chirps'),
+          where('accountId', 'in', user.following),
+          orderBy('postTime', 'desc'),
+          limit(10)
+        );
+      } else {
+        grabQuery = query(
           collection(getFirestore(app), 'chirps'),
           where('accountId', 'in', user.following),
           orderBy('postTime', 'desc'),
           startAfter(finalFollowingChirp),
           limit(10)
-        )
-      );
-      console.log('fetched follow');
-
-      const followChirpsArray = [];
-
-      followChirpDocs.docs.forEach((chirpDoc) => {
-        const chirpData = chirpDoc.data();
-
-        followChirpsArray.push(
-          <Chirp chirpData={chirpData} key={chirpData.chirpId} />
         );
-      });
+      }
 
-      setFinalFollowingChirp(
-        followChirpDocs.docs[followChirpDocs.docs.length - 1]
-      );
-      setFollowingChirps([...followingChirps, ...followChirpsArray]);
+      const followingGrab = await grabForInfinite(grabQuery);
+
+      setFinalFollowingChirp(followingGrab.finalChirp);
+      setFollowingChirps([...followingChirps, ...followingGrab.newChirps]);
       setFollowingPage((followingPage) => followingPage + 1);
     } catch (error) {
       console.error('Could not fetch following chirps', error);
@@ -135,6 +102,7 @@ export default function Home() {
 
   const setTab = (e) => {
     setCurrentTab(e.currentTarget.classList[0]);
+    window.scrollTo(0, 0);
   };
 
   return (
@@ -160,7 +128,7 @@ export default function Home() {
         {currentTab === 'foryou' ? (
           <InfiniteScroll
             dataLength={forYouPage * 10}
-            next={grabMoreForYouChirps}
+            next={grabForYouChirps}
             hasMore={true}
             scrollThreshold={0.9}
           >
@@ -170,7 +138,7 @@ export default function Home() {
         {currentTab === 'following' ? (
           <InfiniteScroll
             dataLength={followingPage * 10}
-            next={grabMoreFollowingChirps}
+            next={grabFollowingChirps}
             hasMore={true}
             scrollThreshold={0.9}
           >

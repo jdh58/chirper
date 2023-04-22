@@ -1,5 +1,6 @@
 import { getDocs } from 'firebase/firestore';
 import Chirp from './components/Chirp';
+import uniqid from 'uniqid';
 
 export default async function grabForInfinite(query) {
   try {
@@ -11,7 +12,9 @@ export default async function grabForInfinite(query) {
     docs.docs.forEach((chirpDoc) => {
       const chirpData = chirpDoc.data();
 
-      chirpsArray.push(<Chirp chirpData={chirpData} key={chirpData.chirpId} />);
+      chirpsArray.push(
+        <Chirp chirpData={chirpData} key={chirpData.chirpId + uniqid()} />
+      );
     });
 
     return {

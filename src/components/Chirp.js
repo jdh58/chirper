@@ -20,7 +20,7 @@ export default function Chirp({ chirpData, profile }) {
     username: null,
     image: null,
   });
-  const [chirpText, setChirpText] = useState();
+  const [chirpText, setChirpText] = useState(null);
 
   useEffect(() => {
     if (profile) {
