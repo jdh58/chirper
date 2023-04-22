@@ -214,3 +214,9 @@ body {
   filter: invert(23%) sepia(97%) saturate(3273%) hue-rotate(267deg)
     brightness(89%) contrast(117%);
 }
+
+@media (max-width: 1250px) {
+  #root {
+    grid-template-columns: 80px 600px 380px;
+  }
+}

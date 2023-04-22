@@ -13,7 +13,7 @@ export default function NavChirpButton(props) {
   return (
     <>
       <button className="chirpButton nav" onClick={props.chirpOverlay}>
-        Chirp
+        <p>Chirp</p>
       </button>
     </>
   );

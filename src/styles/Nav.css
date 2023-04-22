@@ -45,3 +45,38 @@
   font-size: 2.05rem;
   letter-spacing: 0.5px;
 }
+
+.navBar .chirpButton img {
+  display: none;
+}
+
+@media (max-width: 1250px) {
+  .navBar {
+    justify-self: center;
+    justify-content: center;
+    width: 80px;
+  }
+
+  .navBar .logo {
+    margin: 0;
+    align-self: center;
+  }
+
+  .navName {
+    display: none;
+  }
+
+  .navBar .chirpButton {
+    width: 52px;
+    border-radius: 10000px;
+    align-self: center;
+  }
+  .navBar .chirpButton p {
+    display: none;
+  }
+
+  .navButton {
+    margin: auto;
+    padding-right: 10px;
+  }
+}
