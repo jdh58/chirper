@@ -12,8 +12,10 @@ import {
   collection,
   getDocs,
   getFirestore,
+  limit,
   orderBy,
   query,
+  startAfter,
   updateDoc,
   where,
 } from 'firebase/firestore';
@@ -33,14 +35,12 @@ import AddPic from '../assets/addPic.svg';
 import getChirp from '../getChirp';
 import Header from './Header';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import grabForInfinite from '../grabForInfinite';
 
 export default function Profile() {
   const urlId = useParams().id;
   const user = useContext(UserContext);
   const [isUser, setIsUser] = useState(false);
-  const [profileChirps, setProfileChirps] = useState(null);
-  const [profileReplies, setProfileReplies] = useState(null);
-  const [profileMediaChirps, setProfileMediaChirps] = useState(null);
   const [profileLikes, setProfileLikes] = useState(null);
   const [currentTab, setCurrentTab] = useState('chirps');
   const [profile, setProfile] = useState({
@@ -52,6 +52,15 @@ export default function Profile() {
     likes: [],
   });
   const [editMode, setEditMode] = useState(false);
+  const [chirps, setChirps] = useState([]);
+  const [replies, setReplies] = useState([]);
+  const [media, setMedia] = useState([]);
+  const [finalChirp, setFinalChirp] = useState(null);
+  const [finalReply, setFinalReply] = useState(null);
+  const [finalMedia, setFinalMedia] = useState(null);
+  const [chirpPage, setChirpPage] = useState(0);
+  const [replyPage, setReplyPage] = useState(0);
+  const [mediaPage, setMediaPage] = useState(0);
   const displayToast = useContext(ToastContext);
 
   useEffect(() => {
@@ -89,53 +98,95 @@ export default function Profile() {
   }, [profile]);
 
   useEffect(() => {
-    /* Sort the tweets so newest render at the top, set state
-   to be a mapped list of the user's chirps as chirp elements */
-    (async () => {
-      //   let chirpDocs = await getDocs(
-      //     query(
-      //       collection(getFirestore(app), 'chirps'),
-      //       where('accountId', '==', `${profile.userId}`),
-      //       orderBy('postTime', 'desc')
-      //     )
-      //   );
-      //   chirpDocs = chirpDocs.docs;
-      //   function convertToComponents(array) {
-      //     return array.map((chirp) => {
-      //       const chirpData = chirp.data();
-      //       return (
-      //         <Chirp
-      //           chirpData={chirpData}
-      //           profile={profile}
-      //           key={chirpData.chirpId}
-      //         />
-      //       );
-      //     });
-      //   }
-      //   const chirpList = convertToComponents(chirpDocs);
-      //   const mediaChirpDocs = chirpDocs.filter((chirp) => {
-      //     const chirpData = chirp.data();
-      //     if (chirpData.imageURL) {
-      //       return true;
-      //     } else {
-      //       return false;
-      //     }
-      //   });
-      //   const mediaChirpList = convertToComponents(mediaChirpDocs);
-      //   const replyDocs = chirpDocs.filter((chirp) => {
-      //     const chirpData = chirp.data();
-      //     if (chirpData.isReply) {
-      //       return true;
-      //     } else {
-      //       return false;
-      //     }
-      //   });
-      //   const replyList = convertToComponents(replyDocs);
-      //   setProfileChirps(chirpList);
-      //   setProfileReplies(replyList);
-      //   setProfileMediaChirps(mediaChirpList);
-    })();
-  }, [profile]);
+    if (profile) {
+      if (currentTab === 'chirps') {
+        grabChirps(true);
+      } else if (currentTab === 'replies') {
+        grabReplies(true);
+      } else if (currentTab === 'media') {
+        grabMedia(true);
+      }
+    }
+  }, [currentTab, profile]);
+
+  const grabChirps = async (first) => {
+    let grabQuery;
+    if (first) {
+      grabQuery = query(
+        collection(getFirestore(app), 'chirps'),
+        where('accountId', '==', `${profile.userId}`),
+        orderBy('postTime', 'desc'),
+        limit(10)
+      );
+    } else {
+      grabQuery = query(
+        collection(getFirestore(app), 'chirps'),
+        where('accountId', '==', `${profile.userId}`),
+        orderBy('postTime', 'desc'),
+        startAfter(finalChirp),
+        limit(10)
+      );
+    }
+
+    const chirpGrab = await grabForInfinite(grabQuery);
+
+    setFinalChirp(chirpGrab.finalChirp);
+    setChirps([...chirps, ...chirpGrab.newChirps]);
+    setChirpPage((chirpPage) => chirpPage + 1);
+  };
+
+  const grabReplies = async (first) => {
+    let grabQuery;
+
+    if (first) {
+      grabQuery = query(
+        collection(getFirestore(app), 'chirps'),
+        where('accountId', '==', `${profile.userId}`),
+        where('isReply', '!=', false),
+        limit(10)
+      );
+    } else {
+      grabQuery = query(
+        collection(getFirestore(app), 'chirps'),
+        where('accountId', '==', `${profile.userId}`),
+        where('isReply', '!=', false),
+        startAfter(finalReply),
+        limit(10)
+      );
+    }
+
+    const replyGrab = await grabForInfinite(grabQuery);
+
+    setFinalReply(replyGrab.finalChirp);
+    setReplies([...replies, ...replyGrab.newChirps]);
+    setReplyPage((replyPage) => replyPage + 1);
+  };
+
+  const grabMedia = async (first) => {
+    let grabQuery;
+
+    if (first) {
+      grabQuery = query(
+        collection(getFirestore(app), 'chirps'),
+        where('accountId', '==', `${profile.userId}`),
+        where('imageURL', '!=', null),
+        limit(10)
+      );
+    } else {
+      grabQuery = query(
+        collection(getFirestore(app), 'chirps'),
+        where('accountId', '==', `${profile.userId}`),
+        where('imageURL', '!=', null),
+        startAfter(finalMedia),
+        limit(10)
+      );
+    }
+    const mediaGrab = await grabForInfinite(grabQuery);
+
+    setFinalMedia(mediaGrab.finalChirp);
+    setMedia([...media, ...mediaGrab.newChirps]);
+    setMediaPage((mediaPage) => mediaPage + 1);
+  };
 
   const setTab = (e) => {
     setCurrentTab(e.currentTarget.classList[0]);
@@ -372,21 +423,34 @@ export default function Profile() {
         </div>
         {currentTab === 'chirps' ? (
           <InfiniteScroll
-            // next={fetchData}
-            // hasMore={true}
-            // loader={<h4>Loading...</h4>}
-            // endMessage={
-            //   <p style={{ textAlign: 'center' }}>
-            //     <b>Yay! You have seen it all</b>
-            //   </p>
-            // }
-            dataLength={profile.chirps ? profile.chirps : 0}
+            dataLength={chirpPage * 10}
+            next={grabChirps}
+            hasMore={true}
+            scrollThreshold={0.9}
           >
-            {profileChirps}
+            {chirps}
           </InfiniteScroll>
         ) : null}
-        {currentTab === 'replies' ? profileReplies : null}
-        {currentTab === 'media' ? profileMediaChirps : null}
+        {currentTab === 'replies' ? (
+          <InfiniteScroll
+            dataLength={replyPage * 10}
+            next={grabReplies}
+            hasMore={true}
+            scrollThreshold={0.9}
+          >
+            {replies}
+          </InfiniteScroll>
+        ) : null}
+        {currentTab === 'media' ? (
+          <InfiniteScroll
+            dataLength={mediaPage * 10}
+            next={grabMedia}
+            hasMore={true}
+            scrollThreshold={0.9}
+          >
+            {media}
+          </InfiniteScroll>
+        ) : null}
         {currentTab === 'likes' ? profileLikes : null}
       </div>
       <RightBar />
