@@ -164,6 +164,8 @@ export default function ChirpModule({ overlay, killModule, isReply }) {
       text = text.replace(/\n$/, '');
       text = text.replace(/^\n/, '');
 
+      let wordArray = text.toLowerCase().split(' ');
+
       /* Clear box + image once value is saved, and let the module know to 
       update. This also disables the button so the user can't double Chirp.
       If it is an overaly chirp, close the overlay as well. */
@@ -222,6 +224,7 @@ export default function ChirpModule({ overlay, killModule, isReply }) {
         imageURL,
         storageURL,
         isReply,
+        wordArray,
         replies: [],
         reChirps: [],
         likes: [],
