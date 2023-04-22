@@ -8,10 +8,14 @@ import Header from './Header';
 export default function BookmarkPage() {
   const user = useContext(UserContext);
   const [bookmarkedChirps, setBookmarkedChirps] = useState(null);
+  const [hasLoaded, setHasLoaded] = useState(false);
 
   useEffect(() => {
-    if (user) {
-      console.log('if was true');
+    if (!user) {
+      return;
+    }
+
+    if (!hasLoaded) {
       (async () => {
         try {
           const chirpList = await Promise.all(
@@ -19,7 +23,6 @@ export default function BookmarkPage() {
               return await getChirp(chirpId);
             })
           );
-          console.log(chirpList);
 
           setBookmarkedChirps(
             chirpList.map((chirpDoc) => {
@@ -27,13 +30,14 @@ export default function BookmarkPage() {
               return <Chirp chirpData={chirpData} />;
             })
           );
+
+          setHasLoaded(true);
         } catch (error) {
           console.error('Could not fetch bookmarks', error);
         }
       })();
     }
-    console.log('fish');
-  }, [user]);
+  }, [user, hasLoaded]);
 
   return (
     <>

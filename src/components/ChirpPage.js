@@ -43,7 +43,7 @@ export default function ChirpPage() {
       const chirpDoc = await getChirp(parseInt(id));
       setChirpData(chirpDoc.data());
     })();
-  }, [id, user]);
+  }, [id]);
 
   useEffect(() => {
     if (chirpData) {
@@ -56,6 +56,7 @@ export default function ChirpPage() {
 
       setChirpText(addTags(chirpData.text, navigate, displayToast));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chirpData]);
 
   const updateReplies = async () => {

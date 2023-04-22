@@ -15,9 +15,13 @@ import RightBar from './RightBar';
 export default function NotificationPage() {
   const user = useContext(UserContext);
   const [mentions, setMentions] = useState(null);
+  const [hasLoaded, setHasLoaded] = useState(false);
 
   useEffect(() => {
-    if (user) {
+    if (!user) {
+      return;
+    }
+    if (!hasLoaded) {
       (async () => {
         try {
           const mentionDocs = await getDocs(
@@ -28,14 +32,14 @@ export default function NotificationPage() {
           );
           console.log('get chirp for mentions');
 
-          console.log(mentionDocs.docs[0]);
-
           setMentions(
             mentionDocs.docs.map((doc) => {
               const mentionData = doc.data();
               return <Chirp chirpData={mentionData} />;
             })
           );
+
+          setHasLoaded(true);
         } catch (error) {
           console.error('Failed to access mentions', error);
         }
