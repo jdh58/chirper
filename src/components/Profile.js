@@ -201,7 +201,7 @@ export default function Profile() {
       grabQuery = query(
         collection(getFirestore(app), 'chirps'),
         where('accountId', '==', `${profile.userId}`),
-        where('imageURL', '!=', null),
+        where('isMedia', '==', true),
         orderBy('postTime', 'desc'),
         limit(10)
       );
@@ -209,7 +209,7 @@ export default function Profile() {
       grabQuery = query(
         collection(getFirestore(app), 'chirps'),
         where('accountId', '==', `${profile.userId}`),
-        where('imageURL', '!=', null),
+        where('isMedia', '==', true),
         orderBy('postTime', 'desc'),
         startAfter(finalMedia),
         limit(10)

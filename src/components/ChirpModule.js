@@ -221,6 +221,11 @@ export default function ChirpModule({ overlay, killModule, isReply, replyTo }) {
         replyTo = null;
       }
 
+      let isMedia = false;
+      if (imageURL != null) {
+        isMedia = true;
+      }
+
       // Log the chirp to the database
       await addDoc(collection(getFirestore(app), 'chirps'), {
         accountId,
@@ -228,6 +233,7 @@ export default function ChirpModule({ overlay, killModule, isReply, replyTo }) {
         text,
         imageURL,
         storageURL,
+        isMedia,
         isReply,
         replyTo,
         wordArray,
