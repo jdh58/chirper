@@ -243,6 +243,7 @@ export default function ChirpModule({ overlay, killModule, isReply }) {
 
       if (hashArray.length > 0) {
         hashArray.forEach(async (hashtag) => {
+          // Try to grab the doc for the hashtag
           const hashtagDoc = await getDocs(
             query(
               collection(getFirestore(app), 'hashtags'),

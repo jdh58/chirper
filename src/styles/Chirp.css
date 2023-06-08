@@ -171,6 +171,19 @@
   animation-fill-mode: forwards;
 }
 
+.chirpIcons .icon.reChirp .container > img.fill {
+  animation-name: reChirpAnimation;
+  animation-duration: 0.5s;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
+}
+
+@keyframes reChirpAnimation {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 @keyframes likeAnimation {
   50% {
     transform: scale(130%);

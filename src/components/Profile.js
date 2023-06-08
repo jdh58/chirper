@@ -13,6 +13,7 @@ import {
   getDocs,
   getFirestore,
   limit,
+  or,
   orderBy,
   query,
   startAfter,
@@ -126,7 +127,10 @@ export default function Profile() {
     if (first) {
       grabQuery = query(
         collection(getFirestore(app), 'chirps'),
-        where('accountId', '==', `${profile.userId}`),
+        or(
+          where('reChirps', 'array-contains', `${profile.userId}`),
+          where('accountId', '==', `${profile.userId}`)
+        ),
         orderBy('postTime', 'desc'),
         limit(10)
       );

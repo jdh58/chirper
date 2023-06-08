@@ -81,6 +81,7 @@ export default function FinishSignUp() {
         followers: [],
         chirps: 0,
         likes: [],
+        reChirps: [],
         bookmarks: [],
         bannerURL: '',
       });

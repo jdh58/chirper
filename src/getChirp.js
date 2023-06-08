@@ -14,6 +14,7 @@ export default async function getChirp(chirpId) {
       where('chirpId', '==', chirpId)
     )
   );
+  console.log('get chirp for getChirp');
 
   return chirpDoc.docs[0];
 }

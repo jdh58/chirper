@@ -5,6 +5,7 @@ import getChirp from '../getChirp';
 import UserContext from '../UserContext';
 import Chat from '../assets/chat.svg';
 import ReChirp from '../assets/rechirp.svg';
+import ReChirpFill from '../assets/rechirpFill.svg';
 import Like from '../assets/like.svg';
 import LikeFill from '../assets/likeFill.svg';
 import Share from '../assets/share.svg';
@@ -18,12 +19,13 @@ export default function ChirpIcons({ chirpData, fullPage }) {
   const overlayFunction = useContext(OverlayContext);
   const [isLiked, setIsLiked] = useState(false);
   const [chirpLikes, setChirpLikes] = useState(chirpData.likes.length);
-  // const [chirpReChirps, setChirpReChirps] = useState(chirpData.reChirps.length);
-  const chirpReChirps = 0;
+  const [isReChirped, setIsReChirped] = useState(false);
+  const [chirpReChirps, setChirpReChirps] = useState(chirpData.reChirps.length);
   const displayToast = useContext(ToastContext);
 
   useEffect(() => {
     setIsLiked(false);
+    setIsReChirped(false);
 
     if (user) {
       // Check if the user has it liked, if not, like it, if they do, unlike it
@@ -31,8 +33,13 @@ export default function ChirpIcons({ chirpData, fullPage }) {
         setIsLiked(true);
         return;
       }
+      if (user.reChirps.includes(chirpData.chirpId)) {
+        setIsReChirped(true);
+        return;
+      }
 
       setChirpLikes(chirpData.likes.length);
+      setChirpReChirps(chirpData.reChirps.length);
     }
   }, [urlId, chirpData, user]);
 
@@ -72,41 +79,46 @@ export default function ChirpIcons({ chirpData, fullPage }) {
     }
   };
 
-  // const handleReChirpToggle = async () => {
-  //   try {
-  //     // Pre-emptively set isLiked state and update number for responsive UI
-  //     if (isLiked) {
-  //       setIsLiked(false);
-  //       setChirpLikes(chirpLikes - 1);
-  //     } else {
-  //       setIsLiked(true);
-  //       setChirpLikes(chirpLikes + 1);
-  //     }
+  const handleReChirpToggle = async () => {
+    try {
+      if (!user) {
+        // This check is a safeguard to prevent the user
+        return;
+      }
 
-  //     // Update the chirp's likes and current user's likes
-  //     const chirpDoc = await getChirp(chirpData.chirpId);
-  //     const userDoc = await getAccount(user.userId);
+      // Pre-emptively set isReChirped state and update number for responsive UI
+      if (isReChirped) {
+        setIsReChirped(false);
+        setChirpLikes(chirpLikes - 1);
+      } else {
+        setIsReChirped(true);
+        setChirpReChirps(chirpLikes + 1);
+      }
 
-  //     // Check if the user has it liked, if not, like it, if they do, unlike it
-  //     if (isLiked) {
-  //       updateDoc(chirpDoc.ref, {
-  //         likes: arrayRemove(user.userId),
-  //       });
-  //       updateDoc(userDoc.ref, {
-  //         likes: arrayRemove(chirpData.chirpId),
-  //       });
-  //     } else {
-  //       updateDoc(chirpDoc.ref, {
-  //         likes: arrayUnion(user.userId),
-  //       });
-  //       updateDoc(userDoc.ref, {
-  //         likes: arrayUnion(chirpData.chirpId),
-  //       });
-  //     }
-  //   } catch (error) {
-  //     console.log('Failed to like chirp.' + error);
-  //   }
-  // };
+      // Update the chirp's likes and current user's likes
+      const chirpDoc = await getChirp(chirpData.chirpId);
+      const userDoc = await getAccount(user.userId);
+
+      // Check if the user has it reChirps, if not, reChirp it, if they do, un-reChirp it
+      if (isLiked) {
+        updateDoc(chirpDoc.ref, {
+          reChirps: arrayRemove(user.userId),
+        });
+        updateDoc(userDoc.ref, {
+          reChirps: arrayRemove(chirpData.chirpId),
+        });
+      } else {
+        updateDoc(chirpDoc.ref, {
+          reChirps: arrayUnion(user.userId),
+        });
+        updateDoc(userDoc.ref, {
+          reChirps: arrayUnion(chirpData.chirpId),
+        });
+      }
+    } catch (error) {
+      console.log('Failed to reChirp chirp.' + error);
+    }
+  };
 
   const handleShare = () => {
     displayToast('Chirp link copied to clipboard');
@@ -183,8 +195,16 @@ export default function ChirpIcons({ chirpData, fullPage }) {
             </p>
           </div>
           <div className="icon reChirp">
-            <div className="container">
-              <img src={ReChirp} alt="" />
+            <div className="container" onClick={handleReChirpToggle}>
+              {isReChirped ? (
+                <img
+                  src={ReChirpFill}
+                  className="fill"
+                  alt="ReChirp Icon Filled"
+                />
+              ) : (
+                <img src={ReChirp} alt="ReChirp Icon" />
+              )}
             </div>
             <p className="count">{chirpReChirps > 0 ? chirpReChirps : null}</p>
           </div>
