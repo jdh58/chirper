@@ -26,10 +26,12 @@ export default function ChirpIcons({ chirpData, fullPage }) {
     if (user) {
       // Check if the user has it liked, if not, like it, if they do, unlike it
       if (user.likes.includes(chirpData.chirpId)) {
+        console.log('DASDSADASDA' + user.likes);
         setIsLiked(true);
         return;
       }
       if (user.reChirps.includes(chirpData.chirpId)) {
+        console.log('DASDSADASDA' + user.reChirps);
         setIsReChirped(true);
         return;
       }
@@ -88,8 +90,6 @@ export default function ChirpIcons({ chirpData, fullPage }) {
         setChirpReChirps(chirpReChirps + 1);
       }
 
-      console.log('CHIRP RECHIRPS: ' + chirpReChirps);
-
       // Update the chirp's likes and current user's likes
       const chirpDoc = await getChirp(chirpData.chirpId);
       const userDoc = await getAccount(user.userId);
@@ -110,8 +110,6 @@ export default function ChirpIcons({ chirpData, fullPage }) {
           reChirps: arrayUnion(chirpData.chirpId),
         });
       }
-
-      console.log('CHIRP RECHIRPS: ' + chirpReChirps);
     } catch (error) {
       console.log('Failed to reChirp chirp.' + error);
     }

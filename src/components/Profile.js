@@ -89,6 +89,8 @@ export default function Profile() {
     // Go to bookmarks
     // Delete my chirp
     // Go to my profile
+    // Edit my profile to change my name
+    // Upload a new pic
     // Log out
 
     setEditMode(false);

@@ -14,11 +14,13 @@ import {
   updateDoc,
   arrayUnion,
   arrayRemove,
+  or,
 } from 'firebase/firestore';
 import { app } from '../firebase-config';
 import getChirp from '../getChirp';
 import getAccount from '../getAccount';
 import ToastContext from '../ToastContext';
+import { getRedirectResult } from 'firebase/auth';
 
 export default function MoreMenu({ chirpData, killMenu }) {
   const [isUsers, setIsUsers] = useState(false);
@@ -67,6 +69,30 @@ export default function MoreMenu({ chirpData, killMenu }) {
           replies: arrayRemove(deletedChirpData.chirpId),
         });
       }
+
+      // Find any user where they have liked, rechirped, or bookmarked this chirp and remove it
+      const impactedAccounts = await getDocs(
+        collection(getFirestore(app), 'accounts'),
+        query(
+          or(
+            where('likes', 'array-contains', `${deletedChirpData.chirpId}`),
+            where('reChirps', 'array-contains', `${deletedChirpData.chirpId}`),
+            where('bookmarks', 'array-contains', `${deletedChirpData.chirpId}`)
+          )
+        )
+      );
+
+      impactedAccounts.forEach(async (accountDoc) => {
+        try {
+          await updateDoc(accountDoc.ref, {
+            likes: arrayRemove(deletedChirpData.chirpId),
+            reChirps: arrayRemove(deletedChirpData.chirpId),
+            bookmarks: arrayRemove(deletedChirpData.chirpId),
+          });
+        } catch (err) {
+          console.error(err);
+        }
+      });
 
       // Lower chirp count by 1
       const currentChirps = userDoc.data().chirps;
