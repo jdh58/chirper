@@ -202,6 +202,7 @@ export default function Profile() {
         collection(getFirestore(app), 'chirps'),
         where('accountId', '==', `${profile.userId}`),
         where('imageURL', '!=', null),
+        orderBy('postTime', 'desc'),
         limit(10)
       );
     } else {
@@ -209,6 +210,7 @@ export default function Profile() {
         collection(getFirestore(app), 'chirps'),
         where('accountId', '==', `${profile.userId}`),
         where('imageURL', '!=', null),
+        orderBy('postTime', 'desc'),
         startAfter(finalMedia),
         limit(10)
       );

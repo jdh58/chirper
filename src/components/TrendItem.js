@@ -10,7 +10,7 @@ export default function TrendItem({ number, name, count }) {
       <div
         className="trendItem"
         onClick={() => {
-          navigate(`/search/${name.slice(1)}`);
+          navigate(`/search/${encodeURIComponent(`${name}`)}`);
         }}
       >
         <div className="trendInfo">

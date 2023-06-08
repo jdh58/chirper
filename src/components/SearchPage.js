@@ -26,6 +26,16 @@ export default function SearchPage() {
   const [searchQuery, setSearchQuery] = useState([]);
 
   useEffect(() => {
+    setChirps([]);
+    setPage(0);
+    setFinalChirp(null);
+    const queryArray = defaultSearchQuery.toLowerCase().split(' ');
+    const decodedQueryArray = [];
+
+    queryArray.forEach((word) => {
+      decodedQueryArray.push(decodeURIComponent(word));
+    });
+
     setSearchQuery(defaultSearchQuery.toLowerCase().split(' '));
     grabChirps(true);
   }, [defaultSearchQuery]);
