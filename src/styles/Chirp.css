@@ -176,6 +176,8 @@
   animation-duration: 0.5s;
   animation-timing-function: ease-out;
   animation-fill-mode: forwards;
+  filter: invert(46%) sepia(78%) saturate(632%) hue-rotate(81deg)
+    brightness(98%) contrast(94%);
 }
 
 @keyframes reChirpAnimation {
