@@ -83,7 +83,7 @@ export default function Profile() {
     setLikesPage([]);
     setMediaPage([]);
     setReplyPage([]);
-
+    window.scrollTo(0, 0);
     (async () => {
       const profileDocs = await existCheck(urlId);
       if (!profileDocs) {
@@ -151,7 +151,10 @@ export default function Profile() {
     } else {
       grabQuery = query(
         collection(getFirestore(app), 'chirps'),
-        where('accountId', '==', `${profile.userId}`),
+        or(
+          where('reChirps', 'array-contains', `${profile.userId}`),
+          where('accountId', '==', `${profile.userId}`)
+        ),
         orderBy('postTime', 'desc'),
         startAfter(finalChirp),
         limit(10)
