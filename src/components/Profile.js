@@ -69,6 +69,28 @@ export default function Profile() {
 
   useEffect(() => {
     // Reset everything so stuff doesn't carry over from a different profile
+
+    // Send chicken tweet
+    // Go to profile
+    // Click bobbybo
+    // click on his first tweet
+    // like & retweet it
+    // Reply to it
+    // Open overlay and send media tweet
+    // refresh
+    // Click my reply
+    // Click my profile
+    // Go to my media tab
+    // Click explore
+    // Click the #chicken
+    // Go to notifications
+    // Clik my profile
+    // Bookmark my chirp
+    // Go to bookmarks
+    // Delete my chirp
+    // Go to my profile
+    // Log out
+
     setEditMode(false);
     setCurrentTab('chirps');
     setChirps([]);

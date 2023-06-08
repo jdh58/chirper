@@ -53,8 +53,20 @@ export default function MoreMenu({ chirpData, killMenu }) {
     try {
       killMenu();
       const chirpToDelete = await getChirp(chirpData.chirpId);
+      const deletedChirpData = chirpToDelete.data();
 
       await deleteDoc(chirpToDelete.ref);
+
+      // If the deleted chirp is a reply, remove it from that chirp's replies array
+      if (deletedChirpData.isReply) {
+        const repliedToChirp = await getChirp(
+          parseInt(deletedChirpData.replyTo)
+        );
+
+        await updateDoc(repliedToChirp.ref, {
+          replies: arrayRemove(deletedChirpData.chirpId),
+        });
+      }
 
       // Lower chirp count by 1
       const currentChirps = userDoc.data().chirps;
