@@ -28,7 +28,7 @@ import ToastContext from '../ToastContext';
 import getAccount from '../getAccount';
 import getChirp from '../getChirp';
 
-export default function ChirpModule({ overlay, killModule, isReply }) {
+export default function ChirpModule({ overlay, killModule, isReply, replyTo }) {
   const user = useContext(UserContext);
 
   const [characters, setCharacters] = useState(0);
@@ -216,6 +216,11 @@ export default function ChirpModule({ overlay, killModule, isReply }) {
         tagArray.push(tagMatch[0]);
       }
 
+      // If there is not reply, replyTo will be undefined, so set it to null
+      if (!replyTo) {
+        replyTo = null;
+      }
+
       // Log the chirp to the database
       await addDoc(collection(getFirestore(app), 'chirps'), {
         accountId,
@@ -224,6 +229,7 @@ export default function ChirpModule({ overlay, killModule, isReply }) {
         imageURL,
         storageURL,
         isReply,
+        replyTo,
         wordArray,
         replies: [],
         reChirps: [],
@@ -271,9 +277,9 @@ export default function ChirpModule({ overlay, killModule, isReply }) {
         });
       }
 
-      // If it had a reply, add it to the reply array for the chirp it replied to
+      // If the chirp being sent is a reply, add it to the reply array for the chirp it replied to
       if (isReply) {
-        const repliedToChirp = await getChirp(parseInt(isReply));
+        const repliedToChirp = await getChirp(parseInt(replyTo));
 
         updateDoc(repliedToChirp.ref, {
           replies: arrayUnion(chirpId),
@@ -295,8 +301,8 @@ export default function ChirpModule({ overlay, killModule, isReply }) {
       isReply
         ? displayToast('Your reply was sent.')
         : displayToast('Your Chirp was sent.');
-    } catch (error) {
-      console.error(error);
+    } catch (err) {
+      console.error(err);
     }
   };
 

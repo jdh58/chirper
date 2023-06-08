@@ -33,7 +33,6 @@ export default function ChirpIcons({ chirpData, fullPage }) {
         setIsReChirped(true);
         return;
       }
-      console.log('banana');
     }
   }, [urlId, chirpData, user]);
 

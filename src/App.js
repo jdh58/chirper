@@ -114,7 +114,8 @@ function App() {
                 killModule={() => {
                   setOverlay(false);
                 }}
-                isReply={replyId}
+                replyTo={replyId}
+                isReply={true}
               />
             ) : null}
             {overlay === 'chirp' ? (

@@ -37,6 +37,7 @@ import getChirp from '../getChirp';
 import Header from './Header';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import grabForInfinite from '../grabForInfinite';
+import { async } from '@firebase/util';
 
 export default function Profile() {
   const urlId = useParams().id;
@@ -67,8 +68,21 @@ export default function Profile() {
   const displayToast = useContext(ToastContext);
 
   useEffect(() => {
+    // Reset everything so stuff doesn't carry over from a different profile
     setEditMode(false);
     setCurrentTab('chirps');
+    setChirps([]);
+    setReplies([]);
+    setMedia([]);
+    setLikes([]);
+    setFinalChirp([]);
+    setFinalLike([]);
+    setFinalMedia([]);
+    setFinalReply([]);
+    setChirpPage([]);
+    setLikesPage([]);
+    setMediaPage([]);
+    setReplyPage([]);
 
     (async () => {
       const profileDocs = await existCheck(urlId);
@@ -158,14 +172,16 @@ export default function Profile() {
       grabQuery = query(
         collection(getFirestore(app), 'chirps'),
         where('accountId', '==', `${profile.userId}`),
-        where('isReply', '!=', false),
+        where('isReply', '==', true),
+        orderBy('postTime', 'desc'),
         limit(10)
       );
     } else {
       grabQuery = query(
         collection(getFirestore(app), 'chirps'),
         where('accountId', '==', `${profile.userId}`),
-        where('isReply', '!=', false),
+        where('isReply', '==', true),
+        orderBy('postTime', 'desc'),
         startAfter(finalReply),
         limit(10)
       );

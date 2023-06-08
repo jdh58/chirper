@@ -63,7 +63,7 @@ export default function ChirpPage() {
     const replyDocs = await getDocs(
       query(
         collection(getFirestore(app), 'chirps'),
-        where('isReply', '==', `${chirpData.chirpId}`)
+        where('replyTo', '==', `${chirpData.chirpId}`)
       )
     );
     console.log('get chirps for update replies');
@@ -139,7 +139,7 @@ export default function ChirpPage() {
             key={chirpData.chirpId}
           />
         </div>
-        <ChirpModule isReply={id} />
+        <ChirpModule isReply={true} replyTo={id} />
         {chirpReplies}
       </div>
       <RightBar />
