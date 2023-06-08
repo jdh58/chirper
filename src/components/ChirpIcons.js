@@ -26,14 +26,10 @@ export default function ChirpIcons({ chirpData, fullPage }) {
     if (user) {
       // Check if the user has it liked, if not, like it, if they do, unlike it
       if (user.likes.includes(chirpData.chirpId)) {
-        console.log('DASDSADASDA' + user.likes);
         setIsLiked(true);
-        return;
       }
       if (user.reChirps.includes(chirpData.chirpId)) {
-        console.log('DASDSADASDA' + user.reChirps);
         setIsReChirped(true);
-        return;
       }
     }
   }, [urlId, chirpData, user]);
@@ -154,8 +150,16 @@ export default function ChirpIcons({ chirpData, fullPage }) {
               </div>
             </div>
             <div className="icon reChirp">
-              <div className="container">
-                <img src={ReChirp} alt="" />
+              <div className="container" onClick={handleReChirpToggle}>
+                {isReChirped ? (
+                  <img
+                    src={ReChirp}
+                    className="fill"
+                    alt="ReChirp Icon Filled"
+                  />
+                ) : (
+                  <img src={ReChirp} alt="ReChirp Icon" />
+                )}
               </div>
             </div>
             <div className="icon likes">
