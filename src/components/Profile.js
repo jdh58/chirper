@@ -37,6 +37,7 @@ import getChirp from '../getChirp';
 import Header from './Header';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import grabForInfinite from '../grabForInfinite';
+import LoadingIcon from '../assets/loading.svg';
 import { async } from '@firebase/util';
 
 export default function Profile() {
@@ -66,6 +67,8 @@ export default function Profile() {
   const [mediaPage, setMediaPage] = useState(0);
   const [likesPage, setLikesPage] = useState(0);
   const displayToast = useContext(ToastContext);
+  const [loading, setLoading] = useState(true);
+  const [tabLoading, setTabLoading] = useState(false);
 
   useEffect(() => {
     // Reset everything so stuff doesn't carry over from a different profile
@@ -99,14 +102,15 @@ export default function Profile() {
     setReplies([]);
     setMedia([]);
     setLikes([]);
-    setFinalChirp([]);
-    setFinalLike([]);
-    setFinalMedia([]);
-    setFinalReply([]);
-    setChirpPage([]);
-    setLikesPage([]);
-    setMediaPage([]);
-    setReplyPage([]);
+    setFinalChirp(null);
+    setFinalLike(null);
+    setFinalMedia(null);
+    setFinalReply(null);
+    setChirpPage(0);
+    setLikesPage(0);
+    setMediaPage(0);
+    setReplyPage(0);
+    setLoading(true);
     window.scrollTo(0, 0);
     (async () => {
       const profileDocs = await existCheck(urlId);
@@ -250,6 +254,26 @@ export default function Profile() {
   };
 
   const setTab = (e) => {
+    setChirps([]);
+    setReplies([]);
+    setMedia([]);
+    setLikes([]);
+    setFinalChirp(null);
+    setFinalLike(null);
+    setFinalMedia(null);
+    setFinalReply(null);
+    setChirpPage(0);
+    setLikesPage(0);
+    setMediaPage(0);
+    setReplyPage(0);
+
+    setTabLoading(true);
+
+    // This will be the implementation of the loading screen
+    setTimeout(() => {
+      setTabLoading(false);
+    }, 250);
+
     setCurrentTab(e.currentTarget.classList[0]);
   };
 
@@ -374,7 +398,14 @@ export default function Profile() {
     }
   };
 
-  return (
+  // This will be the implementation of the loading screen
+  setTimeout(() => {
+    setLoading(false);
+  }, 250);
+
+  return loading ? (
+    <img src={LoadingIcon} alt="Loading Icon" className="loadingIcon" />
+  ) : (
     <>
       <div className="profilePage page">
         <Header
@@ -482,6 +513,9 @@ export default function Profile() {
           />
           <div className={`indicator ${currentTab}`}></div>
         </div>
+        {tabLoading === true ? (
+          <img src={LoadingIcon} alt="Loading Icon" className="loadingIcon" />
+        ) : null}
         {currentTab === 'chirps' ? (
           <InfiniteScroll
             dataLength={chirpPage * 10}

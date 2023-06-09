@@ -215,6 +215,11 @@ body {
     brightness(89%) contrast(117%);
 }
 
+.loadingIcon {
+  width: 50px;
+  margin: auto;
+}
+
 @media (max-width: 1250px) {
   #root {
     grid-template-columns: 80px 600px 380px;
