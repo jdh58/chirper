@@ -24,8 +24,10 @@ export default function SearchPage() {
   const [page, setPage] = useState(0);
   const [finalChirp, setFinalChirp] = useState(null);
   const [searchQuery, setSearchQuery] = useState([]);
+  const [defVal, setDefVal] = useState(null);
 
   useEffect(() => {
+    setDefVal(defaultSearchQuery);
     setChirps([]);
     setPage(0);
     setFinalChirp(null);
@@ -81,7 +83,7 @@ export default function SearchPage() {
       <div className="searchPage page">
         <div className="explorePage page">
           <header>
-            <Search defaultValue={defaultSearchQuery} />
+            <Search defaultValue={defVal} />
             <Tab
               currentTab={currentTab}
               setTab={setTab}

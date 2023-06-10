@@ -28,9 +28,6 @@
   flex-direction: column;
 }
 
-.chirpHeader.reChirped {
-}
-
 .reChirpHeader {
   position: relative;
   top: 7.5px;
