@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/chirper/static/css/main.4f0a1e14.css",
+    "main.css": "/chirper/static/css/main.3dfe4d5b.css",
     "main.js": "/chirper/static/js/main.1442711c.js",
     "static/media/SFPRODISPLAYMEDIUM.OTF": "/chirper/static/media/SFPRODISPLAYMEDIUM.b85d841dacb040b84951.OTF",
     "static/media/productsans.ttf": "/chirper/static/media/productsans.d165384076551a756b3c.ttf",
@@ -39,11 +39,11 @@
     "static/media/Chirp-Heavy.woff": "/chirper/static/media/Chirp-Heavy.31d6cfe0d16ae931b73c.woff",
     "static/media/Chirp-Medium.woff": "/chirper/static/media/Chirp-Medium.31d6cfe0d16ae931b73c.woff",
     "static/media/Chirp-Regular.woff": "/chirper/static/media/Chirp-Regular.31d6cfe0d16ae931b73c.woff",
-    "main.4f0a1e14.css.map": "/chirper/static/css/main.4f0a1e14.css.map",
+    "main.3dfe4d5b.css.map": "/chirper/static/css/main.3dfe4d5b.css.map",
     "main.1442711c.js.map": "/chirper/static/js/main.1442711c.js.map"
   },
   "entrypoints": [
-    "static/css/main.4f0a1e14.css",
+    "static/css/main.3dfe4d5b.css",
     "static/js/main.1442711c.js"
   ]
 }
