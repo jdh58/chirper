@@ -7,7 +7,6 @@ export default async function grabAccountsForInfinite(query) {
     const docs = await getDocs(query);
     console.log('fetched for grabAccountsForInfinite');
 
-    console.log(query);
     const accountsArray = [];
 
     docs.docs.forEach((accountDoc) => {
@@ -15,7 +14,7 @@ export default async function grabAccountsForInfinite(query) {
 
       accountsArray.push(
         <AccountModule
-          chirpData={accountData}
+          profile={accountData}
           key={accountData.chirpId + uniqid()}
         />
       );

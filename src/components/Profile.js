@@ -37,7 +37,6 @@ import getChirp from '../getChirp';
 import Header from './Header';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import grabForInfinite from '../grabForInfinite';
-import { async } from '@firebase/util';
 
 export default function Profile() {
   const urlId = useParams().id;
