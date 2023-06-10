@@ -1,4 +1,9 @@
-import { arrayRemove, arrayUnion, updateDoc } from 'firebase/firestore';
+import {
+  arrayRemove,
+  arrayUnion,
+  FieldValue,
+  updateDoc,
+} from 'firebase/firestore';
 import { useContext, useEffect, useState } from 'react';
 import getAccount from '../getAccount';
 import getChirp from '../getChirp';
@@ -58,6 +63,7 @@ export default function ChirpIcons({ chirpData, fullPage }) {
       if (isLiked) {
         updateDoc(chirpDoc.ref, {
           likes: arrayRemove(user.userId),
+          likeCount: chirpDoc.data().likeCount - 1,
         });
         updateDoc(userDoc.ref, {
           likes: arrayRemove(chirpData.chirpId),
@@ -65,6 +71,7 @@ export default function ChirpIcons({ chirpData, fullPage }) {
       } else {
         updateDoc(chirpDoc.ref, {
           likes: arrayUnion(user.userId),
+          likeCount: chirpDoc.data().likeCount + 1,
         });
         updateDoc(userDoc.ref, {
           likes: arrayUnion(chirpData.chirpId),

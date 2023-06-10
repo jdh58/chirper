@@ -22,6 +22,6 @@ export default async function grabForInfinite(query) {
       newChirps: chirpsArray,
     };
   } catch (error) {
-    console.error('Could not fetch following chirps', error);
+    console.error('Could not fetch chirps', error);
   }
 }
