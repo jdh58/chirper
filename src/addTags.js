@@ -6,6 +6,7 @@ import {
   where,
 } from 'firebase/firestore';
 import { app } from './firebase-config';
+import { v4 as uuidv4 } from 'uuid';
 
 export default function addTags(text, navigate, displayToast) {
   const handleTagClick = async (e) => {
@@ -79,7 +80,11 @@ export default function addTags(text, navigate, displayToast) {
 
   return dataArray.map((element) => {
     return (
-      <span onClick={handleTagClick} className={element.className}>
+      <span
+        key={uuidv4()}
+        onClick={handleTagClick}
+        className={element.className}
+      >
         {element.textContent}
       </span>
     );

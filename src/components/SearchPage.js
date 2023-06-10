@@ -21,6 +21,7 @@ import {
 } from 'firebase/firestore';
 import { app } from '../firebase-config';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { v4 as uuidv4 } from 'uuid';
 
 export default function SearchPage() {
   const defaultSearchQuery = useParams().query;
@@ -197,6 +198,21 @@ export default function SearchPage() {
     window.scrollTo(0, 0);
   };
 
+  // useEffect(() => {
+  //   (async () => {
+  //     const docs = await getDocs(collection(getFirestore(app), 'chirps'));
+
+  //     docs.forEach(async (chirpDoc) => {
+  //       console.log(typeof chirpDoc.data().reChirps);
+  //       if (typeof chirpDoc.data().reChirps != 'object') {
+  //         await updateDoc(chirpDoc.ref, {
+  //           reChirps: [],
+  //         });
+  //       }
+  //     });
+  //   })();
+  // });
+
   return (
     <>
       <div className="searchPage page">
@@ -235,6 +251,7 @@ export default function SearchPage() {
               next={grabChirps}
               hasMore={true}
               scrollThreshold={0.9}
+              key={uuidv4()}
             >
               {chirps}
             </InfiniteScroll>
@@ -245,6 +262,7 @@ export default function SearchPage() {
               next={grabLatest}
               hasMore={true}
               scrollThreshold={0.9}
+              key={uuidv4()}
             >
               {chirps}
             </InfiniteScroll>
@@ -255,6 +273,7 @@ export default function SearchPage() {
               next={grabPeople}
               hasMore={true}
               scrollThreshold={0.9}
+              key={uuidv4()}
             >
               {chirps}
             </InfiniteScroll>
@@ -265,6 +284,7 @@ export default function SearchPage() {
               next={grabPhotos}
               hasMore={true}
               scrollThreshold={0.9}
+              key={uuidv4()}
             >
               {chirps}
             </InfiniteScroll>
