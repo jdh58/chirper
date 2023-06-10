@@ -60,12 +60,6 @@ export default function SearchPage() {
     setPhotosPage([]);
     setLoading(true);
     window.scrollTo(0, 0);
-    const queryArray = defaultSearchQuery.toLowerCase().split(' ');
-    const decodedQueryArray = [];
-
-    queryArray.forEach((word) => {
-      decodedQueryArray.push(decodeURIComponent(word));
-    });
 
     setSearchQuery(defaultSearchQuery.toLowerCase().split(' '));
     grabChirps(true);
@@ -156,16 +150,15 @@ export default function SearchPage() {
   };
 
   const grabPeople = async (first) => {
-    if (searchQuery.length > 0) {
+    if (defaultSearchQuery.length > 0) {
       let grabQuery;
 
-      console.log(searchQuery);
       if (first === true) {
         grabQuery = query(
           collection(getFirestore(app), 'accounts'),
           or(
-            where('name', 'in', searchQuery),
-            where('username', 'in', searchQuery)
+            where('name', '==', defaultSearchQuery),
+            where('username', '==', defaultSearchQuery)
           ),
           orderBy('joinDate', 'desc'),
           limit(10)
@@ -174,8 +167,8 @@ export default function SearchPage() {
         grabQuery = query(
           collection(getFirestore(app), 'chirps'),
           or(
-            where('name', 'in', searchQuery),
-            where('username', 'in', searchQuery)
+            where('name', '==', defaultSearchQuery),
+            where('username', '==', defaultSearchQuery)
           ),
           orderBy('joinDate', 'desc'),
           startAfter(finalPeople),
