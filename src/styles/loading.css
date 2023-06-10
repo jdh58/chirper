@@ -5,15 +5,33 @@
   justify-content: center;
   z-index: 4;
   width: 100%;
+  height: 100%;
+
   background-color: #fff;
 }
 
-.fullMainLoading {
-  height: 100%;
+.noHeaderLoading {
+  top: 52.5px;
 }
 
-.noHeaderLoading {
-  top: 51.5px;
+.thickHeaderLoading {
+  top: 105px;
+}
+
+.homePageLoading {
+  top: calc(115px + 104px);
+}
+
+.homePageLoading .loadingIcon {
+  margin-top: 100px;
+}
+
+.profileTabLoading {
+  top: 546px;
+}
+
+.profileTabLoading .loadingIcon {
+  margin-top: 25px;
 }
 
 .noHeaderLoading .loadingIcon {
@@ -22,6 +40,10 @@
 
 .fullMainLoading .loadingIcon {
   margin-top: calc(150px + 51.5px);
+}
+
+.thickHeaderLoading .loadingIcon {
+  margin-top: calc(150px + 104px);
 }
 
 .loading .loadingIcon {

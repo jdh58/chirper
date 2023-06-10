@@ -19,6 +19,7 @@ import {
 import { app } from '../firebase-config';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import grabForInfinite from '../grabForInfinite';
+import LoadingIcon from '../assets/loading.svg';
 
 export default function Home() {
   const user = useContext(UserContext);
@@ -29,6 +30,7 @@ export default function Home() {
   const [forYouPage, setForYouPage] = useState(1);
   const [finalFollowingChirp, setFinalFollowingChirp] = useState(null);
   const [followingPage, setFollowingPage] = useState(1);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (user) {
@@ -103,11 +105,23 @@ export default function Home() {
   const setTab = (e) => {
     setCurrentTab(e.currentTarget.classList[0]);
     window.scrollTo(0, 0);
+    setLoading(true);
   };
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 300);
+  });
 
   return (
     <>
       <div className="homePage page">
+        {loading ? (
+          <div className="homePageLoading loading">
+            <img src={LoadingIcon} alt="" className="loadingIcon" />
+          </div>
+        ) : null}
         <header>
           <h1 className="title">Home</h1>
           <Tab

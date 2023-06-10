@@ -66,6 +66,7 @@ export default function Profile() {
   const [mediaPage, setMediaPage] = useState(0);
   const [likesPage, setLikesPage] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [tabLoading, setTabLoading] = useState(false);
   const displayToast = useContext(ToastContext);
 
   useEffect(() => {
@@ -121,17 +122,17 @@ export default function Profile() {
 
   const grabLikes = async () => {
     const newLikes = [];
+    const likedChirpPromises = [];
 
-    console.log(profile.likes.length);
     for (let i = 0; i < 10 && i + finalLike < profile.likes.length; i++) {
-      console.log(i);
-      let likedChirpDoc = await getChirp(profile.likes[i + finalLike]);
-      let likedChirpData = likedChirpDoc.data();
-
-      newLikes.push(
-        <Chirp chirpData={likedChirpData} key={profile.likes[i]} />
-      );
+      likedChirpPromises.push(getChirp(profile.likes[i + finalLike]));
     }
+    const likedChirpDocs = await Promise.all(likedChirpPromises);
+
+    likedChirpDocs.forEach((doc) => {
+      const data = doc.data();
+      newLikes.push(<Chirp chirpData={data} key={data.id} />);
+    });
 
     setFinalLike((finalLike) => finalLike + 10);
     setLikes([...likes, ...newLikes]);
@@ -244,6 +245,7 @@ export default function Profile() {
 
   const setTab = (e) => {
     setCurrentTab(e.currentTarget.classList[0]);
+    setTabLoading(true);
   };
 
   const handleUpdateProfile = async () => {
@@ -373,7 +375,13 @@ export default function Profile() {
         setLoading(false);
       }, 500); /// NEXT UP, MAKE LOADING FOR MAIN PAGE AND EXPLORE PAGE (WHICH WILL WORK FOR SEARCH AS WELL. THEN SEARCH TABS. THEN MAYBE SIDE BARS. THEN HOST.)
     }
-  }, [loading]);
+
+    if (tabLoading) {
+      setTimeout(() => {
+        setTabLoading(false);
+      }, 500);
+    }
+  }, [loading, tabLoading]);
 
   return (
     <>
@@ -488,6 +496,11 @@ export default function Profile() {
           />
           <div className={`indicator ${currentTab}`}></div>
         </div>
+        {tabLoading ? (
+          <div className="profileTabLoading loading">
+            <img src={LoadingIcon} alt="" className="loadingIcon" />
+          </div>
+        ) : null}
         {currentTab === 'chirps' ? (
           <InfiniteScroll
             dataLength={chirpPage * 10}
