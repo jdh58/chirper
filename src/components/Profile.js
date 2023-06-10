@@ -69,30 +69,6 @@ export default function Profile() {
 
   useEffect(() => {
     // Reset everything so stuff doesn't carry over from a different profile
-
-    // Send chicken tweet
-    // Go to profile
-    // Click bobbybo
-    // click on his first tweet
-    // like & retweet it
-    // Reply to it
-    // Open overlay and send media tweet
-    // refresh
-    // Click my reply
-    // Click my profile
-    // Go to my media tab
-    // Click explore
-    // Click the #chicken
-    // Go to notifications
-    // Clik my profile
-    // Bookmark my chirp
-    // Go to bookmarks
-    // Delete my chirp
-    // Go to my profile
-    // Edit my profile to change my name
-    // Upload a new pic
-    // Log out
-
     setEditMode(false);
     setCurrentTab('chirps');
     setChirps([]);
@@ -188,8 +164,13 @@ export default function Profile() {
     const chirpGrab = await grabForInfinite(grabQuery);
 
     setFinalChirp(chirpGrab.finalChirp);
-    setChirps([...chirps, ...chirpGrab.newChirps]);
-    setChirpPage((chirpPage) => chirpPage + 1);
+    if (first) {
+      setChirps([...chirpGrab.newChirps]);
+      setChirpPage(1);
+    } else {
+      setChirps([...chirps, ...chirpGrab.newChirps]);
+      setChirpPage((chirpPage) => chirpPage + 1);
+    }
   };
 
   const grabReplies = async (first) => {
@@ -217,8 +198,13 @@ export default function Profile() {
     const replyGrab = await grabForInfinite(grabQuery);
 
     setFinalReply(replyGrab.finalChirp);
-    setReplies([...replies, ...replyGrab.newChirps]);
-    setReplyPage((replyPage) => replyPage + 1);
+    if (first) {
+      setReplies([...replyGrab.newChirps]);
+      setReplyPage((replyPage) => replyPage + 1);
+    } else {
+      setReplies([...replies, ...replyGrab.newChirps]);
+      setReplyPage((replyPage) => replyPage + 1);
+    }
   };
 
   const grabMedia = async (first) => {
@@ -245,8 +231,13 @@ export default function Profile() {
     const mediaGrab = await grabForInfinite(grabQuery);
 
     setFinalMedia(mediaGrab.finalChirp);
-    setMedia([...media, ...mediaGrab.newChirps]);
-    setMediaPage((mediaPage) => mediaPage + 1);
+    if (first) {
+      setMedia([...mediaGrab.newChirps]);
+      setMediaPage(1);
+    } else {
+      setMedia([...media, ...mediaGrab.newChirps]);
+      setMediaPage((mediaPage) => mediaPage + 1);
+    }
   };
 
   const setTab = (e) => {

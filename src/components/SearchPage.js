@@ -27,16 +27,35 @@ export default function SearchPage() {
   const defaultSearchQuery = useParams().query;
   const [currentTab, setCurrentTab] = useState('top');
   const [chirps, setChirps] = useState([]);
-  const [page, setPage] = useState(0);
+  const [latest, setLatest] = useState([]);
+  const [people, setPeople] = useState([]);
+  const [photos, setPhotos] = useState([]);
   const [finalChirp, setFinalChirp] = useState(null);
+  const [finalLatest, setFinalLatest] = useState(null);
+  const [finalPeople, setFinalPeople] = useState(null);
+  const [finalPhotos, setFinalPhotos] = useState(0);
+  const [chirpPage, setChirpPage] = useState(0);
+  const [latestPage, setLatestPage] = useState(0);
+  const [peoplePage, setPeoplePage] = useState(0);
+  const [photosPage, setPhotosPage] = useState(0);
   const [searchQuery, setSearchQuery] = useState([]);
   const [defVal, setDefVal] = useState(null);
 
   useEffect(() => {
     setDefVal(defaultSearchQuery);
+    setCurrentTab('top');
     setChirps([]);
-    setPage(0);
-    setFinalChirp(null);
+    setLatest([]);
+    setPeople([]);
+    setPhotos([]);
+    setFinalChirp([]);
+    setFinalLatest([]);
+    setFinalPeople([]);
+    setFinalPhotos([]);
+    setChirpPage([]);
+    setLatestPage([]);
+    setPeoplePage([]);
+    setPhotosPage([]);
     window.scrollTo(0, 0);
     const queryArray = defaultSearchQuery.toLowerCase().split(' ');
     const decodedQueryArray = [];
@@ -54,10 +73,6 @@ export default function SearchPage() {
   }, [searchQuery]);
 
   useEffect(() => {
-    setChirps([]);
-    setPage(0);
-    setFinalChirp(null);
-
     if (currentTab === 'top') {
       grabChirps(true);
     } else if (currentTab === 'latest') {
@@ -93,8 +108,13 @@ export default function SearchPage() {
       const grabbedChirps = await grabForInfinite(grabQuery);
 
       setFinalChirp(grabbedChirps.finalChirp);
-      setChirps([...chirps, ...grabbedChirps.newChirps]);
-      setPage((page) => page + 1);
+      if (first) {
+        setChirps([...grabbedChirps.newChirps]);
+        setChirpPage(1);
+      } else {
+        setChirps([...chirps, ...grabbedChirps.newChirps]);
+        setChirpPage((page) => page + 1);
+      }
     }
   };
 
@@ -114,16 +134,21 @@ export default function SearchPage() {
           collection(getFirestore(app), 'chirps'),
           where('wordArray', 'array-contains-any', searchQuery),
           orderBy('postTime', 'desc'),
-          startAfter(finalChirp),
+          startAfter(finalLatest),
           limit(10)
         );
       }
 
       const grabbedChirps = await grabForInfinite(grabQuery);
 
-      setFinalChirp(grabbedChirps.finalChirp);
-      setChirps([...chirps, ...grabbedChirps.newChirps]);
-      setPage((page) => page + 1);
+      setFinalLatest(grabbedChirps.finalChirp);
+      if (first) {
+        setLatest([...grabbedChirps.newChirps]);
+        setLatestPage(1);
+      } else {
+        setLatest([...latest, ...grabbedChirps.newChirps]);
+        setLatestPage((page) => page + 1);
+      }
     }
   };
 
@@ -131,6 +156,7 @@ export default function SearchPage() {
     if (searchQuery.length > 0) {
       let grabQuery;
 
+      console.log(searchQuery);
       if (first === true) {
         grabQuery = query(
           collection(getFirestore(app), 'accounts'),
@@ -149,16 +175,21 @@ export default function SearchPage() {
             where('username', 'in', searchQuery)
           ),
           orderBy('joinDate', 'desc'),
-          startAfter(finalChirp),
+          startAfter(finalPeople),
           limit(10)
         );
       }
 
       const grabbedPeople = await grabAccountsForInfinite(grabQuery);
 
-      setFinalChirp(grabbedPeople.finalAccount);
-      setChirps([...chirps, ...grabbedPeople.newAccounts]);
-      setPage((page) => page + 1);
+      setFinalPeople(grabbedPeople.finalAccount);
+      if (first) {
+        setPeople([...grabbedPeople.newAccounts]);
+        setPeoplePage(1);
+      } else {
+        setPeople([...people, ...grabbedPeople.newAccounts]);
+        setPeoplePage((page) => page + 1);
+      }
     }
   };
 
@@ -180,16 +211,21 @@ export default function SearchPage() {
           where('wordArray', 'array-contains-any', searchQuery),
           where('isMedia', '==', true),
           orderBy('postTime', 'desc'),
-          startAfter(finalChirp),
+          startAfter(finalPhotos),
           limit(10)
         );
       }
 
       const grabbedChirps = await grabForInfinite(grabQuery);
 
-      setFinalChirp(grabbedChirps.finalChirp);
-      setChirps([...chirps, ...grabbedChirps.newChirps]);
-      setPage((page) => page + 1);
+      setFinalPhotos(grabbedChirps.finalChirp);
+      if (first) {
+        setPhotos([...grabbedChirps.newChirps]);
+        setPhotosPage(1);
+      } else {
+        setPhotos([...photos, ...grabbedChirps.newChirps]);
+        setPhotosPage((page) => page + 1);
+      }
     }
   };
 
@@ -247,7 +283,7 @@ export default function SearchPage() {
           </header>
           {currentTab === 'top' ? (
             <InfiniteScroll
-              dataLength={page * 10}
+              dataLength={chirpPage * 10}
               next={grabChirps}
               hasMore={true}
               scrollThreshold={0.9}
@@ -258,35 +294,35 @@ export default function SearchPage() {
           ) : null}
           {currentTab === 'latest' ? (
             <InfiniteScroll
-              dataLength={page * 10}
+              dataLength={latestPage * 10}
               next={grabLatest}
               hasMore={true}
               scrollThreshold={0.9}
               key={uuidv4()}
             >
-              {chirps}
+              {latest}
             </InfiniteScroll>
           ) : null}
           {currentTab === 'people' ? (
             <InfiniteScroll
-              dataLength={page * 10}
+              dataLength={peoplePage * 10}
               next={grabPeople}
               hasMore={true}
               scrollThreshold={0.9}
               key={uuidv4()}
             >
-              {chirps}
+              {people}
             </InfiniteScroll>
           ) : null}
           {currentTab === 'photos' ? (
             <InfiniteScroll
-              dataLength={page * 10}
+              dataLength={photosPage * 10}
               next={grabPhotos}
               hasMore={true}
               scrollThreshold={0.9}
               key={uuidv4()}
             >
-              {chirps}
+              {photos}
             </InfiniteScroll>
           ) : null}
         </div>

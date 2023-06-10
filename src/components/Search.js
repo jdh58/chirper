@@ -11,7 +11,11 @@ export default function Search({ defaultValue }) {
     <form
       className="searchBar"
       onSubmit={() => {
-        navigate(`/search/${document.querySelector('#search').value}`);
+        navigate(
+          `/search/${encodeURIComponent(
+            document.querySelector('#search').value
+          )}`
+        );
       }}
     >
       <input
