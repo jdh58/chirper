@@ -11,11 +11,13 @@ import UserContext from '../UserContext';
 import Chirp from './Chirp';
 import Header from './Header';
 import RightBar from './RightBar';
+import LoadingIcon from '../assets/loading.svg';
 
 export default function NotificationPage() {
   const user = useContext(UserContext);
   const [mentions, setMentions] = useState(null);
   const [hasLoaded, setHasLoaded] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (!user) {
@@ -47,9 +49,20 @@ export default function NotificationPage() {
     }
   }, [user]);
 
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 300);
+  });
+
   return (
     <>
       <div className="notificationPage page">
+        {loading ? (
+          <div className="noHeaderLoading loading">
+            <img src={LoadingIcon} alt="" className="loadingIcon" />
+          </div>
+        ) : null}
         <Header
           top="Notifications"
           bottom={user ? `@${user.username}` : null}

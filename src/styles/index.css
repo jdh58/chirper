@@ -215,20 +215,8 @@ body {
     brightness(89%) contrast(117%);
 }
 
-.fullMainLoading {
-  position: absolute;
-  display: flex;
-  align-items: start;
-  justify-content: center;
-  z-index: 4;
-  width: 100%;
-  height: 100%;
-  background-color: #fff;
-}
-
-.fullMainLoading .loadingIcon {
-  margin-top: 50%;
-  width: 50px;
+.page {
+  position: relative;
 }
 
 @media (max-width: 1250px) {

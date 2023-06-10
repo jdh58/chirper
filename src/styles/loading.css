@@ -1,0 +1,29 @@
+.loading {
+  position: absolute;
+  display: flex;
+  align-items: start;
+  justify-content: center;
+  z-index: 4;
+  width: 100%;
+  background-color: #fff;
+}
+
+.fullMainLoading {
+  height: 100%;
+}
+
+.noHeaderLoading {
+  top: 51.5px;
+}
+
+.noHeaderLoading .loadingIcon {
+  margin-top: 150px;
+}
+
+.fullMainLoading .loadingIcon {
+  margin-top: calc(150px + 51.5px);
+}
+
+.loading .loadingIcon {
+  width: 50px;
+}

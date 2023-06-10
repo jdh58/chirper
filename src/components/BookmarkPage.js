@@ -4,11 +4,13 @@ import UserContext from '../UserContext';
 import Chirp from './Chirp';
 import RightBar from './RightBar';
 import Header from './Header';
+import LoadingIcon from '../assets/loading.svg';
 
 export default function BookmarkPage() {
   const user = useContext(UserContext);
   const [bookmarkedChirps, setBookmarkedChirps] = useState(null);
   const [hasLoaded, setHasLoaded] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (!user) {
@@ -42,9 +44,20 @@ export default function BookmarkPage() {
     }
   }, [user, hasLoaded]);
 
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 300);
+  });
+
   return (
     <>
       <div className="bookmarkPage page">
+        {loading ? (
+          <div className="noHeaderLoading loading">
+            <img src={LoadingIcon} alt="" className="loadingIcon" />
+          </div>
+        ) : null}
         <Header
           hasBack={false}
           top="Bookmarks"

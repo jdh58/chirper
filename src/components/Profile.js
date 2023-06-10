@@ -368,16 +368,18 @@ export default function Profile() {
   };
 
   useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 300);
-  });
+    if (loading) {
+      setTimeout(() => {
+        setLoading(false);
+      }, 500); /// NEXT UP, MAKE LOADING FOR MAIN PAGE AND EXPLORE PAGE (WHICH WILL WORK FOR SEARCH AS WELL. THEN SEARCH TABS. THEN MAYBE SIDE BARS. THEN HOST.)
+    }
+  }, [loading]);
 
   return (
     <>
       <div className="profilePage page">
         {loading ? (
-          <div className="fullMainLoading">
+          <div className="fullMainLoading loading">
             <img src={LoadingIcon} alt="" className="loadingIcon" />
           </div>
         ) : null}

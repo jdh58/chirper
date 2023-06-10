@@ -1,4 +1,5 @@
 import './styles/App.css';
+import './styles/loading.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import SignIn from './components/SignIn';
 import BookmarkPage from './components/BookmarkPage';
