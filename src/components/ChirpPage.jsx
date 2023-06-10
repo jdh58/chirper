@@ -27,7 +27,6 @@ import ToastContext from '../ToastContext';
 export default function ChirpPage() {
   const displayToast = useContext(ToastContext);
   const id = useParams().id;
-  const user = useContext(UserContext);
   const navigate = useNavigate();
   const [account, setAccount] = useState(null);
   const [chirpData, setChirpData] = useState(null);

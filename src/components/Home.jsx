@@ -4,11 +4,9 @@ import '../styles/page.css';
 import Tab from './Tab';
 import RightBar from './RightBar';
 import ChirpModule from './ChirpModule';
-import Chirp from './Chirp';
 import UserContext from '../UserContext';
 import {
   collection,
-  getDocs,
   getFirestore,
   limit,
   orderBy,

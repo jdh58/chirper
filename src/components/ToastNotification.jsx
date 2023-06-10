@@ -11,7 +11,7 @@ export default function ToastNotification({ message, timeAlive }) {
     setTimeout(() => {
       setClasses('toastNotification disappear');
     }, timeAlive - 400);
-  }, []);
+  }, [timeAlive]);
 
   return <div className={classes}>{message}</div>;
 }

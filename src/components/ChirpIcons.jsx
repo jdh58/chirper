@@ -1,9 +1,4 @@
-import {
-  arrayRemove,
-  arrayUnion,
-  FieldValue,
-  updateDoc,
-} from 'firebase/firestore';
+import { arrayRemove, arrayUnion, updateDoc } from 'firebase/firestore';
 import { useContext, useEffect, useState } from 'react';
 import getAccount from '../getAccount';
 import getChirp from '../getChirp';

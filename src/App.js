@@ -1,6 +1,6 @@
 import './styles/App.css';
 import './styles/loading.css';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Routes, Route, HashRouter } from 'react-router-dom';
 import SignIn from './components/SignIn';
 import BookmarkPage from './components/BookmarkPage';
 import NotificationPage from './components/NotificationPage';
@@ -104,7 +104,7 @@ function App() {
   };
 
   return (
-    <BrowserRouter>
+    <HashRouter>
       <UserContext.Provider value={userInfo}>
         <ToastContext.Provider value={displayToast}>
           <OverlayContext.Provider value={overlayFunction}>
@@ -200,7 +200,7 @@ function App() {
           </OverlayContext.Provider>
         </ToastContext.Provider>
       </UserContext.Provider>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 

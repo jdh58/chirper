@@ -9,19 +9,16 @@ import grabForInfinite from '../grabForInfinite';
 import grabAccountsForInfinite from '../grabAccountsForInfinite';
 import {
   collection,
-  getDocs,
   getFirestore,
   limit,
   or,
   orderBy,
   query,
   startAfter,
-  updateDoc,
   where,
 } from 'firebase/firestore';
 import { app } from '../firebase-config';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { v4 as uuidv4 } from 'uuid';
 import LoadingIcon from '../assets/loading.svg';
 
 export default function SearchPage() {

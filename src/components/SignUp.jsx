@@ -9,8 +9,6 @@ import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import existCheck from '../existCheck.js';
 
 export default function SignUp({ killModule, toSignIn, finalize }) {
-  const [userInput, setUserInput] = useState('');
-
   const handleGoogle = async () => {
     try {
       const google = new GoogleAuthProvider();
@@ -25,16 +23,6 @@ export default function SignUp({ killModule, toSignIn, finalize }) {
       }
     } catch (error) {
       console.error('Sign up Failed', error);
-    }
-  };
-
-  const checkUserInput = (e) => {
-    const inputVal = e.target.value;
-
-    if (inputVal.length > 0) {
-      setUserInput('active');
-    } else {
-      setUserInput('');
     }
   };
 
