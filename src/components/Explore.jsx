@@ -1,6 +1,6 @@
 import '../styles/Explore.css';
 import '../styles/page.css';
-import Search from './Search.js';
+import Search from './Search';
 import RightBar from './RightBar';
 import Tab from './Tab';
 import { useEffect, useState } from 'react';
