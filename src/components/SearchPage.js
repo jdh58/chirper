@@ -22,6 +22,7 @@ import {
 import { app } from '../firebase-config';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { v4 as uuidv4 } from 'uuid';
+import LoadingIcon from '../assets/loading.svg';
 
 export default function SearchPage() {
   const defaultSearchQuery = useParams().query;
@@ -40,6 +41,7 @@ export default function SearchPage() {
   const [photosPage, setPhotosPage] = useState(0);
   const [searchQuery, setSearchQuery] = useState([]);
   const [defVal, setDefVal] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setDefVal(defaultSearchQuery);
@@ -56,6 +58,7 @@ export default function SearchPage() {
     setLatestPage([]);
     setPeoplePage([]);
     setPhotosPage([]);
+    setLoading(true);
     window.scrollTo(0, 0);
     const queryArray = defaultSearchQuery.toLowerCase().split(' ');
     const decodedQueryArray = [];
@@ -232,7 +235,14 @@ export default function SearchPage() {
   const setTab = (e) => {
     setCurrentTab(e.currentTarget.classList[0]);
     window.scrollTo(0, 0);
+    setLoading(true);
   };
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 300);
+  });
 
   // useEffect(() => {
   //   (async () => {
@@ -281,13 +291,17 @@ export default function SearchPage() {
             />
             <div className={`indicator ${currentTab}`}></div>
           </header>
+          {loading ? (
+            <div className="thickHeaderLoading loading">
+              <img src={LoadingIcon} alt="" className="loadingIcon" />
+            </div>
+          ) : null}
           {currentTab === 'top' ? (
             <InfiniteScroll
               dataLength={chirpPage * 10}
               next={grabChirps}
               hasMore={true}
               scrollThreshold={0.9}
-              key={uuidv4()}
             >
               {chirps}
             </InfiniteScroll>
@@ -298,7 +312,6 @@ export default function SearchPage() {
               next={grabLatest}
               hasMore={true}
               scrollThreshold={0.9}
-              key={uuidv4()}
             >
               {latest}
             </InfiniteScroll>
@@ -309,7 +322,6 @@ export default function SearchPage() {
               next={grabPeople}
               hasMore={true}
               scrollThreshold={0.9}
-              key={uuidv4()}
             >
               {people}
             </InfiniteScroll>
@@ -320,7 +332,6 @@ export default function SearchPage() {
               next={grabPhotos}
               hasMore={true}
               scrollThreshold={0.9}
-              key={uuidv4()}
             >
               {photos}
             </InfiniteScroll>

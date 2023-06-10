@@ -240,6 +240,7 @@ export default function ChirpModule({ overlay, killModule, isReply, replyTo }) {
         replies: [],
         reChirps: [],
         likes: [],
+        likeCount: 0,
         tags: tagArray,
         postTime: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
       });
