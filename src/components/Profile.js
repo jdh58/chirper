@@ -37,6 +37,7 @@ import getChirp from '../getChirp';
 import Header from './Header';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import grabForInfinite from '../grabForInfinite';
+import LoadingIcon from '../assets/loading.svg';
 
 export default function Profile() {
   const urlId = useParams().id;
@@ -64,11 +65,13 @@ export default function Profile() {
   const [replyPage, setReplyPage] = useState(0);
   const [mediaPage, setMediaPage] = useState(0);
   const [likesPage, setLikesPage] = useState(0);
+  const [loading, setLoading] = useState(true);
   const displayToast = useContext(ToastContext);
 
   useEffect(() => {
     // Reset everything so stuff doesn't carry over from a different profile
     setEditMode(false);
+    setLoading(true);
     setCurrentTab('chirps');
     setChirps([]);
     setReplies([]);
@@ -364,9 +367,20 @@ export default function Profile() {
     }
   };
 
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 300);
+  });
+
   return (
     <>
       <div className="profilePage page">
+        {loading ? (
+          <div className="fullMainLoading">
+            <img src={LoadingIcon} alt="" className="loadingIcon" />
+          </div>
+        ) : null}
         <Header
           hasBack={true}
           top={profile.name}

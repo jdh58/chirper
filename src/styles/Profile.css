@@ -1,3 +1,7 @@
+.profilePage {
+  position: relative;
+}
+
 .profilePage header {
   padding: 0 10px;
   display: flex;

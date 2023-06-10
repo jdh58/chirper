@@ -139,7 +139,6 @@ export default function SearchPage() {
         );
       }
 
-      console.log('banana');
       const grabbedChirps = await grabForInfinite(grabQuery);
 
       setFinalLatest(grabbedChirps.finalChirp);
