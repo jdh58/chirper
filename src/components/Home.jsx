@@ -115,7 +115,12 @@ export default function Home() {
   return (
     <>
       <div className="homePage page">
-        {loading ? (
+        {loading && !user ? (
+          <div className="thickHeaderLoading loading">
+            <img src={LoadingIcon} alt="" className="loadingIcon" />
+          </div>
+        ) : null}
+        {loading && user ? (
           <div className="homePageLoading loading">
             <img src={LoadingIcon} alt="" className="loadingIcon" />
           </div>
