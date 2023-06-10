@@ -23,6 +23,7 @@ import UserContext from '../UserContext';
 import ChirpIcons from './ChirpIcons';
 import addTags from '../addTags';
 import ToastContext from '../ToastContext';
+import LoadingIcon from '../assets/loading.svg';
 
 export default function ChirpPage() {
   const displayToast = useContext(ToastContext);
@@ -79,7 +80,22 @@ export default function ChirpPage() {
   if (!account || !chirpData) {
     return (
       <>
-        <div className="loading">Loading...</div>
+        <div className="chirpPage page">
+          <header>
+            <div
+              className="backContainer"
+              onClick={() => {
+                navigate(-1);
+              }}
+            >
+              <img src={Back} alt="" className="backButton" />
+            </div>
+            <h1 className="title">Chirp</h1>
+          </header>
+          <div className="noHeaderLoading loading">
+            <img src={LoadingIcon} alt="" className="loadingIcon" />
+          </div>
+        </div>
         <RightBar />
       </>
     );
