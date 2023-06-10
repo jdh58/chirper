@@ -31,6 +31,7 @@ export default function SearchPage() {
     setChirps([]);
     setPage(0);
     setFinalChirp(null);
+    window.scrollTo(0, 0);
     const queryArray = defaultSearchQuery.toLowerCase().split(' ');
     const decodedQueryArray = [];
 
@@ -76,6 +77,7 @@ export default function SearchPage() {
 
   const setTab = (e) => {
     setCurrentTab(e.currentTarget.classList[0]);
+    window.scrollTo(0, 0);
   };
 
   return (

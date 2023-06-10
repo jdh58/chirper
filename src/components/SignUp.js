@@ -65,6 +65,9 @@ export default function SignUp({ killModule, toSignIn, finalize }) {
           <span className="signUpButton" onClick={toSignIn}>
             Log In
           </span>
+          <br />
+          <br />
+          (only Google for now)
         </h2>
       </div>
     </div>
