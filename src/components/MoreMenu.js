@@ -20,7 +20,6 @@ import { app } from '../firebase-config';
 import getChirp from '../getChirp';
 import getAccount from '../getAccount';
 import ToastContext from '../ToastContext';
-import { getRedirectResult } from 'firebase/auth';
 
 export default function MoreMenu({ chirpData, killMenu }) {
   const [isUsers, setIsUsers] = useState(false);

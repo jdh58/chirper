@@ -4,12 +4,13 @@ import '../styles/ProfilePic.css';
 import '../styles/Chirp.css';
 import { useContext, useEffect, useState } from 'react';
 import { format, formatDistanceToNowStrict, parseISO } from 'date-fns';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import MoreMenu from './MoreMenu';
 import getAccount from '../getAccount';
 import ChirpIcons from './ChirpIcons';
 import addTags from '../addTags';
 import ToastContext from '../ToastContext';
+import ReChirp from '../assets/rechirp.svg';
 
 export default function Chirp({ chirpData, profile }) {
   const displayToast = useContext(ToastContext);
@@ -20,7 +21,10 @@ export default function Chirp({ chirpData, profile }) {
     username: null,
     image: null,
   });
+  const urlId = useParams().id;
   const [chirpText, setChirpText] = useState(null);
+  const [isReChirp, setIsReChirp] = useState(false);
+  const [reChirpUser, setReChirpUser] = useState(null);
 
   useEffect(() => {
     if (profile) {
@@ -32,7 +36,13 @@ export default function Chirp({ chirpData, profile }) {
         setAccount(accountDocs.data());
       })();
     }
-  }, [chirpData, profile]);
+
+    if (chirpData.reChirps.includes(urlId)) {
+      setIsReChirp(true);
+    } else {
+      setIsReChirp(false);
+    }
+  }, [chirpData, profile, urlId]);
 
   useEffect(() => {
     setChirpText(addTags(chirpData.text, navigate, displayToast));
@@ -78,6 +88,18 @@ export default function Chirp({ chirpData, profile }) {
     }
   };
 
+  useEffect(() => {
+    (async () => {
+      if (isReChirp) {
+        const reChirpUserDoc = await getAccount(urlId);
+
+        const reChirpName = reChirpUserDoc.data().name;
+
+        setReChirpUser(reChirpName);
+      }
+    })();
+  }, [isReChirp]);
+
   return (
     <>
       {displayMore ? (
@@ -88,7 +110,10 @@ export default function Chirp({ chirpData, profile }) {
           }}
         ></div>
       ) : null}
-      <div className="chirp" onClick={handleChirpClick}>
+      <div
+        className={isReChirp ? 'chirp reChirped' : 'chirp'}
+        onClick={handleChirpClick}
+      >
         {displayMore ? (
           <MoreMenu
             chirpData={chirpData}
@@ -103,32 +128,40 @@ export default function Chirp({ chirpData, profile }) {
             navigate(`/profile/${account.userId}`);
           }}
         />
-        <div className="chirpInfo">
-          <p
-            className="name"
-            onClick={() => {
-              navigate(`/profile/${account.userId}`);
-            }}
-          >
-            {account.name}
-          </p>
-          <p
-            className="at"
-            onClick={() => {
-              navigate(`/profile/${account.userId}`);
-            }}
-          >
-            @{account.username}
-          </p>
-          <div className="separator"></div>
-          <p className="time">{formatDistanceShort()}</p>
-          <div
-            className="settingContainer"
-            onClick={() => {
-              setDisplayMore(true);
-            }}
-          >
-            <img src={More} alt="" />
+        <div className="chirpHeader">
+          {isReChirp ? (
+            <div className="reChirpHeader">
+              <img src={ReChirp} alt="" />
+              <p>{`${reChirpUser} ReChirped`}</p>
+            </div>
+          ) : null}
+          <div className="chirpInfo">
+            <p
+              className="name"
+              onClick={() => {
+                navigate(`/profile/${account.userId}`);
+              }}
+            >
+              {account.name}
+            </p>
+            <p
+              className="at"
+              onClick={() => {
+                navigate(`/profile/${account.userId}`);
+              }}
+            >
+              @{account.username}
+            </p>
+            <div className="separator"></div>
+            <p className="time">{formatDistanceShort()}</p>
+            <div
+              className="settingContainer"
+              onClick={() => {
+                setDisplayMore(true);
+              }}
+            >
+              <img src={More} alt="" />
+            </div>
           </div>
         </div>
         <div className="chirpSubmit">

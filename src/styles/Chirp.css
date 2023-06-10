@@ -19,8 +19,41 @@
   background-color: transparent;
 }
 
-.chirpInfo {
+.chirpHeader {
   align-self: center;
+  grid-row: 1 / 2;
+  grid-column: 2 / -1;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+}
+
+.chirpHeader.reChirped {
+}
+
+.reChirpHeader {
+  position: relative;
+  top: 7.5px;
+  bottom: 7.5px;
+  display: flex;
+  align-items: center;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--light-black);
+  gap: 5px;
+}
+
+.reChirpHeader img {
+  width: 12.5px;
+}
+
+.reChirped.chirp .chirpInfo {
+  margin-top: 10px;
+}
+.reChirped.chirp .chirpSubmit {
+  margin-top: 12.5px;
+}
+.chirpInfo {
   grid-row: 1 / 2;
   grid-column: 2 / -1;
   display: flex;
