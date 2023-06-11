@@ -204,6 +204,8 @@ body {
 }
 
 .clickDetector {
+  top: 0;
+  left: 0;
   position: fixed;
   z-index: 50;
   height: 100%;
