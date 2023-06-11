@@ -50,7 +50,7 @@ header .title {
   height: 4.5px;
   background-color: var(--blue);
   justify-self: center;
-  align-self: end;
+  align-self: flex-end;
   position: absolute;
   border-radius: 1000px;
 }

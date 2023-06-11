@@ -1,13 +1,13 @@
 .navBar {
   padding-top: 17.5px;
-  justify-self: start;
+  justify-self: flex-start;
   display: flex;
   flex-direction: column;
   gap: 14px;
   padding-left: 0;
   position: sticky;
   top: 0;
-  align-self: start;
+  align-self: flex-start;
   height: 100vh;
 }
 

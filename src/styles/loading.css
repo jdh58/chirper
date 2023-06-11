@@ -1,7 +1,7 @@
 .loading {
   position: absolute;
   display: flex;
-  align-items: start;
+  align-items: flex-start;
   justify-content: center;
   z-index: 4;
   width: 100%;

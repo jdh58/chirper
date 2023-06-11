@@ -42,7 +42,7 @@
 .signInPopUp .logo {
   height: 25px;
   justify-self: center;
-  align-self: end;
+  align-self: flex-end;
 }
 
 .signInPopUp .title {
@@ -186,7 +186,7 @@
 }
 
 .signInPopUp h2 {
-  align-self: end;
+  align-self: flex-end;
 }
 
 .finish {

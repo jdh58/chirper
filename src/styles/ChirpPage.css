@@ -62,7 +62,7 @@ header .backContainer:hover {
   display: flex;
   flex-direction: column;
   justify-self: flex-start;
-  align-items: start;
+  align-items: flex-start;
 }
 
 .profileArea .profilePicContainer {
