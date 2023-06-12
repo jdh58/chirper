@@ -13,7 +13,11 @@ export default function AccountModule({ profile }) {
   };
 
   return (
-    <div className="accountModule" onClick={handleAccountClick}>
+    <div
+      className="accountModule"
+      onClick={handleAccountClick}
+      data-testid="account-module"
+    >
       <ProfilePic picURL={profile.picURL} />
       <div className="accountInfo">
         <p className="name">{profile.name}</p>

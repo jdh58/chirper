@@ -65,6 +65,7 @@ export default function FollowButton({ clickedUser, isProfile }) {
             isProfile ? 'unfollowButton profileButton' : 'unfollowButton'
           }
           onClick={handleUnfollow}
+          data-testid="follow-button"
         >
           Unfollow
         </button>
@@ -72,6 +73,7 @@ export default function FollowButton({ clickedUser, isProfile }) {
         <button
           className={isProfile ? 'followButton profileButton' : 'followButton'}
           onClick={handleFollow}
+          data-testid="follow-button"
         >
           Follow
         </button>

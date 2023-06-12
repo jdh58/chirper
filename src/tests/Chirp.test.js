@@ -55,7 +55,7 @@ describe('Chirp component', () => {
   test('navigates to profile page when clicking on the profile picture', () => {
     render(<Chirp chirpData={chirpData} profile={profile} />);
 
-    const profilePicture = screen.getByTestId('profile-pic');
+    const profilePicture = screen.getByTestId('profile-pic-container');
 
     userEvent.click(profilePicture);
 
