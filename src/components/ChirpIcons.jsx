@@ -115,7 +115,9 @@ export default function ChirpIcons({ chirpData, fullPage }) {
 
   const handleShare = () => {
     displayToast('Chirp link copied to clipboard');
-    navigator.clipboard.writeText(`localhost:3000/chirp/${chirpData.chirpId}`);
+    navigator.clipboard.writeText(
+      `chirper.jonathanhawes.dev/chirp/${chirpData.chirpId}`
+    );
   };
 
   return (
