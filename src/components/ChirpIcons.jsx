@@ -44,6 +44,7 @@ export default function ChirpIcons({ chirpData, fullPage }) {
       if (!user) {
         return;
       }
+
       // Pre-emptively set isLiked state and update number for responsive UI
       if (isLiked) {
         setIsLiked(false);
@@ -123,7 +124,7 @@ export default function ChirpIcons({ chirpData, fullPage }) {
   const handleShare = () => {
     displayToast('Chirp link copied to clipboard');
     navigator.clipboard.writeText(
-      `chirper.jonathanhawes.dev/chirp/${chirpData.chirpId}`
+      `https://chirper.jonathanhawes.dev/chirp/${chirpData.chirpId}`
     );
   };
 
@@ -139,7 +140,9 @@ export default function ChirpIcons({ chirpData, fullPage }) {
               </p>
             </div>
             <div className="reChirpCount countContainer">
-              <p className="count">{chirpReChirps}</p>
+              <p className="count" data-testid="rechirp-count">
+                {chirpReChirps}
+              </p>
               <p className="label">
                 {chirpReChirps === 1 ? 'ReChirp' : 'ReChirps'}
               </p>
@@ -163,29 +166,43 @@ export default function ChirpIcons({ chirpData, fullPage }) {
               </div>
             </div>
             <div className="icon reChirp">
-              <div className="container" onClick={handleReChirpToggle}>
-                {isReChirped ? (
-                  <img
-                    src={ReChirp}
-                    className="fill"
-                    alt="ReChirp Icon Filled"
-                  />
-                ) : (
-                  <img src={ReChirp} alt="ReChirp Icon" />
-                )}
+              <div
+                className="container"
+                onClick={handleReChirpToggle}
+                data-testid="rechirp-button"
+              >
+                <img
+                  src={ReChirp}
+                  alt="ReChirp Icon"
+                  className={isReChirped ? 'fill' : ''}
+                  data-testid="rechirp-icon"
+                />
               </div>
             </div>
             <div className="icon likes">
-              <div className="container" onClick={handleLikeToggle}>
+              <div
+                className="container"
+                onClick={handleLikeToggle}
+                data-testid="like-button"
+              >
                 {isLiked ? (
-                  <img src={LikeFill} alt="" className="fill" />
+                  <img
+                    src={LikeFill}
+                    alt=""
+                    className="fill"
+                    data-testid="like-icon"
+                  />
                 ) : (
-                  <img src={Like} alt="" />
+                  <img src={Like} alt="" data-testid="like-icon" />
                 )}
               </div>
             </div>
             <div className="icon share">
-              <div className="container" onClick={handleShare}>
+              <div
+                className="container"
+                onClick={handleShare}
+                data-testid="share-button"
+              >
                 <img src={Share} alt="" />
               </div>
             </div>
@@ -207,21 +224,37 @@ export default function ChirpIcons({ chirpData, fullPage }) {
             </p>
           </div>
           <div className="icon reChirp">
-            <div className="container" onClick={handleReChirpToggle}>
-              {isReChirped ? (
-                <img src={ReChirp} className="fill" alt="ReChirp Icon Filled" />
-              ) : (
-                <img src={ReChirp} alt="ReChirp Icon" />
-              )}
+            <div
+              className="container"
+              onClick={handleReChirpToggle}
+              data-testid="rechirp-button"
+            >
+              <img
+                src={ReChirp}
+                alt="ReChirp Icon"
+                className={isReChirped ? 'fill' : ''}
+                data-testid="rechirp-icon"
+              />
             </div>
-            <p className="count">{chirpReChirps > 0 ? chirpReChirps : null}</p>
+            <p className="count" data-testid="rechirp-count">
+              {chirpReChirps > 0 ? chirpReChirps : null}
+            </p>
           </div>
           <div className="icon likes">
-            <div className="container" onClick={handleLikeToggle}>
+            <div
+              className="container"
+              onClick={handleLikeToggle}
+              data-testid="like-button"
+            >
               {isLiked ? (
-                <img src={LikeFill} alt="" className="fill" />
+                <img
+                  src={LikeFill}
+                  alt=""
+                  className={isLiked ? 'fill' : ''}
+                  data-testid="like-icon"
+                />
               ) : (
-                <img src={Like} alt="" />
+                <img src={Like} alt="" data-testid="like-icon" />
               )}
             </div>
             <p className="count" data-testid="like-count">
@@ -229,7 +262,11 @@ export default function ChirpIcons({ chirpData, fullPage }) {
             </p>
           </div>
           <div className="icon share">
-            <div className="container" onClick={handleShare}>
+            <div
+              className="container"
+              onClick={handleShare}
+              data-testid="share-button"
+            >
               <img src={Share} alt="" />
             </div>
           </div>
