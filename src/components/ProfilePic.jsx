@@ -8,7 +8,11 @@ export default function ProfilePic({
   inputOnClick,
 }) {
   return (
-    <div className="profilePicContainer" onClick={onClick}>
+    <div
+      className="profilePicContainer"
+      onClick={onClick}
+      data-testid="profile-pic"
+    >
       {editMode ? (
         <>
           <input
@@ -20,7 +24,7 @@ export default function ProfilePic({
           <img className="inputIcon" src={AddPic} alt="" />
         </>
       ) : null}
-      <img src={picURL} alt="" className="profilePic" />
+      <img src={picURL} alt="profile pic" className="profilePic" />
       {noOverlay ? null : <div className="imageOverlay"></div>}
     </div>
   );

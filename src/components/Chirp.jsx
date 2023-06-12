@@ -108,11 +108,13 @@ export default function Chirp({ chirpData, profile }) {
           onClick={() => {
             setDisplayMore(false);
           }}
+          data-testid="click-detector"
         ></div>
       ) : null}
       <div
         className={isReChirp ? 'chirp reChirped' : 'chirp'}
         onClick={handleChirpClick}
+        data-testid="chirp"
       >
         {displayMore ? (
           <MoreMenu
@@ -131,7 +133,7 @@ export default function Chirp({ chirpData, profile }) {
         <div className="chirpHeader">
           {isReChirp ? (
             <div className="reChirpHeader">
-              <img src={ReChirp} alt="" />
+              <img src={ReChirp} alt="rechirp" />
               <p>{`${reChirpUser} ReChirped`}</p>
             </div>
           ) : null}
@@ -159,15 +161,20 @@ export default function Chirp({ chirpData, profile }) {
               onClick={() => {
                 setDisplayMore(true);
               }}
+              data-testid="more-container"
             >
-              <img src={More} alt="" />
+              <img src={More} alt="more button" />
             </div>
           </div>
         </div>
         <div className="chirpSubmit">
           <div className="chirpWords">{chirpText}</div>
           {chirpData.imageURL ? (
-            <img src={chirpData.imageURL} alt="" className="chirpImage" />
+            <img
+              src={chirpData.imageURL}
+              alt="attachment"
+              className="chirpImage"
+            />
           ) : null}
         </div>
         <ChirpIcons chirpData={chirpData} fullPage={false} />

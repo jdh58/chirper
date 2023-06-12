@@ -159,7 +159,10 @@ export default function MoreMenu({ chirpData, killMenu }) {
 
   return (
     <>
-      <div className={isUsers ? 'moreMenu users' : 'moreMenu'}>
+      <div
+        className={isUsers ? 'moreMenu users' : 'moreMenu'}
+        data-testid="more-menu"
+      >
         {isUsers ? (
           <div className="delete option" onClick={handleDelete}>
             <img src={Delete} alt="" />

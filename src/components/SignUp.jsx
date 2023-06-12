@@ -25,7 +25,7 @@ export default function SignUp({ killModule, toSignIn, finalize }) {
       console.error('Sign up Failed', error);
     }
   };
-
+ 
   return (
     <div className="signInOverlay">
       <div className="signInPopUp">
