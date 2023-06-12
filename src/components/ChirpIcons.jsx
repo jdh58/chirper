@@ -41,6 +41,9 @@ export default function ChirpIcons({ chirpData, fullPage }) {
 
   const handleLikeToggle = async () => {
     try {
+      if (!user) {
+        return;
+      }
       // Pre-emptively set isLiked state and update number for responsive UI
       if (isLiked) {
         setIsLiked(false);
@@ -79,6 +82,10 @@ export default function ChirpIcons({ chirpData, fullPage }) {
 
   const handleReChirpToggle = async () => {
     try {
+      if (!user) {
+        return;
+      }
+
       // Pre-emptively set isReChirped state and update number for responsive UI
       if (isReChirped) {
         setIsReChirped(false);
@@ -124,7 +131,7 @@ export default function ChirpIcons({ chirpData, fullPage }) {
     <>
       {fullPage ? (
         <>
-          <div className="chirpStats">
+          <div className="chirpStats" data-testid="chirp-stats">
             <div className="replyCount countContainer">
               <p className="count">{chirpData.replies.length}</p>
               <p className="label">
@@ -138,7 +145,9 @@ export default function ChirpIcons({ chirpData, fullPage }) {
               </p>
             </div>
             <div className="likesCount countContainer">
-              <p className="count">{chirpLikes}</p>
+              <p className="count" data-testid="like-count">
+                {chirpLikes}
+              </p>
               <p className="label">{chirpLikes === 1 ? 'Like' : 'Likes'}</p>
             </div>
           </div>
@@ -183,7 +192,7 @@ export default function ChirpIcons({ chirpData, fullPage }) {
           </div>
         </>
       ) : (
-        <div className="chirpIcons">
+        <div className="chirpIcons" data-testid="chirp-icons">
           <div
             className="icon chat"
             onClick={() => {
@@ -215,7 +224,9 @@ export default function ChirpIcons({ chirpData, fullPage }) {
                 <img src={Like} alt="" />
               )}
             </div>
-            <p className="count">{chirpLikes > 0 ? chirpLikes : null}</p>
+            <p className="count" data-testid="like-count">
+              {chirpLikes > 0 ? chirpLikes : null}
+            </p>
           </div>
           <div className="icon share">
             <div className="container" onClick={handleShare}>

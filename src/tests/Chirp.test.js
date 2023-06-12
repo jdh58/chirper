@@ -32,6 +32,13 @@ describe('Chirp component', () => {
     userId: '456',
   };
 
+  test('renders the Chirp component', () => {
+    render(<Chirp chirpData={chirpData} profile={profile} />);
+
+    // Assert that the component is rendered
+    expect(screen.getByTestId('chirp')).toBeInTheDocument();
+  });
+
   test('renders chirp information correctly', () => {
     // Wrap this in the Router so useNavigate() works
     render(<Chirp chirpData={chirpData} profile={profile} />);
