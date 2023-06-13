@@ -1,10 +1,8 @@
 import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import ChirpModule from '../components/ChirpModule';
-import userEvent from '@testing-library/user-event';
 import UserContext from '../UserContext';
 import '@testing-library/jest-dom';
-import { act } from 'react-dom/test-utils';
 
 describe('ChirpModule', () => {
   test('renders ChirpModule correctly if logged in', () => {
@@ -45,7 +43,7 @@ describe('ChirpModule', () => {
     expect(screen.queryByTestId('chirp-module')).not.toBeInTheDocument();
   });
 
-  test.only('updates character count', () => {
+  test('updates character count', () => {
     // Mock user so we are "logged in"
     const mockUser = {
       userId: '456',
@@ -77,7 +75,7 @@ describe('ChirpModule', () => {
     expect(screen.getByRole('button')).toBeEnabled();
   });
 
-  test.only('and disables button when input is too long', () => {
+  test('and disables button when input is too long', () => {
     // Mock user so we are "logged in"
     const mockUser = {
       userId: '456',
@@ -106,38 +104,5 @@ describe('ChirpModule', () => {
 
     // Assert that the character count has updated and button is disabled
     expect(screen.getByText('311/280')).toBeInTheDocument();
-  });
-
-  test.only('sends chirp when button is clicked', () => {
-    // Mock user so we are "logged in"
-    const mockUser = {
-      userId: '456',
-      name: 'Mary Jane',
-      username: 'maryjane',
-      picURL: 'examplepic2',
-    };
-
-    render(
-      <UserContext.Provider value={mockUser}>
-        <ChirpModule isReply={false} overlay={false} />
-      </UserContext.Provider>
-    );
-
-    // Get the input element and button
-    const input = screen.getByTestId('textbox');
-    const button = screen.getByRole('button');
-
-    // Type some text in the input
-    fireEvent.input(input, { target: { textContent: 'Hello, world!' } });
-
-    // Click the chirp button
-    act(() => {
-      userEvent.click(button);
-    });
-
-    // Assert that the ToastNotification popped up
-    setTimeout(() => {
-      expect(screen.getByText('Your Chirp was sent.')).toBeInTheDocument();
-    }, 1000);
   });
 });

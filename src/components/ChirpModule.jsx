@@ -313,6 +313,9 @@ export default function ChirpModule({ overlay, killModule, isReply, replyTo }) {
         ? displayToast('Your reply was sent.')
         : displayToast('Your Chirp was sent.');
     } catch (err) {
+      isReply
+        ? displayToast('Your reply failed to send.')
+        : displayToast('Your Chirp failed to send.');
       console.error(err);
     }
   };
