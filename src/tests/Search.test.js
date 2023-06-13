@@ -40,6 +40,7 @@ describe('Search', () => {
     fireEvent.change(searchInput, { target: { value: 'search term' } });
     fireEvent.submit(screen.getByTestId('search-form'));
 
+    // URL encoded
     expect(mockedNavigate).toHaveBeenCalledWith('/search/search%20term');
   });
 

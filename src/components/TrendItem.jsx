@@ -22,7 +22,7 @@ export default function TrendItem({ number, name, count }) {
           <h3 className="topic">{name}</h3>
           <p className="number">{count} Chirps</p>
         </div>
-        <img src={More} alt="" className="more" />
+        <img src={More} alt="more icon" className="more" />
       </div>
     </>
   );
