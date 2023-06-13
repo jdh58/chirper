@@ -41,12 +41,12 @@ export default function SignIn({ killModule, toSignUp, finalize }) {
   return (
     <div className="signInOverlay">
       <div className="signInPopUp">
-        <img src={Close} alt="" className="close" onClick={killModule} />
-        <img src={Logo} alt="" className="logo" />
+        <img src={Close} alt="close" className="close" onClick={killModule} />
+        <img src={Logo} alt="logo" className="logo" />
         <h1 className="title">Sign in to Chirper</h1>
         <div className="otherSignIn">
           <button className="signInButton google" onClick={handleGoogle}>
-            <img src={Google} alt="" />
+            <img src={Google} alt="Google Logo" />
             <p>Sign in with Google</p>
           </button>
           <button className="signInButton apple">
@@ -62,6 +62,7 @@ export default function SignIn({ killModule, toSignUp, finalize }) {
           name="username"
           id="username"
           onChange={checkUserInput}
+          data-testid="username-input"
         />
         <div className={`placeholder ${userInput}`}>Email or username</div>
         <div className="otherSignIn">
