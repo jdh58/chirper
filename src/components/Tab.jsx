@@ -1,15 +1,15 @@
 export default function Tab({ currentTab, tabName, className, setTab }) {
   return (
-    <div
+    <button
       className={`${className} subheader`}
       onClick={setTab}
       style={
         currentTab === className
           ? { opacity: '1', fontWeight: 700 }
-          : { opacity: '70%', fontWeight: 600 }
+          : { opacity: '.7', fontWeight: 600 }
       }
     >
       <h2>{tabName}</h2>
-    </div>
+    </button>
   );
 }

@@ -30,7 +30,7 @@ export default function Explore() {
       <div className="explorePage page">
         {loading ? (
           <div className="thickHeaderLoading loading">
-            <img src={LoadingIcon} alt="" className="loadingIcon" />
+            <img src={LoadingIcon} alt="loading icon" className="loadingIcon" />
           </div>
         ) : null}
         <header>

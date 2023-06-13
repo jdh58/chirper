@@ -32,7 +32,6 @@ export default function Chirp({ chirpData, profile }) {
     } else {
       (async () => {
         const accountDocs = await getAccount(chirpData.accountId);
-
         setAccount(accountDocs.data());
       })();
     }
