@@ -6,13 +6,14 @@ export default function Header({ hasBack, top, bottom }) {
   const navigate = useNavigate();
 
   return (
-    <header>
+    <header data-testid="header">
       {hasBack ? (
         <div
           className="backContainer"
           onClick={() => {
             navigate(-1);
           }}
+          data-testid="back-container"
         >
           <img src={Back} alt="" className="backButton" />
         </div>

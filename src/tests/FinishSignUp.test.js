@@ -25,7 +25,7 @@ describe('FinishSignUp', () => {
     expect(nameInput.value).toBe('John Doe');
   });
 
-  test.only('displays the active state when there is text in the name field', () => {
+  test('displays the active state when there is text in the name field', () => {
     render(<FinishSignUp />);
     const nameInput = screen.getByTestId('name');
 
