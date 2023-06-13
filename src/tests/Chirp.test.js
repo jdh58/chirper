@@ -1,7 +1,6 @@
 import { render, screen, act } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
-import { HashRouter } from 'react-router-dom';
 import Chirp from '../components/Chirp';
 
 // Mock the useNavigate() function so I can pick up on it in the tests
@@ -74,11 +73,7 @@ describe('Chirp component', () => {
   });
 
   test('displays MoreMenu when clicking on the More icon', () => {
-    render(
-      <HashRouter>
-        <Chirp chirpData={chirpData} profile={profile} />
-      </HashRouter>
-    );
+    render(<Chirp chirpData={chirpData} profile={profile} />);
 
     const moreIcon = screen.getByTestId('more-container');
 
@@ -90,11 +85,7 @@ describe('Chirp component', () => {
   });
 
   test('hides MoreMenu when clicking outside of the chirp', () => {
-    render(
-      <HashRouter>
-        <Chirp chirpData={chirpData} profile={profile} />
-      </HashRouter>
-    );
+    render(<Chirp chirpData={chirpData} profile={profile} />);
     const moreIcon = screen.getByTestId('more-container');
 
     act(() => {

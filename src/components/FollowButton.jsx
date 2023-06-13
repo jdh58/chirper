@@ -22,6 +22,10 @@ export default function FollowButton({ clickedUser, isProfile }) {
   }, [loggedInUser, clickedUser]);
 
   const handleFollow = async () => {
+    if (!loggedInUser) {
+      return;
+    }
+
     // Change state so button updates
     setIsFollowing(true);
 
@@ -40,6 +44,10 @@ export default function FollowButton({ clickedUser, isProfile }) {
   };
 
   const handleUnfollow = async () => {
+    if (!loggedInUser) {
+      return;
+    }
+
     // Update state so button updates
     setIsFollowing(false);
 

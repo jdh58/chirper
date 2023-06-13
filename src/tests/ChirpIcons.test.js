@@ -27,7 +27,7 @@ describe('ChirpIcons working full page', () => {
     expect(screen.getByTestId('chirp-stats')).toBeInTheDocument();
   });
 
-  test('increments like count and icon on like button click (full page)', async () => {
+  test('increments like count and icon on like button click (full page)', () => {
     render(
       <UserContext.Provider value={mockUser}>
         <ChirpIcons chirpData={chirpData} fullPage={true} />
@@ -57,7 +57,7 @@ describe('ChirpIcons working full page', () => {
     expect(screen.getByTestId('like-icon')).not.toHaveClass('fill');
   });
 
-  test('increments reChirp count and toggles icon on reChirp button click (full screen)', async () => {
+  test('increments reChirp count and toggles icon on reChirp button click (full screen)', () => {
     render(
       <UserContext.Provider value={mockUser}>
         <ChirpIcons chirpData={chirpData} fullPage={false} />
@@ -98,7 +98,7 @@ describe('ChirpIcons working normal', () => {
     expect(screen.getByTestId('chirp-icons')).toBeInTheDocument();
   });
 
-  test('increments like count and icon on like button click (normal)', async () => {
+  test('increments like count and icon on like button click (normal)', () => {
     render(
       <UserContext.Provider value={mockUser}>
         <ChirpIcons chirpData={chirpData} fullPage={false} />
@@ -130,7 +130,7 @@ describe('ChirpIcons working normal', () => {
     expect(screen.getByTestId('like-icon')).not.toHaveClass('fill');
   });
 
-  test('increments reChirp count and toggles icon on reChirp button click (normal)', async () => {
+  test('increments reChirp count and toggles icon on reChirp button click (normal)', () => {
     render(
       <UserContext.Provider value={mockUser}>
         <ChirpIcons chirpData={chirpData} fullPage={false} />
