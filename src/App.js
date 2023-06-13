@@ -39,9 +39,6 @@ function App() {
   const [userInfo, setUserInfo] = useState(null);
   const [replyId, setReplyId] = useState(null);
 
-  /* TODO: Change profile urls from ids to usernames.
-  TODO: Set postDate to just the normal date, format later. */
-
   useEffect(() => {
     onAuthStateChanged(getAuth(app), async (user) => {
       if (user) {

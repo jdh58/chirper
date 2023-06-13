@@ -20,8 +20,14 @@ export default function ProfilePic({
             name="profilePicInput"
             id="profilePicInput"
             onChange={inputOnClick}
+            data-testid="profile-pic-input"
           />
-          <img className="inputIcon" src={AddPic} alt="" />
+          <img
+            className="inputIcon"
+            src={AddPic}
+            alt="profile pic"
+            data-testid="input-icon"
+          />
         </>
       ) : null}
       <img
@@ -30,7 +36,9 @@ export default function ProfilePic({
         className="profilePic"
         data-testid="profile-pic"
       />
-      {noOverlay ? null : <div className="imageOverlay"></div>}
+      {noOverlay ? null : (
+        <div className="imageOverlay" data-testid="image-overlay"></div>
+      )}
     </div>
   );
 }
