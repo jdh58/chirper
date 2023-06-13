@@ -61,7 +61,7 @@ export default function ChirpModule({ overlay, killModule, isReply, replyTo }) {
   }, [uploadedImage]);
 
   // We don't want non-users chirping
-  if (!getAuth(app).currentUser) {
+  if (!user) {
     return null;
   }
 
@@ -152,11 +152,15 @@ export default function ChirpModule({ overlay, killModule, isReply, replyTo }) {
 
   const handleSendChirp = async (e) => {
     try {
+      // Make sure the user didnt somehow call this without being logged in
+      if (!user) {
+        throw new Error('User is not logged in');
+      }
       // We go up from the button to ensure we grab the corresponding input
       const chirpModule = e.target.parentElement.parentElement;
       const textBox = chirpModule.querySelector('#chirpInput');
       let text = textBox.textContent;
-      const accountId = getAuth(app).currentUser.uid;
+      const accountId = user.userId;
       let chirpId = null;
 
       // Remove excessive newlines
@@ -319,7 +323,7 @@ export default function ChirpModule({ overlay, killModule, isReply, replyTo }) {
         overlay ? 'chirpModuleContainer overlay' : 'chirpModuleContainer'
       }
     >
-      <div className="chirpModule">
+      <div className="chirpModule" data-testid="chirp-module">
         {overlay ? (
           <img src={Close} alt="" className="close" onClick={killModule} />
         ) : null}
@@ -338,6 +342,7 @@ export default function ChirpModule({ overlay, killModule, isReply, replyTo }) {
               onPaste={(e) => {
                 e.preventDefault();
               }}
+              data-testid="textbox"
             ></span>
             <span
               className="textarea copy"
