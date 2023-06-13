@@ -11,7 +11,11 @@ export default function NavChirpButton(props) {
 
   return (
     <>
-      <button className="chirpButton nav" onClick={props.chirpOverlay}>
+      <button
+        className="chirpButton nav"
+        onClick={props.chirpOverlay}
+        data-testid="nav-chirp-button"
+      >
         <p>Chirp</p>
         <img src={Compose} alt="" />
       </button>
