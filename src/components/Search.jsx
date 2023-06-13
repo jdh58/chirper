@@ -17,6 +17,7 @@ export default function Search({ defaultValue }) {
           )}`
         );
       }}
+      data-testid="search-form"
     >
       <input
         type="text"
@@ -25,7 +26,7 @@ export default function Search({ defaultValue }) {
         placeholder="Search Chirper"
         defaultValue={defaultValue}
       />
-      <img src={Glass} alt="" />
+      <img src={Glass} alt="search" />
     </form>
   );
 }
